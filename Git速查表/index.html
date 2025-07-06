@@ -1,0 +1,655 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Git速查表 | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这么火爆的Git速查表，让我想起了小时候的小抄，简直是程序员们的福音啊！看来大家都想在Git这条路上越走越远啊！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git速查表">
+<meta property="og:url" content="https://www.wangwangit.com/Git%E9%80%9F%E6%9F%A5%E8%A1%A8/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:description" content="这么火爆的Git速查表，让我想起了小时候的小抄，简直是程序员们的福音啊！看来大家都想在Git这条路上越走越远啊！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.wangwangit.com/images/background/6.webp">
+<meta property="article:published_time" content="2024-05-26T10:25:00.000Z">
+<meta property="article:modified_time" content="2025-07-06T08:00:14.088Z">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.wangwangit.com/images/background/6.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Git速查表",
+  "url": "https://www.wangwangit.com/Git%E9%80%9F%E6%9F%A5%E8%A1%A8/",
+  "image": "https://www.wangwangit.com/images/background/6.webp",
+  "datePublished": "2024-05-26T10:25:00.000Z",
+  "dateModified": "2025-07-06T08:00:14.088Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "一只会飞的旺旺",
+      "url": "https://www.wangwangit.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/Git%E9%80%9F%E6%9F%A5%E8%A1%A8/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Git速查表',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">179</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">152</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fa-fw fas fa-comment-dots"></i><span> 动态</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tuku/"><i class="fa-fw fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/background/6.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a><a class="nav-page-title" href="/"><span class="site-name">Git速查表</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fa-fw fas fa-comment-dots"></i><span> 动态</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tuku/"><i class="fa-fw fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Git速查表</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-26T10:25:00.000Z" title="发表于 2024-05-26 18:25:00">2024-05-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-06T08:00:14.088Z" title="更新于 2025-07-06 16:00:14">2025-07-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">681</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2025-07-06 16:00:14&quot;}" hidden></div><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/image-20240527104040276.png" alt="image-20240527104040276"></p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>入门</strong></th>
+<th align="center"><strong>在分支间移动</strong></th>
+<th align="center"><strong>差异比较</strong></th>
+<th align="center"><strong>放弃更改</strong></th>
+<th align="center"><strong>合并分支</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">开始一个新仓库：<br> <code>git init</code></td>
+<td align="center">切换分支：<br> <code>git switch $NAME</code> <br> 或<br> <code>git checkout $NAME</code></td>
+<td align="center">展示不同提交间的差异：<br> <code>git show $COMMIT_ID</code></td>
+<td align="center">丢弃所有已暂存和未暂存的更改到一个文件：<br> <code>git checkout HEAD $FILE</code></td>
+<td align="center">合并分支前的结构：<br> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://example.com/merge_before.png" alt="before merge"></td>
+</tr>
+<tr>
+<td align="center">克隆现有仓库：<br> <code>git clone $URL</code></td>
+<td align="center">创建一个分支：<br> <code>git switch -c $NAME</code> <br> 或<br> <code>git checkout -b $NAME</code></td>
+<td align="center">展示不同提交间的差异：<br> <code>git diff $COMMIT_ID1 $COMMIT_ID2</code></td>
+<td align="center">丢弃单个文件中的更改：<br> <code>git checkout $FILE</code></td>
+<td align="center"><strong>用 rebase 合并</strong>：<br> <code>git switch main</code> <br> <code>git rebase $NAME</code> <br> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://example.com/rebase.png" alt="rebase"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">列出分支：<br> <code>git branch</code></td>
+<td align="center">比较暂存和未暂存的更改：<br> <code>git diff</code></td>
+<td align="center">丢弃所有未暂存的更改：<br> <code>git reset --hard</code></td>
+<td align="center"><strong>用 merge 合并</strong>：<br> <code>git switch main</code> <br> <code>git merge $NAME</code> <br> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://example.com/merge.png" alt="merge"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">删除一个分支：<br> <code>git branch -d $NAME</code></td>
+<td align="center">比较提交和工作目录：<br> <code>git diff $COMMIT_ID</code></td>
+<td align="center">清理未追踪的文件：<br> <code>git clean</code></td>
+<td align="center"><strong>用 squash 合并</strong>：<br> <code>git switch main</code> <br> <code>git merge --squash $NAME</code> <br> <code>git commit</code> <br> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://example.com/squash_merge.png" alt="squash merge"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">强制删除一个分支：<br> <code>git branch -D $NAME</code></td>
+<td align="center">仅显示特定文件的差异：<br> <code>git diff $COMMIT_ID $FILE</code></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>查看当前状态</strong></th>
+<th align="center"><strong>准备提交</strong></th>
+<th align="center"><strong>查看分支历史</strong></th>
+<th align="center"><strong>编辑历史</strong></th>
+<th align="center"><strong>推送和拉取更改</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>git status</code></td>
+<td align="center">添加未追踪的文件：<br> <code>git add $FILE</code></td>
+<td align="center">查看分支日志：<br> <code>git log main</code></td>
+<td align="center">撤销最近的提交：<br> <code>git reset HEAD~</code></td>
+<td align="center">添加远程仓库：<br> <code>git remote add $NAME $URL</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">添加所有未追踪和未暂存的更改：<br> <code>git add .</code></td>
+<td align="center">查看两个分支的关系：<br> <code>git log --graph a b</code></td>
+<td align="center">修改最后一次提交：<br> <code>git commit --amend</code></td>
+<td align="center">推送更改到远程仓库：<br> <code>git push origin main</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">选择暂存的部分文件：<br> <code>git add -p</code></td>
+<td align="center">单行日志：<br> <code>git log --oneline</code></td>
+<td align="center">修正多个提交（交互式 rebase）：<br> <code>git rebase -i HEAD~4</code></td>
+<td align="center">强制推送：<br> <code>git push --force-with-lease</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">删除或移动文件：<br> <code>git rm $FILE</code> <br> 或<br> <code>git mv $OLD $NEW</code></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">停止追踪但不删除文件：<br> <code>git rm --cached $FILE</code></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">取消所有暂存的更改：<br> <code>git reset HEAD</code></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>提交更改</strong></th>
+<th align="center"><strong>代码考古</strong></th>
+<th align="center"><strong>配置 git</strong></th>
+<th align="center"><strong>其他命令</strong></th>
+<th align="center"><strong>引用提交的方式</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">提交更改（打开编辑器以写入信息）：<br> <code>git commit</code></td>
+<td align="center">查看文件的更改历史：<br> <code>git blame $FILE</code></td>
+<td align="center">设置配置选项：<br> <code>git config user.name &#39;Julia&#39;</code></td>
+<td align="center">检查本地 git 配置：<br> <code>git config --list</code></td>
+<td align="center">每次使用 $COMMIT_ID，可以使用以下任意方式：<br> - 分支：<code>main</code><br> - 标签：<code>v0.1</code><br> - 哈希：<code>1e3887a</code><br> - 分支名@{时间}：<code>main@&#123;yesterday&#125;</code><br> - 提交相对引用：<code>HEAD~3</code></td>
+</tr>
+<tr>
+<td align="center">提交消息：<br> <code>git commit -m &#39;message&#39;</code></td>
+<td align="center">显示每次修改的内容：<br> <code>git log -p $FILE</code></td>
+<td align="center">查看所有配置选项：<br> <code>man git-config</code></td>
+<td align="center">恢复文件到某次提交：<br> <code>git restore $FILE --source $COMMIT_ID</code></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">提交所有未暂存的更改：<br> <code>git commit -a -m &#39;message&#39;</code></td>
+<td align="center"></td>
+<td align="center">编辑配置全局选项：<br> <code>git config --global user.name &#39;Julia&#39;</code></td>
+<td align="center">恢复整个提交：<br> <code>git restore --source $COMMIT_ID</code></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">别名配置：<br> <code>git config alias.st status</code></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com">一只会飞的旺旺</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com/Git%E9%80%9F%E6%9F%A5%E8%A1%A8/">https://www.wangwangit.com/Git速查表/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.wangwangit.com" target="_blank">一只会飞的旺旺</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Git/">Git</a></div><div class="post-share"><div class="social-share" data-image="/images/background/6.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Git常用命令"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/17.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-11</div><div class="info-item-2">Git常用命令</div></div><div class="info-2"><div class="info-item-1">Git常用命令记录</div></div></div></a><a class="pagination-related" href="/Git%E6%95%99%E7%A8%8B%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E5%9C%9F/" title="Git教程从入门到入土"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/8.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-23</div><div class="info-item-2">Git教程从入门到入土</div></div><div class="info-2"><div class="info-item-1">Git 是一个用于管理源代码的分布式版本控制系统。那么什么是版本控制？简而言之，版本控制是用于跟踪文件更改的系统。修改文件时，版本控制系统会记录并保存每个更改。这允许您随时还原以前版本的代码。</div></div></div></a><a class="pagination-related" href="/Git%E7%A5%9E%E5%A5%87%E4%B9%8B%E6%97%85/" title="Git奇幻之旅一"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/18.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-10</div><div class="info-item-2">Git奇幻之旅一</div></div><div class="info-2"><div class="info-item-1">今天我要给你讲一个关于Git的故事，希望你能从中学到一些常用的命令。😊</div></div></div></a><a class="pagination-related" href="/Git%E7%A5%9E%E5%A5%87%E4%B9%8B%E6%97%85%E4%BA%8C/" title="Git奇幻之旅二"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/19.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-13</div><div class="info-item-2">Git奇幻之旅二</div></div><div class="info-2"><div class="info-item-1">今天我要给你讲一个关于Git的故事，希望你能从中学到一些常用的命令。😊</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">179</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">152</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p>这里会持续更新我日常搭建的站点 👇：</p> <ul style="list-style: none; padding-left: 0;"> <li style="margin-bottom: 8px;">🧭 <a href="https://nav.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">导航站</a></li> <li style="margin-bottom: 8px;">🗂️ <a href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">资源下载站</a></li> <li style="margin-bottom: 8px;">☃️ <a href="https://url.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">短链站</a></li> <li style="margin-bottom: 8px;">❄ <a href="https://mail.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">临时邮箱站</a></li> <li style="margin-bottom: 8px;">📢 <a href="https://tts.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">文字转语音站</a></li> <li style="margin-bottom: 8px;">🍺 <a href="https://news.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">AI新闻站</a></li> </ul> <p style="margin-bottom: 15px;">若存在无法访问的情况,可以及时反馈!后续还会继续添加新站点哦，敬请期待！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/%E5%88%AB%E5%86%8D%E6%84%81%E6%B2%A1%E5%9B%BD%E5%A4%96%E5%8D%A1%E4%BA%86%EF%BC%81%E6%95%99%E4%BD%A0%E7%94%A8PayPal%E4%B8%9D%E6%BB%91%E8%AE%A2%E9%98%85%E4%B8%80%E7%BE%8E%E5%85%83%E7%9A%84ChatGPT%20Team%EF%BC%88%E5%86%85%E9%99%84%E9%98%B2%E5%B0%81%E6%95%99%E7%A8%8B%EF%BC%89/" title="不用愁没国外卡了！教你用PayPal丝滑订阅一美元的ChatGPT Team（内附防封教程）"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.wangwangit.com/file/1751788740148_image.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="不用愁没国外卡了！教你用PayPal丝滑订阅一美元的ChatGPT Team（内附防封教程）"/></a><div class="content"><a class="title" href="/%E5%88%AB%E5%86%8D%E6%84%81%E6%B2%A1%E5%9B%BD%E5%A4%96%E5%8D%A1%E4%BA%86%EF%BC%81%E6%95%99%E4%BD%A0%E7%94%A8PayPal%E4%B8%9D%E6%BB%91%E8%AE%A2%E9%98%85%E4%B8%80%E7%BE%8E%E5%85%83%E7%9A%84ChatGPT%20Team%EF%BC%88%E5%86%85%E9%99%84%E9%98%B2%E5%B0%81%E6%95%99%E7%A8%8B%EF%BC%89/" title="不用愁没国外卡了！教你用PayPal丝滑订阅一美元的ChatGPT Team（内附防封教程）">不用愁没国外卡了！教你用PayPal丝滑订阅一美元的ChatGPT Team（内附防封教程）</a><time datetime="2025-07-05T04:25:00.000Z" title="发表于 2025-07-05 12:25:00">2025-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E8%85%BE%E8%AE%AF%E2%80%9C%E8%89%AF%E5%BF%83%E5%8F%91%E7%8E%B0%E2%80%9D%EF%BC%9F%E5%85%8D%E8%B4%B9CDN+AI%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8C%E6%88%91%E6%8A%8ACloudflare%E4%B8%8A%E7%9A%84%E5%8D%9A%E5%AE%A2%E8%BF%9E%E5%A4%9C%E6%90%AC%E4%BA%86%E8%BF%87%E6%9D%A5/" title="腾讯“良心发现”？免费CDN+AI一键部署，我把Cloudflare上的博客连夜搬了过来"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.wangwangit.com/file/1751788508771_ChatGPT_Image_2025年6月30日_19_54_21.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="腾讯“良心发现”？免费CDN+AI一键部署，我把Cloudflare上的博客连夜搬了过来"/></a><div class="content"><a class="title" href="/%E8%85%BE%E8%AE%AF%E2%80%9C%E8%89%AF%E5%BF%83%E5%8F%91%E7%8E%B0%E2%80%9D%EF%BC%9F%E5%85%8D%E8%B4%B9CDN+AI%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8C%E6%88%91%E6%8A%8ACloudflare%E4%B8%8A%E7%9A%84%E5%8D%9A%E5%AE%A2%E8%BF%9E%E5%A4%9C%E6%90%AC%E4%BA%86%E8%BF%87%E6%9D%A5/" title="腾讯“良心发现”？免费CDN+AI一键部署，我把Cloudflare上的博客连夜搬了过来">腾讯“良心发现”？免费CDN+AI一键部署，我把Cloudflare上的博客连夜搬了过来</a><time datetime="2025-07-04T03:25:00.000Z" title="发表于 2025-07-04 11:25:00">2025-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E5%9F%9F%E5%90%8D%E8%BF%99%E7%8E%A9%E6%84%8F%E5%84%BF%EF%BC%8C%E7%9C%9F%E8%83%BD%E4%B8%8D%E8%8A%B1%E9%92%B1%E6%88%96%E5%8F%AA%E8%8A%B1%E5%87%A0%E5%9D%97%E9%92%B1%E6%90%9E%E5%AE%9A%EF%BC%9F%E8%83%BD/" title="域名这玩意儿，真能不花钱或只花几块钱搞定？能"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.wangwangit.com/file/1751556554602_20250703232907146.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="域名这玩意儿，真能不花钱或只花几块钱搞定？能"/></a><div class="content"><a class="title" href="/%E5%9F%9F%E5%90%8D%E8%BF%99%E7%8E%A9%E6%84%8F%E5%84%BF%EF%BC%8C%E7%9C%9F%E8%83%BD%E4%B8%8D%E8%8A%B1%E9%92%B1%E6%88%96%E5%8F%AA%E8%8A%B1%E5%87%A0%E5%9D%97%E9%92%B1%E6%90%9E%E5%AE%9A%EF%BC%9F%E8%83%BD/" title="域名这玩意儿，真能不花钱或只花几块钱搞定？能">域名这玩意儿，真能不花钱或只花几块钱搞定？能</a><time datetime="2025-07-03T04:25:00.000Z" title="发表于 2025-07-03 12:25:00">2025-07-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E5%88%AB%E5%86%8D%E6%8A%98%E8%85%BEFRP%E4%BA%86%EF%BC%81%E6%88%91%E7%94%A8%E8%BF%99%E4%B8%AA%E5%BC%80%E6%BA%90%E7%A5%9E%E5%99%A8%EF%BC%8C%E8%AE%A9%E4%BD%A0%E6%97%A0%E9%9C%80%E5%85%AC%E7%BD%91IP%EF%BC%8C%E4%B9%9F%E8%83%BD%E9%9A%8F%E6%97%B6%E9%9A%8F%E5%9C%B0%E8%AE%BF%E9%97%AE%E5%AE%B6%E9%87%8C%E7%9A%84%E4%BB%BB%E4%BD%95%E8%AE%BE%E5%A4%87/" title="别再折腾FRP了！我用这个开源神器，让你无需公网IP，也能随时随地访问家里的任何设备"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.wangwangit.com/file/1751788249769_ChatGPT_Image_2025年6月29日_12_59_51.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="别再折腾FRP了！我用这个开源神器，让你无需公网IP，也能随时随地访问家里的任何设备"/></a><div class="content"><a class="title" href="/%E5%88%AB%E5%86%8D%E6%8A%98%E8%85%BEFRP%E4%BA%86%EF%BC%81%E6%88%91%E7%94%A8%E8%BF%99%E4%B8%AA%E5%BC%80%E6%BA%90%E7%A5%9E%E5%99%A8%EF%BC%8C%E8%AE%A9%E4%BD%A0%E6%97%A0%E9%9C%80%E5%85%AC%E7%BD%91IP%EF%BC%8C%E4%B9%9F%E8%83%BD%E9%9A%8F%E6%97%B6%E9%9A%8F%E5%9C%B0%E8%AE%BF%E9%97%AE%E5%AE%B6%E9%87%8C%E7%9A%84%E4%BB%BB%E4%BD%95%E8%AE%BE%E5%A4%87/" title="别再折腾FRP了！我用这个开源神器，让你无需公网IP，也能随时随地访问家里的任何设备">别再折腾FRP了！我用这个开源神器，让你无需公网IP，也能随时随地访问家里的任何设备</a><time datetime="2025-07-02T04:25:00.000Z" title="发表于 2025-07-02 12:25:00">2025-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E5%91%8A%E5%88%AB%E2%80%9C%E9%99%8D%E6%99%BA%E7%BC%96%E7%A8%8B%E2%80%9D%EF%BC%9AClaude%20Code%20%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97%E4%B8%8E%E5%B9%B3%E6%9B%BF%E6%96%B9%E6%A1%88/" title="告别“降智编程”：Claude Code 终极指南与平替方案"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.wangwangit.com/file/1751556260756_20250703232414660.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="告别“降智编程”：Claude Code 终极指南与平替方案"/></a><div class="content"><a class="title" href="/%E5%91%8A%E5%88%AB%E2%80%9C%E9%99%8D%E6%99%BA%E7%BC%96%E7%A8%8B%E2%80%9D%EF%BC%9AClaude%20Code%20%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97%E4%B8%8E%E5%B9%B3%E6%9B%BF%E6%96%B9%E6%A1%88/" title="告别“降智编程”：Claude Code 终极指南与平替方案">告别“降智编程”：Claude Code 终极指南与平替方案</a><time datetime="2025-07-01T04:25:00.000Z" title="发表于 2025-07-01 12:25:00">2025-07-01</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div></div></div></main><footer id="footer" style="background-image: url(/images/background/6.webp);"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-waline-nine-rho.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('/pluginsSrc/@waline/client/dist/waline.css')
+        .then(() => import('/pluginsSrc/@waline/client/dist/waline.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
