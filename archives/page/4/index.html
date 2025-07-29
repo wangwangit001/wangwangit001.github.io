@@ -1,0 +1,534 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>时间轴 | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="时间轴">
+<meta property="og:url" content="https://www.wangwangit.com/archives/page/4/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.wangwangit.com/img/favicon.webp">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="Oracle,Java,Python,VPS,Spring,Hexo,Google,ChatGPT,Bing,AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.wangwangit.com/img/favicon.webp"><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/archives/page/4/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '时间轴',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'archive'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">187</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">156</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fa-fw fas fa-comment-dots"></i><span> 动态</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tuku/"><i class="fa-fw fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fa-fw fas fa-comment-dots"></i><span> 动态</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tuku/"><i class="fa-fw fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">时间轴</h1></div></header><main class="layout" id="content-inner"><div id="archive"><div class="article-sort-title">全部文章 - 187</div><div class="article-sort"><div class="article-sort-item year">2025</div><div class="article-sort-item"><a class="article-sort-item-img" href="/2025-03-20-%E5%BC%80%E5%8F%91%E5%8A%A0%E9%80%9F%E4%B8%8E%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87%E7%A7%98%E7%B1%8D/" title="告别网络卡顿！开发加速与效率提升秘籍"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/24.webp" alt="告别网络卡顿！开发加速与效率提升秘籍" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2025-03-20T01:00:00.000Z" title="发表于 2025-03-20 09:00:00">2025-03-20</time></div><a class="article-sort-item-title" href="/2025-03-20-%E5%BC%80%E5%8F%91%E5%8A%A0%E9%80%9F%E4%B8%8E%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87%E7%A7%98%E7%B1%8D/" title="告别网络卡顿！开发加速与效率提升秘籍">告别网络卡顿！开发加速与效率提升秘籍</a></div></div><div class="article-sort-item"><a class="article-sort-item-img" href="/2025-03-19-frpmgr-Windows%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E7%A5%9E%E5%99%A8/" title="【小白福音】frpmgr：Windows内网穿透神器，告别繁琐配置！"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/22.webp" alt="【小白福音】frpmgr：Windows内网穿透神器，告别繁琐配置！" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2025-03-18T21:44:00.000Z" title="发表于 2025-03-19 05:44:00">2025-03-19</time></div><a class="article-sort-item-title" href="/2025-03-19-frpmgr-Windows%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E7%A5%9E%E5%99%A8/" title="【小白福音】frpmgr：Windows内网穿透神器，告别繁琐配置！">【小白福音】frpmgr：Windows内网穿透神器，告别繁琐配置！</a></div></div><div class="article-sort-item"><a class="article-sort-item-img" href="/2025-03-18-%E8%85%BE%E8%AE%AF%E5%BA%94%E7%94%A8%E5%AE%9D%E4%B8%93%E5%8C%BA%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" title="腾讯应用宝专区上手指南，PC秒变安卓机！"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/19.webp" alt="腾讯应用宝专区上手指南，PC秒变安卓机！" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2025-03-17T16:00:00.000Z" title="发表于 2025-03-18 00:00:00">2025-03-18</time></div><a class="article-sort-item-title" href="/2025-03-18-%E8%85%BE%E8%AE%AF%E5%BA%94%E7%94%A8%E5%AE%9D%E4%B8%93%E5%8C%BA%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" title="腾讯应用宝专区上手指南，PC秒变安卓机！">腾讯应用宝专区上手指南，PC秒变安卓机！</a></div></div><div class="article-sort-item"><a class="article-sort-item-img" href="/DeepSeek-R1%E6%9C%80%E5%85%A8%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="DeepSeek R1最全使用指南 🌟"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/17.webp" alt="DeepSeek R1最全使用指南 🌟" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2025-02-07T09:00:00.000Z" title="发表于 2025-02-07 17:00:00">2025-02-07</time></div><a class="article-sort-item-title" href="/DeepSeek-R1%E6%9C%80%E5%85%A8%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="DeepSeek R1最全使用指南 🌟">DeepSeek R1最全使用指南 🌟</a></div></div><div class="article-sort-item"><a class="article-sort-item-img" href="/Hexo%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" title="Github+Hexo搭建个人网站详细教程"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/14.webp" alt="Github+Hexo搭建个人网站详细教程" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2025-01-02T04:14:00.000Z" title="发表于 2025-01-02 12:14:00">2025-01-02</time></div><a class="article-sort-item-title" href="/Hexo%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" title="Github+Hexo搭建个人网站详细教程">Github+Hexo搭建个人网站详细教程</a></div></div><div class="article-sort-item year">2024</div><div class="article-sort-item"><a class="article-sort-item-img" href="/Youtube%E5%AE%9E%E6%97%B6%E9%85%8D%E9%9F%B3/" title="玩转AI - 开发一个 YouTube 视频翻译助手"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/19.webp" alt="玩转AI - 开发一个 YouTube 视频翻译助手" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2024-11-30T03:25:00.000Z" title="发表于 2024-11-30 11:25:00">2024-11-30</time></div><a class="article-sort-item-title" href="/Youtube%E5%AE%9E%E6%97%B6%E9%85%8D%E9%9F%B3/" title="玩转AI - 开发一个 YouTube 视频翻译助手">玩转AI - 开发一个 YouTube 视频翻译助手</a></div></div><div class="article-sort-item"><a class="article-sort-item-img" href="/iot-dc3%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="iot-dc3阅读笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/18.webp" alt="iot-dc3阅读笔记" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2024-06-30T22:25:00.000Z" title="发表于 2024-07-01 06:25:00">2024-07-01</time></div><a class="article-sort-item-title" href="/iot-dc3%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="iot-dc3阅读笔记">iot-dc3阅读笔记</a></div></div><div class="article-sort-item"><a class="article-sort-item-img" href="/%E8%BF%98%E5%9C%A8%E8%8B%A6%E8%8B%A6%E5%AF%BB%E6%89%BE%E5%85%8D%E8%B4%B9%E5%A5%BD%E7%94%A8%E7%9A%84%E7%9F%AD%E9%93%BE%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%90%97/" title="专属短链服务搭建(Cloudflare系列教程二)"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/22.webp" alt="专属短链服务搭建(Cloudflare系列教程二)" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2024-06-24T11:14:00.000Z" title="发表于 2024-06-24 19:14:00">2024-06-24</time></div><a class="article-sort-item-title" href="/%E8%BF%98%E5%9C%A8%E8%8B%A6%E8%8B%A6%E5%AF%BB%E6%89%BE%E5%85%8D%E8%B4%B9%E5%A5%BD%E7%94%A8%E7%9A%84%E7%9F%AD%E9%93%BE%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%90%97/" title="专属短链服务搭建(Cloudflare系列教程二)">专属短链服务搭建(Cloudflare系列教程二)</a></div></div><div class="article-sort-item"><a class="article-sort-item-img" href="/%E6%89%93%E9%80%9A%E7%BD%91%E7%BB%9C%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89,%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%8E%A9%E8%BD%AC-Cloudflare-Tunnel/" title="打通网络任督二脉,手把手教你玩转 Cloudflare Tunnel 🚀(Cloudflare系列教程一)"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/22.webp" alt="打通网络任督二脉,手把手教你玩转 Cloudflare Tunnel 🚀(Cloudflare系列教程一)" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2024-06-19T10:25:00.000Z" title="发表于 2024-06-19 18:25:00">2024-06-19</time></div><a class="article-sort-item-title" href="/%E6%89%93%E9%80%9A%E7%BD%91%E7%BB%9C%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89,%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%8E%A9%E8%BD%AC-Cloudflare-Tunnel/" title="打通网络任督二脉,手把手教你玩转 Cloudflare Tunnel 🚀(Cloudflare系列教程一)">打通网络任督二脉,手把手教你玩转 Cloudflare Tunnel 🚀(Cloudflare系列教程一)</a></div></div><div class="article-sort-item"><a class="article-sort-item-img" href="/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E6%BB%A1%E9%80%9F%E4%B8%8B%E8%BD%BD%E6%95%99%E7%A8%8B/" title="阿里云盘限速太心塞？这款开源神器让你告别龟速下载！"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/26.webp" alt="阿里云盘限速太心塞？这款开源神器让你告别龟速下载！" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="article-sort-item-info"><div class="article-sort-item-time"><i class="far fa-calendar-alt"></i><time class="post-meta-date-created" datetime="2024-06-16T08:14:00.000Z" title="发表于 2024-06-16 16:14:00">2024-06-16</time></div><a class="article-sort-item-title" href="/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E6%BB%A1%E9%80%9F%E4%B8%8B%E8%BD%BD%E6%95%99%E7%A8%8B/" title="阿里云盘限速太心塞？这款开源神器让你告别龟速下载！">阿里云盘限速太心塞？这款开源神器让你告别龟速下载！</a></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/archives/page/3/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/19/">19</a><a class="extend next" rel="next" href="/archives/page/5/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">187</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">156</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p>这里会持续更新我日常搭建的站点 👇：</p> <ul style="list-style: none; padding-left: 0;"> <li style="margin-bottom: 8px;">🧭 <a href="https://nav.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">导航站</a></li> <li style="margin-bottom: 8px;">🗂️ <a href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">资源下载站</a></li> <li style="margin-bottom: 8px;">☃️ <a href="https://url.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">短链站</a></li> <li style="margin-bottom: 8px;">❄ <a href="https://mail.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">临时邮箱站</a></li> <li style="margin-bottom: 8px;">📢 <a href="https://tts.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">文字转语音站</a></li> <li style="margin-bottom: 8px;">🍺 <a href="https://news.wangwangit.com" rel="external nofollow noreferrer" target="_blank" style="color: #007bff; text-decoration: none;">AI新闻站</a></li> </ul> <p style="margin-bottom: 15px;">若存在无法访问的情况,可以及时反馈!后续还会继续添加新站点哦，敬请期待！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/HTTP%E5%AD%A6%E4%B9%A0/" title="人人都能看懂的HTTP学习笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/4.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="人人都能看懂的HTTP学习笔记"/></a><div class="content"><a class="title" href="/HTTP%E5%AD%A6%E4%B9%A0/" title="人人都能看懂的HTTP学习笔记">人人都能看懂的HTTP学习笔记</a><time datetime="2025-07-25T09:25:00.000Z" title="发表于 2025-07-25 17:25:00">2025-07-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E5%85%B3%E4%BA%8E%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%8C%E6%88%91%E6%8A%8A%E6%88%91%E7%9F%A5%E9%81%93%E7%9A%84%E9%83%BD%E5%86%99%E5%9C%A8%E4%BA%86%E8%BF%99%E9%87%8C/" title="关于个人微信机器人，我把我知道的都写在了这里"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1752494828621_20250714200701238.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关于个人微信机器人，我把我知道的都写在了这里"/></a><div class="content"><a class="title" href="/%E5%85%B3%E4%BA%8E%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%8C%E6%88%91%E6%8A%8A%E6%88%91%E7%9F%A5%E9%81%93%E7%9A%84%E9%83%BD%E5%86%99%E5%9C%A8%E4%BA%86%E8%BF%99%E9%87%8C/" title="关于个人微信机器人，我把我知道的都写在了这里">关于个人微信机器人，我把我知道的都写在了这里</a><time datetime="2025-07-20T22:25:00.000Z" title="发表于 2025-07-21 06:25:00">2025-07-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D%E5%A4%A7%E6%8F%AD%E7%A7%98%EF%BC%9A%E9%82%A3%E4%BA%9B%E7%8E%AF%E7%90%83%E6%97%85%E8%A1%8C%E5%AE%B6%EF%BC%8C%E5%85%B6%E5%AE%9E%E4%B8%80%E6%AD%A5%E9%83%BD%E6%B2%A1%E5%87%BA%E9%97%A8/" title="为什么你的同事从不迟到？一文看懂虚拟定位的&quot;黑科技&quot;"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1753095125559_20250721185153546.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="为什么你的同事从不迟到？一文看懂虚拟定位的&quot;黑科技&quot;"/></a><div class="content"><a class="title" href="/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D%E5%A4%A7%E6%8F%AD%E7%A7%98%EF%BC%9A%E9%82%A3%E4%BA%9B%E7%8E%AF%E7%90%83%E6%97%85%E8%A1%8C%E5%AE%B6%EF%BC%8C%E5%85%B6%E5%AE%9E%E4%B8%80%E6%AD%A5%E9%83%BD%E6%B2%A1%E5%87%BA%E9%97%A8/" title="为什么你的同事从不迟到？一文看懂虚拟定位的&quot;黑科技&quot;">为什么你的同事从不迟到？一文看懂虚拟定位的&quot;黑科技&quot;</a><time datetime="2025-07-20T22:25:00.000Z" title="发表于 2025-07-21 06:25:00">2025-07-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E2%80%9C%E5%A4%A7%E5%B0%8F%E5%86%99+%E6%95%B0%E5%AD%97+%E7%AC%A6%E5%8F%B7%E2%80%9D%EF%BC%8C%E6%88%91%E6%8A%95%E9%99%8D%E4%BA%86%EF%BC%81%E8%BF%99%E6%98%AF%E4%B8%80%E4%BB%BD%E8%AE%A9%E4%BD%A0%E5%BD%BB%E5%BA%95%E5%91%8A%E5%88%AB%E5%AF%86%E7%A0%81%E6%B7%B7%E4%B9%B1%E7%9A%84%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/" title="“大小写+数字+符号”，我投降了！这是一份让你彻底告别密码混乱的自救指南"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.wangwangit.com/file/1751890725660_ChatGPT_Image_2025年7月7日_20_18_18.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="“大小写+数字+符号”，我投降了！这是一份让你彻底告别密码混乱的自救指南"/></a><div class="content"><a class="title" href="/%E2%80%9C%E5%A4%A7%E5%B0%8F%E5%86%99+%E6%95%B0%E5%AD%97+%E7%AC%A6%E5%8F%B7%E2%80%9D%EF%BC%8C%E6%88%91%E6%8A%95%E9%99%8D%E4%BA%86%EF%BC%81%E8%BF%99%E6%98%AF%E4%B8%80%E4%BB%BD%E8%AE%A9%E4%BD%A0%E5%BD%BB%E5%BA%95%E5%91%8A%E5%88%AB%E5%AF%86%E7%A0%81%E6%B7%B7%E4%B9%B1%E7%9A%84%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/" title="“大小写+数字+符号”，我投降了！这是一份让你彻底告别密码混乱的自救指南">“大小写+数字+符号”，我投降了！这是一份让你彻底告别密码混乱的自救指南</a><time datetime="2025-07-17T22:25:00.000Z" title="发表于 2025-07-18 06:25:00">2025-07-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E6%8A%96%E9%9F%B3%E8%A7%86%E9%A2%91%E5%A4%AA%E7%B4%AF%E4%BA%86%EF%BC%8C%E6%9C%80%E8%BF%91%E5%9C%A8%E7%94%A8%E8%BF%99%E4%B8%AA%E6%8F%92%E4%BB%B6/" title="抖音视频下到手软？这个“搬家”神器，一键备份你所有的点赞和收藏！"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/1.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="抖音视频下到手软？这个“搬家”神器，一键备份你所有的点赞和收藏！"/></a><div class="content"><a class="title" href="/%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E6%8A%96%E9%9F%B3%E8%A7%86%E9%A2%91%E5%A4%AA%E7%B4%AF%E4%BA%86%EF%BC%8C%E6%9C%80%E8%BF%91%E5%9C%A8%E7%94%A8%E8%BF%99%E4%B8%AA%E6%8F%92%E4%BB%B6/" title="抖音视频下到手软？这个“搬家”神器，一键备份你所有的点赞和收藏！">抖音视频下到手软？这个“搬家”神器，一键备份你所有的点赞和收藏！</a><time datetime="2025-07-15T04:25:00.000Z" title="发表于 2025-07-15 12:25:00">2025-07-15</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI/"><span class="card-category-list-name">AI</span><span class="card-category-list-count">33</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2/"><span class="card-category-list-name">博客</span><span class="card-category-list-count">8</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">开发</span><span class="card-category-list-count">52</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%95%99%E7%A8%8B/"><span class="card-category-list-name">教程</span><span class="card-category-list-count">53</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BD%91%E7%AB%99/"><span class="card-category-list-name">网站</span><span class="card-category-list-count">17</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6/"><span class="card-category-list-name">软件</span><span class="card-category-list-count">24</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA/" style="font-size: 1.15em; color: rgb(79, 164, 50);">虚拟主机</a><a href="/tags/%E8%A7%86%E9%A2%91%E4%B8%8B%E8%BD%BD/" style="font-size: 1.15em; color: rgb(62, 95, 64);">视频下载</a><a href="/tags/Windows%E6%95%99%E7%A8%8B/" style="font-size: 1.15em; color: rgb(53, 50, 112);">Windows教程</a><a href="/tags/frp/" style="font-size: 1.19em; color: rgb(50, 187, 50);">frp</a><a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 1.24em; color: rgb(154, 50, 183);">内网穿透</a><a href="/tags/Windows/" style="font-size: 1.45em; color: rgb(78, 62, 126);">Windows</a><a href="/tags/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/" style="font-size: 1.15em; color: rgb(186, 50, 120);">网络优化</a><a href="/tags/Docker/" style="font-size: 1.32em; color: rgb(89, 198, 50);">Docker</a><a href="/tags/GitHub/" style="font-size: 1.15em; color: rgb(154, 196, 163);">GitHub</a><a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 1.19em; color: rgb(50, 158, 177);">开发工具</a><a href="/tags/MCP/" style="font-size: 1.15em; color: rgb(162, 61, 124);">MCP</a><a href="/tags/AI/" style="font-size: 1.45em; color: rgb(64, 62, 160);">AI</a><a href="/tags/%E7%9F%AD%E4%BF%A1%E8%BD%AC%E5%8F%91/" style="font-size: 1.15em; color: rgb(198, 144, 50);">短信转发</a><a href="/tags/Android/" style="font-size: 1.19em; color: rgb(76, 50, 148);">Android</a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.15em; color: rgb(84, 173, 120);">教程</a><a href="/tags/%E6%95%88%E7%8E%87/" style="font-size: 1.15em; color: rgb(50, 147, 179);">效率</a><a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 1.19em; color: rgb(179, 51, 158);">自动化</a><a href="/tags/Scoop/" style="font-size: 1.15em; color: rgb(191, 101, 159);">Scoop</a><a href="/tags/Linux/" style="font-size: 1.32em; color: rgb(184, 84, 62);">Linux</a><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 1.19em; color: rgb(57, 143, 59);">人工智能</a><a href="/tags/%E8%AE%A2%E9%98%85%E7%AE%A1%E7%90%86/" style="font-size: 1.15em; color: rgb(168, 198, 193);">订阅管理</a><a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 1.19em; color: rgb(132, 50, 169);">域名</a><a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 1.19em; color: rgb(50, 134, 50);">邮箱</a><a href="/tags/Google-Cloud/" style="font-size: 1.15em; color: rgb(139, 50, 119);">Google Cloud</a><a href="/tags/WebDAV/" style="font-size: 1.15em; color: rgb(194, 169, 168);">WebDAV</a><a href="/tags/Github/" style="font-size: 1.36em; color: rgb(84, 119, 57);">Github</a><a href="/tags/%E8%AE%A2%E9%98%85/" style="font-size: 1.15em; color: rgb(61, 50, 200);">订阅</a><a href="/tags/%E7%BD%91%E7%9B%98/" style="font-size: 1.15em; color: rgb(82, 185, 158);">网盘</a><a href="/tags/PDF/" style="font-size: 1.24em; color: rgb(112, 146, 50);">PDF</a><a href="/tags/JetBrains/" style="font-size: 1.19em; color: rgb(200, 129, 90);">JetBrains</a><a href="/tags/Chat2DB/" style="font-size: 1.15em; color: rgb(66, 125, 61);">Chat2DB</a><a href="/tags/Chatgpt/" style="font-size: 1.41em; color: rgb(75, 141, 174);">Chatgpt</a><a href="/tags/Aria2/" style="font-size: 1.15em; color: rgb(50, 50, 190);">Aria2</a><a href="/tags/Alist/" style="font-size: 1.15em; color: rgb(185, 176, 182);">Alist</a><a href="/tags/Azure/" style="font-size: 1.19em; color: rgb(50, 65, 76);">Azure</a><a href="/tags/Edge/" style="font-size: 1.28em; color: rgb(105, 92, 177);">Edge</a><a href="/tags/Hexo/" style="font-size: 1.24em; color: rgb(50, 108, 50);">Hexo</a><a href="/tags/Claude3/" style="font-size: 1.15em; color: rgb(186, 123, 185);">Claude3</a><a href="/tags/Claude/" style="font-size: 1.19em; color: rgb(63, 131, 118);">Claude</a><a href="/tags/Command/" style="font-size: 1.15em; color: rgb(50, 50, 81);">Command</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/07/">
+            <span class="card-archive-list-date">
+              七月 2025
+            </span>
+            <span class="card-archive-list-count">11</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/06/">
+            <span class="card-archive-list-date">
+              六月 2025
+            </span>
+            <span class="card-archive-list-count">8</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/05/">
+            <span class="card-archive-list-date">
+              五月 2025
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              四月 2025
+            </span>
+            <span class="card-archive-list-count">5</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/03/">
+            <span class="card-archive-list-date">
+              三月 2025
+            </span>
+            <span class="card-archive-list-count">6</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/02/">
+            <span class="card-archive-list-date">
+              二月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/01/">
+            <span class="card-archive-list-date">
+              一月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/11/">
+            <span class="card-archive-list-date">
+              十一月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">187</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">296.6k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-07-29T01:28:12.478Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="https://events.vercount.one/js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
