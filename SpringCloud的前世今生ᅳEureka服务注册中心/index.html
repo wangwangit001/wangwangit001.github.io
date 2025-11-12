@@ -1,0 +1,652 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>SpringCloud的前世今生ᅳEureka服务注册中心 | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Eureka由Netflix开源，并被Pivatal集成到SpringCloud体系中，它是基于 RestfulAPI⻛格开发的服务注册与发现组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud的前世今生ᅳEureka服务注册中心">
+<meta property="og:url" content="https://www.wangwangit.com/SpringCloud%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%E1%85%B3Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:description" content="Eureka由Netflix开源，并被Pivatal集成到SpringCloud体系中，它是基于 RestfulAPI⻛格开发的服务注册与发现组件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.wangwangit.com/images/background/24.webp">
+<meta property="article:published_time" content="2023-02-19T06:14:00.000Z">
+<meta property="article:modified_time" content="2025-11-12T02:28:07.944Z">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="SpringCloud">
+<meta property="article:tag" content="Eureka">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.wangwangit.com/images/background/24.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SpringCloud的前世今生ᅳEureka服务注册中心",
+  "url": "https://www.wangwangit.com/SpringCloud%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%E1%85%B3Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/",
+  "image": "https://www.wangwangit.com/images/background/24.webp",
+  "datePublished": "2023-02-19T06:14:00.000Z",
+  "dateModified": "2025-11-12T02:28:07.944Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "一只会飞的旺旺",
+      "url": "https://www.wangwangit.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/SpringCloud%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%E1%85%B3Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SpringCloud的前世今生ᅳEureka服务注册中心',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/background/24.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a><a class="nav-page-title" href="/"><span class="site-name">SpringCloud的前世今生ᅳEureka服务注册中心</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">SpringCloud的前世今生ᅳEureka服务注册中心</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-19T06:14:00.000Z" title="发表于 2023-02-19 14:14:00">2023-02-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-12T02:28:07.944Z" title="更新于 2025-11-12 10:28:07">2025-11-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2025-11-12 10:28:07&quot;}" hidden></div><h2 id="注册中心原理"><a href="#注册中心原理" class="headerlink" title="注册中心原理"></a>注册中心原理</h2><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191503344.png" alt="image-20230219145829240"></p>
+<p>分布式微服务架构中，服务注册中⼼⽤于存储服务提供者地址信息、服务发布相关 的属性信息，消费者通过主动查询和被动通知的⽅式获取服务提供者的地址信息， ⽽不再需要通过硬编码⽅式得到提供者的地址信息。消费者只需要知道当前系统发 布了那些服务，⽽不需要知道服务具体存在于什么位置，这就是透明化路由。</p>
+<ul>
+<li><p>pull模式: 服务消费者可以主动拉取可用的服务提供者清单</p>
+</li>
+<li><p>push模式: 服务消费者订阅服务,当服务提供者有变化时,注册中心也会主动推送更新后的服务清单给消费者</p>
+</li>
+<li><p>注册中心需要完成对服务提供者的健康监控,当发现服务提供者失效时需要及时剔除</p>
+</li>
+</ul>
+<h2 id="主流服务中心对比"><a href="#主流服务中心对比" class="headerlink" title="主流服务中心对比"></a>主流服务中心对比</h2><ul>
+<li>Zookeeper</li>
+</ul>
+<p>​		Zookeeper它是⼀个分布式服务框架，是Apache Hadoop 的⼀个⼦项⽬，它主 要是⽤来解决分布式应 ⽤中经常遇到的⼀些数据管理问题，如：统⼀命名服务、状态同步服务、集群管理、分布式应⽤配置项的管理等。</p>
+<p>​		Zookeeper本质&#x3D;存储+监听通知,主要是通过znode监听实现服务注册的,只要服务节点发生变动,就会通知到监听端,另外,Zookeeper有选举机制,保证了可用性,只要有一半以上的选举节点存活即可.</p>
+<ul>
+<li>Eureka</li>
+</ul>
+<p>​		由Netflix开源，并被Pivatal集成到SpringCloud体系中，它是基于 RestfulAPI ⻛格开发的服务注册与发现组件</p>
+<ul>
+<li>Consul</li>
+</ul>
+<p>​		Consul是由HashiCorp基于Go语⾔开发的⽀持多数据中⼼分布式⾼可⽤的服务 发布和注册服务软件， 采⽤Raft算法保证服务的⼀致性，且⽀持健康检查</p>
+<ul>
+<li>Nacos</li>
+</ul>
+<p>​		Nacos是⼀个更易于构建云原⽣应⽤的动态服务发现、配置管理和服务管理平 台。简单来说 Nacos 就是 注册中⼼ + 配置中⼼的组合，帮助我们解决微服务开 发必会涉及到的服务注册 与发现，服务配置，服务管理等问题。Nacos 是 Spring Cloud Alibaba 核⼼组件之⼀，负责服务注册与发现，还有配置。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191506640.png" alt="image-20230219150655582"></p>
+<p>P：分区容错性（⼀定的要满⾜的） </p>
+<p>C：数据⼀致性 </p>
+<p>A：⾼可⽤ </p>
+<p>CAP不可能同时满⾜三个，要么是AP，要么是CP</p>
+<h2 id="Eureka组件"><a href="#Eureka组件" class="headerlink" title="Eureka组件"></a>Eureka组件</h2><h3 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191509478.png" alt="image-20230219150904416"></p>
+<h3 id="交互流程"><a href="#交互流程" class="headerlink" title="交互流程"></a>交互流程</h3><p>这个是官方的一个描述图</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191510910.png" alt="image-20230219151004848"></p>
+<ul>
+<li>从图中可以看出,Eureka Server支持集群同步,异地同步.高可用性</li>
+<li>微服务会定期向Eureka Server发送心跳,进行存活续约</li>
+<li>Eureka Server同时也是Eureka Client,多个Eureka Server通过复制的方式完成服务注册列表同步</li>
+<li>Eureka Client会缓存Eureka Server中的信息,即使所有Eureka Server节点宕机,服务消费者依然可以使用缓存查找到服务提供者</li>
+</ul>
+<h2 id="Eureka源码剖析"><a href="#Eureka源码剖析" class="headerlink" title="Eureka源码剖析"></a>Eureka源码剖析</h2><h3 id="1-Eureka-Server启动过程"><a href="#1-Eureka-Server启动过程" class="headerlink" title="1.Eureka Server启动过程"></a>1.Eureka Server启动过程</h3><p>SpringBoot启动时,会加载EurekaServerAutoConfiguration配置类</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191529181.png" alt="image-20230219152926084"></p>
+<ul>
+<li>EurekaServerAutoConfiguration类</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191531447.png" alt="image-20230219153111389"></p>
+<ol>
+<li>只有添加了@EnableEurekaServer注解,才会引入EurekaServerMarkerConfiguration类</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191534847.png" alt="image-20230219153412783"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191534136.png" alt="image-20230219153442058"></p>
+<ol start="2">
+<li>EurekaServerAutoConfiguration做了哪些事</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191538449.png" alt="image-20230219153833349"></p>
+<p>针对PeerEurekaNodes是如何实现节点更新的呢?可以查看类中的start方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191541964.png" alt="image-20230219154124895"></p>
+<p>上面的updatePeerEurekaNodes是什么时候执行的呢?</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191542869.png" alt="image-20230219154217808"></p>
+<p>可以看到在构建DefaultEurekaServerContext对象时,会执行start方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191543577.png" alt="image-20230219154315496"></p>
+<p>在配置类中,我们还需要关注如下两个bea:</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191544452.png" alt="image-20230219154414391"></p>
+<ol start="3">
+<li>EurekaServerInitializerConfiguration做了哪些事?</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191545658.png" alt="image-20230219154513593"></p>
+<p>查看contextInitialized中都初始化了哪些内容?</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191546160.png" alt="image-20230219154600102"></p>
+<p>继续查看initEurekaServerContext中都做了啥?</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191547586.png" alt="image-20230219154703520"></p>
+<p>查看syncUp方法中,如何实现的注册信息同步?</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191548482.png" alt="image-20230219154819412"></p>
+<p>再看一看同步过来的信息是如何注册到EurekaServer中的</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191549117.png" alt="image-20230219154926051"></p>
+<p>我们再看一下如何实现的服务剔除</p>
+<p>com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#openForTraffic</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191551351.png" alt="image-20230219155149289"></p>
+<p>进入postInit方法查看</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191552332.png" alt="image-20230219155207263"></p>
+<h3 id="2-Eureka服务接口暴露策略"><a href="#2-Eureka服务接口暴露策略" class="headerlink" title="2.Eureka服务接口暴露策略"></a>2.Eureka服务接口暴露策略</h3><p>在第一步中,我们看到自动配置类中注册了jerseyFilterRegistration</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191554513.png" alt="image-20230219155413455"></p>
+<p>注入Jersey的细节</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191555753.png" alt="image-20230219155556689"></p>
+<p>具体要扫描那些包呢?</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191557366.png" alt="image-20230219155725305"></p>
+<p>查看这些包下包含哪些接口服务</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191557249.png" alt="image-20230219155745185"></p>
+<p>这些就是使⽤Jersey发布的供Eureka Client调⽤的Restful⻛格服务接⼝（完成服务 注册、⼼跳续约等接⼝</p>
+<h3 id="3-Eureka-Server服务注册接口-接受客户端注册服务"><a href="#3-Eureka-Server服务注册接口-接受客户端注册服务" class="headerlink" title="3.Eureka Server服务注册接口(接受客户端注册服务)"></a>3.Eureka Server服务注册接口(接受客户端注册服务)</h3><p>查看ApplicationResource类的addInstance()⽅法中代码</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191559772.png" alt="image-20230219155916706"></p>
+<p>点击register方法:注册服务信息并且同步到其他Eureka节点,查看实现</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191559809.png" alt="image-20230219155949756"></p>
+<p>点击super.register方法:实例信息存储到注册表是一个ConcurrentHashMap.查看实现</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Registers a new instance with a given duration.</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@see</span></span></span><br><span class="line"><span class="comment">com.netflix.eureka.lease.LeaseManager#register(java.lang.Object,</span></span><br><span class="line"><span class="comment">int, boolean)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">register</span><span class="params">(InstanceInfo registrant, <span class="type">int</span> leaseDuration,</span></span><br><span class="line"><span class="params"><span class="type">boolean</span> isReplication)</span> &#123;</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> read.lock(); <span class="comment">//读锁</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">// registry是保存所有应⽤实例信息的Map：</span></span><br><span class="line">ConcurrentHashMap&lt;String, Map&lt;String, Lease&lt;InstanceInfo&gt;&gt;&gt;</span><br><span class="line"> <span class="comment">// 从registry中获取当前appName的所有实例信息</span></span><br><span class="line">Map&lt;String, Lease&lt;InstanceInfo&gt;&gt; gMap =</span><br><span class="line">registry.get(registrant.getAppName());</span><br><span class="line"> </span><br><span class="line"> REGISTER.increment(isReplication); <span class="comment">//注册统计+1</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 如果当前appName实例信息为空，新建Map</span></span><br><span class="line"> <span class="keyword">if</span> (gMap == <span class="literal">null</span>) &#123;</span><br><span class="line"> <span class="keyword">final</span> ConcurrentHashMap&lt;String, Lease&lt;InstanceInfo&gt;&gt;</span><br><span class="line">gNewMap = <span class="keyword">new</span> <span class="title class_">ConcurrentHashMap</span>&lt;String, Lease&lt;InstanceInfo&gt;&gt;();</span><br><span class="line"> gMap = registry.putIfAbsent(registrant.getAppName(),</span><br><span class="line">gNewMap);</span><br><span class="line"> <span class="keyword">if</span> (gMap == <span class="literal">null</span>) &#123;</span><br><span class="line"> gMap = gNewMap;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 获取实例的Lease租约信息</span></span><br><span class="line"> Lease&lt;InstanceInfo&gt; existingLease =</span><br><span class="line">gMap.get(registrant.getId());</span><br><span class="line"> <span class="comment">// Retain the last dirty timestamp without overwriting it,</span></span><br><span class="line"><span class="keyword">if</span> there is already a lease</span><br><span class="line"> <span class="comment">// 如果已经有租约，则保留最后⼀个脏时间戳⽽不覆盖它</span></span><br><span class="line"> <span class="comment">// （⽐较当前请求实例租约 和 已有租约 的LastDirtyTimestamp，选择靠</span></span><br><span class="line">后的）</span><br><span class="line"> <span class="keyword">if</span> (existingLease != <span class="literal">null</span> &amp;&amp; (existingLease.getHolder() !=</span><br><span class="line"><span class="literal">null</span>)) &#123;</span><br><span class="line"> <span class="type">Long</span> <span class="variable">existingLastDirtyTimestamp</span> <span class="operator">=</span></span><br><span class="line">existingLease.getHolder().getLastDirtyTimestamp();</span><br><span class="line"> <span class="type">Long</span> <span class="variable">registrationLastDirtyTimestamp</span> <span class="operator">=</span></span><br><span class="line">registrant.getLastDirtyTimestamp();</span><br><span class="line"> logger.debug(<span class="string">&quot;Existing lease found (existing=&#123;&#125;,</span></span><br><span class="line"><span class="string">provided=&#123;&#125;&quot;</span>, existingLastDirtyTimestamp,</span><br><span class="line">registrationLastDirtyTimestamp);</span><br><span class="line"> <span class="keyword">if</span> (existingLastDirtyTimestamp &gt;</span><br><span class="line">registrationLastDirtyTimestamp) &#123;</span><br><span class="line"> logger.warn(<span class="string">&quot;There is an existing lease and the</span></span><br><span class="line"><span class="string">existing lease&#x27;s dirty timestamp &#123;&#125; is greater&quot;</span> +</span><br><span class="line"> <span class="string">&quot; than the one that is being registered</span></span><br><span class="line"><span class="string">&#123;&#125;&quot;</span>, existingLastDirtyTimestamp, registrationLastDirtyTimestamp);</span><br><span class="line"> logger.warn(<span class="string">&quot;Using the existing instanceInfo</span></span><br><span class="line"><span class="string">instead of the new instanceInfo as the registrant&quot;</span>);</span><br><span class="line"> registrant = existingLease.getHolder();</span><br><span class="line">&#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> &#123;</span><br><span class="line"> <span class="comment">// The lease does not exist and hence it is a new</span></span><br><span class="line">registration</span><br><span class="line"> <span class="comment">// 如果之前不存在实例的租约，说明是新实例注册</span></span><br><span class="line"> <span class="comment">// expectedNumberOfRenewsPerMin期待的每分钟续约数+2（因为</span></span><br><span class="line">30s⼀个）</span><br><span class="line"> <span class="comment">// 并更新numberOfRenewsPerMinThreshold每分钟续约阀值（85%）</span></span><br><span class="line"> <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line"> <span class="keyword">if</span> (<span class="built_in">this</span>.expectedNumberOfRenewsPerMin &gt; <span class="number">0</span>) &#123;</span><br><span class="line"> <span class="comment">// Since the client wants to cancel it, reduce</span></span><br><span class="line">the threshold</span><br><span class="line"> <span class="comment">// (1</span></span><br><span class="line"> <span class="comment">// for 30 seconds, 2 for a minute)</span></span><br><span class="line"> <span class="built_in">this</span>.expectedNumberOfRenewsPerMin =</span><br><span class="line"><span class="built_in">this</span>.expectedNumberOfRenewsPerMin + <span class="number">2</span>;</span><br><span class="line"> <span class="built_in">this</span>.numberOfRenewsPerMinThreshold =</span><br><span class="line"> (<span class="type">int</span>)</span><br><span class="line">(<span class="built_in">this</span>.expectedNumberOfRenewsPerMin *</span><br><span class="line">serverConfig.getRenewalPercentThreshold());</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> logger.debug(<span class="string">&quot;No previous lease information found; it</span></span><br><span class="line"><span class="string">is new registration&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> Lease&lt;InstanceInfo&gt; lease = <span class="keyword">new</span> <span class="title class_">Lease</span>&lt;InstanceInfo&gt;</span><br><span class="line">(registrant, leaseDuration);</span><br><span class="line"> <span class="keyword">if</span> (existingLease != <span class="literal">null</span>) &#123;</span><br><span class="line"> </span><br><span class="line">lease.setServiceUpTimestamp(existingLease.getServiceUpTimestamp())</span><br><span class="line">;</span><br><span class="line"> &#125;</span><br><span class="line"> gMap.put(registrant.getId(), lease); <span class="comment">//当前实例信息放到维护注册</span></span><br><span class="line">信息的Map</span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 同步维护最近注册队列</span></span><br><span class="line"> <span class="keyword">synchronized</span> (recentRegisteredQueue) &#123;</span><br><span class="line"> recentRegisteredQueue.add(<span class="keyword">new</span> <span class="title class_">Pair</span>&lt;Long, String&gt;(</span><br><span class="line"> System.currentTimeMillis(),</span><br><span class="line">registrant.getAppName() + <span class="string">&quot;(&quot;</span> +</span><br><span class="line">registrant.getId() + <span class="string">&quot;)&quot;</span>));</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">// This is where the initial state transfer of overridden</span></span><br><span class="line">status happens</span><br><span class="line"> <span class="comment">// 如果当前实例已经维护了OverriddenStatus，将其也放到此Eureka</span></span><br><span class="line">Server的overriddenInstanceStatusMap中</span><br><span class="line"> <span class="keyword">if</span></span><br><span class="line">(!InstanceStatus.UNKNOWN.equals(registrant.getOverriddenStatus()))</span><br><span class="line">&#123;</span><br><span class="line"> logger.debug(<span class="string">&quot;Found overridden status &#123;&#125; for instance</span></span><br><span class="line"><span class="string">&#123;&#125;. Checking to see if needs to be add to the &quot;</span></span><br><span class="line"> + <span class="string">&quot;overrides&quot;</span>,</span><br><span class="line">registrant.getOverriddenStatus(), registrant.getId());</span><br><span class="line"> <span class="keyword">if</span></span><br><span class="line">(!overriddenInstanceStatusMap.containsKey(registrant.getId())) &#123;</span><br><span class="line"> logger.info(<span class="string">&quot;Not found overridden id &#123;&#125; and hence</span></span><br><span class="line"><span class="string">adding it&quot;</span>, registrant.getId());</span><br><span class="line"> overriddenInstanceStatusMap.put(registrant.getId(),</span><br><span class="line">registrant.getOverriddenStatus());</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="type">InstanceStatus</span> <span class="variable">overriddenStatusFromMap</span> <span class="operator">=</span></span><br><span class="line">overriddenInstanceStatusMap.get(registrant.getId());</span><br><span class="line"> <span class="keyword">if</span> (overriddenStatusFromMap != <span class="literal">null</span>) &#123;</span><br><span class="line"> logger.info(<span class="string">&quot;Storing overridden status &#123;&#125; from map&quot;</span>,</span><br><span class="line">overriddenStatusFromMap);</span><br><span class="line"> </span><br><span class="line">registrant.setOverriddenStatus(overriddenStatusFromMap);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// Set the status based on the overridden status rules</span></span><br><span class="line"> <span class="comment">// 根据overridden status规则，设置状态</span></span><br><span class="line"> <span class="type">InstanceStatus</span> <span class="variable">overriddenInstanceStatus</span></span><br><span class="line"> <span class="operator">=</span> getOverriddenInstanceStatus(registrant,</span><br><span class="line">existingLease, isReplication);</span><br><span class="line"> registrant.setStatusWithoutDirty(overriddenInstanceStatus);</span><br><span class="line"> <span class="comment">// If the lease is registered with UP status, set lease</span></span><br><span class="line">service up timestamp</span><br><span class="line"> <span class="comment">// 如果租约以UP状态注册，设置租赁服务时间戳</span></span><br><span class="line"><span class="keyword">if</span> (InstanceStatus.UP.equals(registrant.getStatus())) &#123;</span><br><span class="line"> lease.serviceUp();</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> registrant.setActionType(ActionType.ADDED); <span class="comment">//ActionType为</span></span><br><span class="line">ADD</span><br><span class="line"> recentlyChangedQueue.add(<span class="keyword">new</span> <span class="title class_">RecentlyChangedItem</span>(lease));</span><br><span class="line"><span class="comment">//维护recentlyChangedQueue</span></span><br><span class="line"> registrant.setLastUpdatedTimestamp(); <span class="comment">//更新最后更新时间</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 使当前应⽤的ResponseCache失效</span></span><br><span class="line"> invalidateCache(registrant.getAppName(),</span><br><span class="line">registrant.getVIPAddress(), registrant.getSecureVipAddress());</span><br><span class="line"> logger.info(<span class="string">&quot;Registered instance &#123;&#125;/&#123;&#125; with status &#123;&#125;</span></span><br><span class="line"><span class="string">(replication=&#123;&#125;)&quot;</span>,</span><br><span class="line"> registrant.getAppName(), registrant.getId(),</span><br><span class="line">registrant.getStatus(), isReplication);</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> read.unlock(); <span class="comment">//读锁</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们再看一下如何复制的对等节点,PeerAwareInstanceRegistryImpl#replicateToPeers() ：复制到Eureka对等节点</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">replicateToPeers</span><span class="params">(Action action, String appName, String</span></span><br><span class="line"><span class="params">id,</span></span><br><span class="line"><span class="params"> InstanceInfo info <span class="comment">/* optional */</span>,</span></span><br><span class="line"><span class="params"> InstanceStatus newStatus <span class="comment">/* optional</span></span></span><br><span class="line"><span class="comment"><span class="params">*/</span>, <span class="type">boolean</span> isReplication)</span> &#123;</span><br><span class="line"> <span class="type">Stopwatch</span> <span class="variable">tracer</span> <span class="operator">=</span> action.getTimer().start();</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> <span class="comment">// 如果是复制操作（针对当前节点，false）</span></span><br><span class="line"> <span class="keyword">if</span> (isReplication) &#123;</span><br><span class="line"> numberOfReplicationsLastMin.increment();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 如果它已经是复制，请不要再次复制，直接return</span></span><br><span class="line"> <span class="keyword">if</span> (peerEurekaNodes == Collections.EMPTY_LIST ||</span><br><span class="line">isReplication) &#123;</span><br><span class="line"> <span class="keyword">return</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 遍历集群所有节点（除当前节点外）</span></span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">final</span> PeerEurekaNode node :</span><br><span class="line">peerEurekaNodes.getPeerEurekaNodes()) &#123;</span><br><span class="line"> <span class="comment">// If the url represents this host, do not replicate to</span></span><br><span class="line">yourself.</span><br><span class="line"> <span class="keyword">if</span> (peerEurekaNodes.isThisMyUrl(node.getServiceUrl()))</span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">continue</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 复制Instance实例操作到某个node节点</span></span><br><span class="line"> replicateInstanceActionsToPeers(action, appName, id,</span><br><span class="line">info, newStatus, node);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">finally</span> &#123;</span><br><span class="line"> tracer.stop();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查看PeerAwareInstanceRegistryImpl#replicateInstanceActionsToPeers的具体实现</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191604397.png" alt="image-20230219160459321"></p>
+<h3 id="4-Eureka-Server服务续约接口-接受客户端续约"><a href="#4-Eureka-Server服务续约接口-接受客户端续约" class="headerlink" title="4.Eureka Server服务续约接口(接受客户端续约)"></a>4.Eureka Server服务续约接口(接受客户端续约)</h3><p>InstanceResource的renewLease⽅法中完成客户端的⼼跳（续约）处理，关键代码：registry.renew(app.getName(), id, isFromReplicaNode)</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191606778.png" alt="image-20230219160617705"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191606086.png" alt="image-20230219160626025"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191606334.png" alt="image-20230219160632274"></p>
+<p>replicateInstanceActionsToPeers() 复制Instance实例操作到其它节点</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">replicateInstanceActionsToPeers</span><span class="params">(Action action, String</span></span><br><span class="line"><span class="params">appName,</span></span><br><span class="line"><span class="params"> String id,</span></span><br><span class="line"><span class="params">InstanceInfo info, InstanceStatus newStatus,</span></span><br><span class="line"><span class="params"> PeerEurekaNode node)</span> &#123;</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> <span class="type">InstanceInfo</span> <span class="variable">infoFromRegistry</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"> CurrentRequestVersion.set(Version.V2);</span><br><span class="line"> <span class="keyword">switch</span> (action) &#123;</span><br><span class="line"><span class="keyword">case</span> Cancel: <span class="comment">//取消</span></span><br><span class="line"> node.cancel(appName, id);</span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> <span class="keyword">case</span> Heartbeat: <span class="comment">//⼼跳</span></span><br><span class="line"> <span class="type">InstanceStatus</span> <span class="variable">overriddenStatus</span> <span class="operator">=</span></span><br><span class="line">overriddenInstanceStatusMap.get(id);</span><br><span class="line"> infoFromRegistry = getInstanceByAppAndId(appName,</span><br><span class="line">id, <span class="literal">false</span>);</span><br><span class="line"> node.heartbeat(appName, id, infoFromRegistry,</span><br><span class="line">overriddenStatus, <span class="literal">false</span>);</span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> <span class="keyword">case</span> Register: <span class="comment">//注册</span></span><br><span class="line"> node.register(info);</span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> <span class="keyword">case</span> StatusUpdate: <span class="comment">//状态更新</span></span><br><span class="line"> infoFromRegistry = getInstanceByAppAndId(appName,</span><br><span class="line">id, <span class="literal">false</span>);</span><br><span class="line"> node.statusUpdate(appName, id, newStatus,</span><br><span class="line">infoFromRegistry);</span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> <span class="keyword">case</span> DeleteStatusOverride: <span class="comment">//删除OverrideStatus</span></span><br><span class="line"> infoFromRegistry = getInstanceByAppAndId(appName,</span><br><span class="line">id, <span class="literal">false</span>);</span><br><span class="line"> node.deleteStatusOverride(appName, id,</span><br><span class="line">infoFromRegistry);</span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line"> logger.error(<span class="string">&quot;Cannot replicate information to &#123;&#125; for action</span></span><br><span class="line"><span class="string">&#123;&#125;&quot;</span>, node.getServiceUrl(), action.name(), t);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-Eureka-Client注册服务"><a href="#5-Eureka-Client注册服务" class="headerlink" title="5.Eureka Client注册服务"></a>5.Eureka Client注册服务</h3><p>SpringBoot启动时,会加载EurekaClientAutoConfiguration配置类</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191609828.png" alt="image-20230219160906757"></p>
+<p>分析EurekaClientAutoConfiguration类的注解</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191609893.png" alt="image-20230219160938819"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191609806.png" alt="image-20230219160945740"></p>
+<p>1.读取配置文件</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191610293.png" alt="image-20230219161022219"></p>
+<p>2.启动时从EurekaServer获取服务实例信息</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191610879.png" alt="image-20230219161035803"></p>
+<p>观察父类DiscoveryClient()</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191611711.png" alt="image-20230219161111648"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191611137.png" alt="image-20230219161122044"></p>
+<p>3.注册自己到EurekaServer中</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191611221.png" alt="image-20230219161140157"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191611334.png" alt="image-20230219161159258"></p>
+<p>4.开启一些定时任务(心跳,刷新缓存)</p>
+<p>刷新缓存</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191612816.png" alt="image-20230219161221754"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191612803.png" alt="image-20230219161230730"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191612080.png" alt="image-20230219161241016"></p>
+<p>心跳续约</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191612314.png" alt="image-20230219161253230"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191613431.png" alt="image-20230219161309324"></p>
+<h3 id="6-Eureka-Client下架服务"><a href="#6-Eureka-Client下架服务" class="headerlink" title="6. Eureka Client下架服务"></a>6. Eureka Client下架服务</h3><p>查看com.netflix.discovery.DiscoveryClient#shutdown</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191615527.png" alt="image-20230219161523458"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202302191615822.png" alt="image-20230219161538743"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com">一只会飞的旺旺</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com/SpringCloud%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%E1%85%B3Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/">https://www.wangwangit.com/SpringCloud的前世今生ᅳEureka服务注册中心/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.wangwangit.com" target="_blank">一只会飞的旺旺</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SpringCloud/">SpringCloud</a><a class="post-meta__tags" href="/tags/Eureka/">Eureka</a></div><div class="post-share"><div class="social-share" data-image="/images/background/24.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/SpringCloud%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%E1%85%B3Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" title="SpringCloud的前世今生ᅳRibbon负载均衡"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/25.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-23</div><div class="info-item-2">SpringCloud的前世今生ᅳRibbon负载均衡</div></div><div class="info-2"><div class="info-item-1">Ribbon是它是Netflix发布的项目，它主要是为了给客户端提供软件负载均衡的算法跟服务的调用。</div></div></div></a><a class="pagination-related" href="/SpringCloud%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%E1%85%B3%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9D%A5%E5%8E%86/" title="SpringCloud的前世今生ᅳ微服务的来历"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/21.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-13</div><div class="info-item-2">SpringCloud的前世今生ᅳ微服务的来历</div></div><div class="info-2"><div class="info-item-1">随着互联⽹的发展，⽤户群体逐渐扩⼤，⽹站的流量成倍增⻓，常规的单体架构已⽆法满⾜请求压⼒和业务的快速迭代，架构的变化势在必⾏</div></div></div></a><a class="pagination-related" href="/WebSocket%E6%B6%88%E6%81%AF%E5%A4%AA%E5%A4%A7%E6%97%A0%E6%B3%95%E5%8F%91%E9%80%81/" title="WebSocket消息太大导致无法发送"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/13.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-01</div><div class="info-item-2">WebSocket消息太大导致无法发送</div></div><div class="info-2"><div class="info-item-1">Spring Cloud微服务架构，网关采用Spring Cloud Gateway，在消息服务发送大WebSocket消息时，会发现WebSocket连接自动断开。在消息服务中只告知服务关闭，最后在Spring Cloud Gateway中发现是因为消息太大导致的。</div></div></div></a><a class="pagination-related" href="/%E5%88%86%E5%B8%83%E5%BC%8F%E5%9C%BA%E6%99%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="分布式场景解决方案"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/36.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-13</div><div class="info-item-2">分布式场景解决方案</div></div><div class="info-2"><div class="info-item-1">分布式和集群是不⼀样的，分布式⼀定是集群，但是集群不⼀定是分布式,因为集群就是多个实例⼀起⼯作，分布式将⼀个系统拆分之后那就是多个实例；集群并不⼀定是分布式，因为复制型的集群不是拆分⽽是复制</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p style="margin-bottom: 15px;">我的个人站点已整合到顶部"我的站点"菜单中，欢迎访问体验！若存在无法访问的情况，可以及时反馈！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">注册中心原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E6%B5%81%E6%9C%8D%E5%8A%A1%E4%B8%AD%E5%BF%83%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">主流服务中心对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Eureka%E7%BB%84%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">Eureka组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">基础架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E4%BA%92%E6%B5%81%E7%A8%8B"><span class="toc-number">3.2.</span> <span class="toc-text">交互流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Eureka%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">Eureka源码剖析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Eureka-Server%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">4.1.</span> <span class="toc-text">1.Eureka Server启动过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Eureka%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3%E6%9A%B4%E9%9C%B2%E7%AD%96%E7%95%A5"><span class="toc-number">4.2.</span> <span class="toc-text">2.Eureka服务接口暴露策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Eureka-Server%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E6%8E%A5%E5%8F%A3-%E6%8E%A5%E5%8F%97%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.3.</span> <span class="toc-text">3.Eureka Server服务注册接口(接受客户端注册服务)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Eureka-Server%E6%9C%8D%E5%8A%A1%E7%BB%AD%E7%BA%A6%E6%8E%A5%E5%8F%A3-%E6%8E%A5%E5%8F%97%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%AD%E7%BA%A6"><span class="toc-number">4.4.</span> <span class="toc-text">4.Eureka Server服务续约接口(接受客户端续约)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Eureka-Client%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.5.</span> <span class="toc-text">5.Eureka Client注册服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Eureka-Client%E4%B8%8B%E6%9E%B6%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.6.</span> <span class="toc-text">6. Eureka Client下架服务</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223631117_20251104103344206.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程二：零成本搭建个人图床"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床">CloudFlare系列教程二：零成本搭建个人图床</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223792489_20251104103625566.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站">CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223404333_20251104102957089.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"/></a><div class="content"><a class="title" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站">保姆级教程：从零开始，搭建一个属于你自己的AI中转站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223686134_20251104103443881.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址">CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223735785_20251104103528734.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”">CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div></div></div></main><footer id="footer" style="background-image: url(/images/background/24.webp);"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-waline-nine-rho.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('/pluginsSrc/@waline/client/dist/waline.css')
+        .then(() => import('/pluginsSrc/@waline/client/dist/waline.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="https://events.vercount.one/js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>IDEA 2025.1更新-AI助手试用和第三方模型集成方案 | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天刚把 IntelliJ IDEA 更新到了 2025.1 版本，主要是想看看这次 AI Assistant 有什么新东西。之前看到消息说功能有更新，而且似乎可以免费试用，就动手试了试，顺便把过程和一些发现记录下来，给可能需要的朋友一个参考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IDEA 2025.1更新-AI助手试用和第三方模型集成方案">
+<meta property="og:url" content="https://www.wangwangit.com/IDEA%202025.1%E6%9B%B4%E6%96%B0-AI%E5%8A%A9%E6%89%8B%E8%AF%95%E7%94%A8%E5%92%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9E%8B%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:description" content="今天刚把 IntelliJ IDEA 更新到了 2025.1 版本，主要是想看看这次 AI Assistant 有什么新东西。之前看到消息说功能有更新，而且似乎可以免费试用，就动手试了试，顺便把过程和一些发现记录下来，给可能需要的朋友一个参考。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.wangwangit.com/images/background/4.webp">
+<meta property="article:published_time" content="2025-04-17T13:25:00.000Z">
+<meta property="article:modified_time" content="2025-11-12T02:28:07.943Z">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="PDF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.wangwangit.com/images/background/4.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "IDEA 2025.1更新-AI助手试用和第三方模型集成方案",
+  "url": "https://www.wangwangit.com/IDEA%202025.1%E6%9B%B4%E6%96%B0-AI%E5%8A%A9%E6%89%8B%E8%AF%95%E7%94%A8%E5%92%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9E%8B%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88/",
+  "image": "https://www.wangwangit.com/images/background/4.webp",
+  "datePublished": "2025-04-17T13:25:00.000Z",
+  "dateModified": "2025-11-12T02:28:07.943Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "一只会飞的旺旺",
+      "url": "https://www.wangwangit.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/IDEA%202025.1%E6%9B%B4%E6%96%B0-AI%E5%8A%A9%E6%89%8B%E8%AF%95%E7%94%A8%E5%92%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9E%8B%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'IDEA 2025.1更新-AI助手试用和第三方模型集成方案',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/background/4.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a><a class="nav-page-title" href="/"><span class="site-name">IDEA 2025.1更新-AI助手试用和第三方模型集成方案</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">IDEA 2025.1更新-AI助手试用和第三方模型集成方案</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-17T13:25:00.000Z" title="发表于 2025-04-17 21:25:00">2025-04-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-12T02:28:07.943Z" title="更新于 2025-11-12 10:28:07">2025-11-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2025-11-12 10:28:07&quot;}" hidden></div><p>今天刚把 IntelliJ IDEA 更新到了 2025.1 版本，主要是想看看这次 AI Assistant 有什么新东西。之前看到消息说功能有更新，而且似乎可以免费试用，就动手试了试，顺便把过程和一些发现记录下来，给可能需要的朋友一个参考。</p>
+<p><strong>一、启用 AI Assistant 试用</strong></p>
+<p>之前的版本 AI Assistant 对国内用户不太友好，这次更新后，我发现通过调整区域设置，可以重新弹出 AI Assistant 的登录和试用选项。</p>
+<p>具体步骤是这样的：</p>
+<ol>
+<li><p><strong>确认 IDEA 版本：</strong> 确保是 2025.1 或更新版本。</p>
+</li>
+<li><p><strong>修改地区设置：</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250417203643237.png" alt="image-20250417203643237"></p>
+</li>
+<li><p><strong>重启 IDEA：</strong> 必须完全关闭 IDEA 再重新打开，让配置生效。</p>
+</li>
+<li><p><strong>检查 AI Assistant 插件：</strong></p>
+<ul>
+<li>去 <code>Settings/Preferences</code> -&gt; <code>Plugins</code> -&gt; <code>Installed</code> 确认 <code>AI Assistant</code>, <code>Junie</code>插件是启用状态。如果没有，去 <code>Marketplace</code> 搜索安装一下。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250417203601570.png" alt="image-20250417203601570"></p>
+</li>
+<li><p><strong>登录并开始试用：</strong></p>
+<ul>
+<li>重启后，IDE 右侧应该会出现 AI Assistant 的工具窗口。点击登录你的 JetBrains 账号。</li>
+<li>登录成功后，应该会看到一个 “Start Trial” 或类似的按钮，点击它就可以开始试用了。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250417204108437.png" alt="image-20250417204108437"></p>
+</li>
+</ol>
+<p><strong>注意：</strong> 这个方法本质上是开启了 JetBrains 提供的试用期。试用期有多长、结束后政策如何，目前还不确定。这更像是一个基于区域的试用策略，不保证长期有效。</p>
+<p><strong>二、新东西：Agent AI</strong></p>
+<p>这次更新除了常规的 AI 功能（代码补全、解释、生成 Commit Message 等），比较有意思的是推出了一个叫 “Agent AI” 的东西。</p>
+<p>看介绍和初步试用，它似乎不只是建议，而是可以<strong>直接参与到跨文件、更复杂的代码修改任务中</strong>。比如你可以让它分析某个方法的调用链，或者尝试进行一些重构。</p>
+<p>这个功能看起来潜力挺大，可以直接在 IDE 里处理一些稍微繁琐的任务。具体效果怎么样，还需要在实际项目中多用用看。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250417212613727.png" alt="image-20250417212613727"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250417212539428.png" alt="image-20250417212539428"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250417212553335.png" alt="image-20250417212553335"></p>
+<p><strong>三、连接本地模型（可选）</strong></p>
+<p>对于注重隐私或者想用特定模型的开发者，AI Assistant 现在也支持连接本地运行的大语言模型了。</p>
+<ol>
+<li><p><strong>本地运行模型：</strong> 如果你本地用 Ollama 或其他兼容 OpenAI API 格式的服务跑了模型（比如 Llama 3, Qwen, Gemma 等），确保服务在运行。</p>
+</li>
+<li><p><strong>配置 IDEA：</strong></p>
+<ul>
+<li>打开 <code>Settings/Preferences</code> -&gt; <code>Tools</code> -&gt; <code>AI Assistant</code> -&gt; <code>LLM Service</code>。</li>
+<li>选择 <code>Custom</code> 或 <code>Local</code> (具体选项名称可能微调)，然后填入你本地服务的地址，比如 Ollama 默认的 <code>http://localhost:11434</code>。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250417205159689.png" alt="image-20250417205159689"></p>
+</li>
+</ol>
+<p><strong>本地跑不动模型怎么办？</strong></p>
+<p>我看有人整理了一些提供免费在线 Ollama 服务的列表（比如这个：<code>https://idea.wangwangit.com/zh</code>），你可以找一个试试看，配置方法和本地一样，填入对应的服务地址就行。不过用第三方服务，数据隐私方面就需要自己衡量了。</p>
+<p><strong>ollama模型太辣鸡？</strong></p>
+<p>那就让我抛出重磅级武器吧,直接接入第三方API, 修改<strong>API_URL</strong>,<strong>API_KEY</strong>为自己的配置,在<strong>ENABLED_MODELS</strong>中添加合适的模型,然后在本地或者服务器启动这份代码! 就可以集成各种在线AI模型使用啦!</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, jsonify</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> uuid</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Dict</span>, <span class="type">Any</span></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, UTC</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置日志（更改为中文）</span></span><br><span class="line">logging.basicConfig(</span><br><span class="line">    level=logging.INFO,</span><br><span class="line">    <span class="built_in">format</span>=<span class="string">&#x27;%(asctime)s [%(levelname)s] %(message)s&#x27;</span>,</span><br><span class="line">    handlers=[logging.StreamHandler()]</span><br><span class="line">)</span><br><span class="line">logger = logging.getLogger(__name__)</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用模型配置：直接定义启用的模型名称</span></span><br><span class="line"><span class="comment"># 用户可添加/删除模型名称，动态生成元数据</span></span><br><span class="line">ENABLED_MODELS = &#123;</span><br><span class="line">    <span class="string">&quot;gemini-2.0-flash&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grok-3-beta&quot;</span>,</span><br><span class="line">    <span class="string">&quot;DeepSeek-V3&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># API 配置</span></span><br><span class="line">API_URL = <span class="string">&quot;https://xxxx/v1/chat/completions&quot;</span></span><br><span class="line"><span class="comment"># 请替换为你的 API 密钥（请勿公开分享）</span></span><br><span class="line">API_KEY = <span class="string">&quot;xxxxx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟 Ollama 聊天响应数据库</span></span><br><span class="line">OLLAMA_MOCK_RESPONSES = &#123;</span><br><span class="line">    <span class="string">&quot;What is the capital of France?&quot;</span>: <span class="string">&quot;The capital of France is Paris.&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Tell me about AI.&quot;</span>: <span class="string">&quot;AI is the simulation of human intelligence in machines, enabling tasks like reasoning and learning.&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Hello&quot;</span>: <span class="string">&quot;Hi! How can I assist you today?&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">root_endpoint</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;模拟 Ollama 根路径，返回 &#x27;Ollama is running&#x27;&quot;&quot;&quot;</span></span><br><span class="line">    logger.info(<span class="string">&quot;收到根路径请求&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Ollama is running&quot;</span>, <span class="number">200</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/api/tags&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tags_endpoint</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;模拟 Ollama 的 /api/tags 端点，动态生成启用模型列表&quot;&quot;&quot;</span></span><br><span class="line">    logger.info(<span class="string">&quot;收到 /api/tags 请求&quot;</span>)</span><br><span class="line">    models = []</span><br><span class="line">    <span class="keyword">for</span> model_name <span class="keyword">in</span> ENABLED_MODELS:</span><br><span class="line">        <span class="comment"># 推导 family：从模型名称提取前缀（如 &quot;gpt-4o&quot; -&gt; &quot;gpt&quot;）</span></span><br><span class="line">        family = model_name.split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">0</span>].lower() <span class="keyword">if</span> <span class="string">&#x27;-&#x27;</span> <span class="keyword">in</span> model_name <span class="keyword">else</span> model_name.lower()</span><br><span class="line">        <span class="comment"># 特殊处理已知模型</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;llama&#x27;</span> <span class="keyword">in</span> model_name:</span><br><span class="line">            family = <span class="string">&#x27;llama&#x27;</span></span><br><span class="line">            <span class="built_in">format</span> = <span class="string">&#x27;gguf&#x27;</span></span><br><span class="line">            size = <span class="number">1234567890</span></span><br><span class="line">            parameter_size = <span class="string">&#x27;405B&#x27;</span> <span class="keyword">if</span> <span class="string">&#x27;405b&#x27;</span> <span class="keyword">in</span> model_name <span class="keyword">else</span> <span class="string">&#x27;unknown&#x27;</span></span><br><span class="line">            quantization_level = <span class="string">&#x27;Q4_0&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="string">&#x27;mistral&#x27;</span> <span class="keyword">in</span> model_name:</span><br><span class="line">            family = <span class="string">&#x27;mistral&#x27;</span></span><br><span class="line">            <span class="built_in">format</span> = <span class="string">&#x27;gguf&#x27;</span></span><br><span class="line">            size = <span class="number">1234567890</span></span><br><span class="line">            parameter_size = <span class="string">&#x27;unknown&#x27;</span></span><br><span class="line">            quantization_level = <span class="string">&#x27;unknown&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">format</span> = <span class="string">&#x27;unknown&#x27;</span></span><br><span class="line">            size = <span class="number">9876543210</span></span><br><span class="line">            parameter_size = <span class="string">&#x27;unknown&#x27;</span></span><br><span class="line">            quantization_level = <span class="string">&#x27;unknown&#x27;</span></span><br><span class="line"></span><br><span class="line">        models.append(&#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: model_name,</span><br><span class="line">            <span class="string">&quot;model&quot;</span>: model_name,</span><br><span class="line">            <span class="string">&quot;modified_at&quot;</span>: datetime.now(UTC).strftime(<span class="string">&quot;%Y-%m-%dT%H:%M:%S.%fZ&quot;</span>),</span><br><span class="line">            <span class="string">&quot;size&quot;</span>: size,</span><br><span class="line">            <span class="string">&quot;digest&quot;</span>: <span class="built_in">str</span>(uuid.uuid4()),</span><br><span class="line">            <span class="string">&quot;details&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;parent_model&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;format&quot;</span>: <span class="built_in">format</span>,</span><br><span class="line">                <span class="string">&quot;family&quot;</span>: family,</span><br><span class="line">                <span class="string">&quot;families&quot;</span>: [family],</span><br><span class="line">                <span class="string">&quot;parameter_size&quot;</span>: parameter_size,</span><br><span class="line">                <span class="string">&quot;quantization_level&quot;</span>: quantization_level</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    logger.info(<span class="string">f&quot;返回 <span class="subst">&#123;<span class="built_in">len</span>(models)&#125;</span> 个模型: <span class="subst">&#123;[m[<span class="string">&#x27;name&#x27;</span>] <span class="keyword">for</span> m <span class="keyword">in</span> models]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;models&quot;</span>: models&#125;), <span class="number">200</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_ollama_mock_response</span>(<span class="params">prompt: <span class="built_in">str</span>, model: <span class="built_in">str</span></span>) -&gt; <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="type">Any</span>]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;生成模拟的 Ollama 聊天响应，符合 /api/chat 格式&quot;&quot;&quot;</span></span><br><span class="line">    response_content = OLLAMA_MOCK_RESPONSES.get(</span><br><span class="line">        prompt, <span class="string">f&quot;Echo: <span class="subst">&#123;prompt&#125;</span> (这是来自模拟 Ollama 服务器的响应。)&quot;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&quot;model&quot;</span>: model,</span><br><span class="line">        <span class="string">&quot;created_at&quot;</span>: datetime.now(UTC).strftime(<span class="string">&quot;%Y-%m-%dT%H:%M:%SZ&quot;</span>),</span><br><span class="line">        <span class="string">&quot;message&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>,</span><br><span class="line">            <span class="string">&quot;content&quot;</span>: response_content</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;done&quot;</span>: <span class="literal">True</span>,</span><br><span class="line">        <span class="string">&quot;total_duration&quot;</span>: <span class="number">123456789</span>,</span><br><span class="line">        <span class="string">&quot;load_duration&quot;</span>: <span class="number">1234567</span>,</span><br><span class="line">        <span class="string">&quot;prompt_eval_count&quot;</span>: <span class="number">10</span>,</span><br><span class="line">        <span class="string">&quot;prompt_eval_duration&quot;</span>: <span class="number">2345678</span>,</span><br><span class="line">        <span class="string">&quot;eval_count&quot;</span>: <span class="number">20</span>,</span><br><span class="line">        <span class="string">&quot;eval_duration&quot;</span>: <span class="number">3456789</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_api_to_ollama_response</span>(<span class="params">api_response: <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="type">Any</span>], model: <span class="built_in">str</span></span>) -&gt; <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="type">Any</span>]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;将 API 的 OpenAI 格式响应转换为 Ollama 格式&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        content = api_response[<span class="string">&quot;choices&quot;</span>][<span class="number">0</span>][<span class="string">&quot;message&quot;</span>][<span class="string">&quot;content&quot;</span>]</span><br><span class="line">        total_duration = api_response.get(<span class="string">&quot;usage&quot;</span>, &#123;&#125;).get(<span class="string">&quot;total_tokens&quot;</span>, <span class="number">30</span>) * <span class="number">1000000</span></span><br><span class="line">        prompt_tokens = api_response.get(<span class="string">&quot;usage&quot;</span>, &#123;&#125;).get(<span class="string">&quot;prompt_tokens&quot;</span>, <span class="number">10</span>)</span><br><span class="line">        completion_tokens = api_response.get(<span class="string">&quot;usage&quot;</span>, &#123;&#125;).get(<span class="string">&quot;completion_tokens&quot;</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="string">&quot;model&quot;</span>: model,</span><br><span class="line">            <span class="string">&quot;created_at&quot;</span>: datetime.now(UTC).strftime(<span class="string">&quot;%Y-%m-%dT%H:%M:%SZ&quot;</span>),</span><br><span class="line">            <span class="string">&quot;message&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>,</span><br><span class="line">                <span class="string">&quot;content&quot;</span>: content</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;done&quot;</span>: <span class="literal">True</span>,</span><br><span class="line">            <span class="string">&quot;total_duration&quot;</span>: total_duration,</span><br><span class="line">            <span class="string">&quot;load_duration&quot;</span>: <span class="number">1234567</span>,</span><br><span class="line">            <span class="string">&quot;prompt_eval_count&quot;</span>: prompt_tokens,</span><br><span class="line">            <span class="string">&quot;prompt_eval_duration&quot;</span>: prompt_tokens * <span class="number">100000</span>,</span><br><span class="line">            <span class="string">&quot;eval_count&quot;</span>: completion_tokens,</span><br><span class="line">            <span class="string">&quot;eval_duration&quot;</span>: completion_tokens * <span class="number">100000</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">except</span> KeyError <span class="keyword">as</span> e:</span><br><span class="line">        logger.error(<span class="string">f&quot;转换API响应失败: 缺少键 <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;error&quot;</span>: <span class="string">f&quot;无效的API响应格式: 缺少键 <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_request_params</span>(<span class="params">data: <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="type">Any</span>], endpoint: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;打印请求参数&quot;&quot;&quot;</span></span><br><span class="line">    model = data.get(<span class="string">&quot;model&quot;</span>, <span class="string">&quot;未指定&quot;</span>)</span><br><span class="line">    temperature = data.get(<span class="string">&quot;temperature&quot;</span>, <span class="string">&quot;未指定&quot;</span>)</span><br><span class="line">    stream = data.get(<span class="string">&quot;stream&quot;</span>, <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    messages_info = []</span><br><span class="line">    <span class="keyword">for</span> msg <span class="keyword">in</span> data.get(<span class="string">&quot;messages&quot;</span>, []):</span><br><span class="line">        role = msg.get(<span class="string">&quot;role&quot;</span>, <span class="string">&quot;未知&quot;</span>)</span><br><span class="line">        content = msg.get(<span class="string">&quot;content&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">        content_preview = content[:<span class="number">50</span>] + <span class="string">&quot;...&quot;</span> <span class="keyword">if</span> <span class="built_in">len</span>(content) &gt; <span class="number">50</span> <span class="keyword">else</span> content</span><br><span class="line">        messages_info.append(<span class="string">f&quot;[<span class="subst">&#123;role&#125;</span>] <span class="subst">&#123;content_preview&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    params_str = &#123;</span><br><span class="line">        <span class="string">&quot;端点&quot;</span>: endpoint,</span><br><span class="line">        <span class="string">&quot;模型&quot;</span>: model,</span><br><span class="line">        <span class="string">&quot;温度&quot;</span>: temperature,</span><br><span class="line">        <span class="string">&quot;流式输出&quot;</span>: stream,</span><br><span class="line">        <span class="string">&quot;消息数量&quot;</span>: <span class="built_in">len</span>(data.get(<span class="string">&quot;messages&quot;</span>, [])),</span><br><span class="line">        <span class="string">&quot;消息预览&quot;</span>: messages_info</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    logger.info(<span class="string">f&quot;请求参数: <span class="subst">&#123;json.dumps(params_str, ensure_ascii=<span class="literal">False</span>, indent=<span class="number">2</span>)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/api/chat&quot;</span>, methods=[<span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ollama_chat_endpoint</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;模拟 Ollama 的 /api/chat 端点，所有模型都能使用&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        data = request.get_json()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> data <span class="keyword">or</span> <span class="string">&quot;messages&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> data:</span><br><span class="line">            logger.error(<span class="string">&quot;无效请求: 缺少 &#x27;messages&#x27; 字段&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;无效请求: 缺少 &#x27;messages&#x27; 字段&quot;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">        messages = data.get(<span class="string">&quot;messages&quot;</span>, [])</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> messages <span class="keyword">or</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(messages, <span class="built_in">list</span>):</span><br><span class="line">            logger.error(<span class="string">&quot;无效请求: &#x27;messages&#x27; 必须是非空列表&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;无效请求: &#x27;messages&#x27; 必须是非空列表&quot;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">        model = data.get(<span class="string">&quot;model&quot;</span>, <span class="string">&quot;llama3.2&quot;</span>)</span><br><span class="line">        user_message = <span class="built_in">next</span>(</span><br><span class="line">            (msg[<span class="string">&quot;content&quot;</span>] <span class="keyword">for</span> msg <span class="keyword">in</span> <span class="built_in">reversed</span>(messages) <span class="keyword">if</span> msg.get(<span class="string">&quot;role&quot;</span>) == <span class="string">&quot;user&quot;</span>),</span><br><span class="line">            <span class="string">&quot;&quot;</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> user_message:</span><br><span class="line">            logger.error(<span class="string">&quot;未找到用户消息&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;未找到用户消息&quot;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 打印请求参数</span></span><br><span class="line">        print_request_params(data, <span class="string">&quot;/api/chat&quot;</span>)</span><br><span class="line"></span><br><span class="line">        logger.info(<span class="string">f&quot;处理 /api/chat 请求, 模型: <span class="subst">&#123;model&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 移除模型限制，所有模型都使用API</span></span><br><span class="line">        api_request = &#123;</span><br><span class="line">            <span class="string">&quot;model&quot;</span>: model,</span><br><span class="line">            <span class="string">&quot;messages&quot;</span>: messages,</span><br><span class="line">            <span class="string">&quot;stream&quot;</span>: <span class="literal">False</span>,</span><br><span class="line">            <span class="string">&quot;temperature&quot;</span>: data.get(<span class="string">&quot;temperature&quot;</span>, <span class="number">0.7</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        headers = &#123;</span><br><span class="line">            <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Authorization&quot;</span>: <span class="string">f&quot;Bearer <span class="subst">&#123;API_KEY&#125;</span>&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            logger.info(<span class="string">f&quot;转发请求到API: <span class="subst">&#123;API_URL&#125;</span>&quot;</span>)</span><br><span class="line">            response = requests.post(API_URL, json=api_request, headers=headers, timeout=<span class="number">30</span>)</span><br><span class="line">            response.raise_for_status()</span><br><span class="line">            api_response = response.json()</span><br><span class="line">            ollama_response = convert_api_to_ollama_response(api_response, model)</span><br><span class="line">            logger.info(<span class="string">f&quot;收到来自API的响应，模型: <span class="subst">&#123;model&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> jsonify(ollama_response), <span class="number">200</span></span><br><span class="line">        <span class="keyword">except</span> requests.RequestException <span class="keyword">as</span> e:</span><br><span class="line">            logger.error(<span class="string">f&quot;API请求失败: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="comment"># 如果API请求失败，使用模拟响应作为备用</span></span><br><span class="line">            logger.info(<span class="string">f&quot;使用模拟响应作为备用方案，模型: <span class="subst">&#123;model&#125;</span>&quot;</span>)</span><br><span class="line">            response = generate_ollama_mock_response(user_message, model)</span><br><span class="line">            <span class="keyword">return</span> jsonify(response), <span class="number">200</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        logger.error(<span class="string">f&quot;/api/chat 服务器错误: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">f&quot;服务器错误: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>&#125;), <span class="number">500</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/v1/chat/completions&quot;</span>, methods=[<span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">api_chat_endpoint</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;转发到API的 /v1/chat/completions 端点，并转换为 Ollama 格式&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        data = request.get_json()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> data <span class="keyword">or</span> <span class="string">&quot;messages&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> data:</span><br><span class="line">            logger.error(<span class="string">&quot;无效请求: 缺少 &#x27;messages&#x27; 字段&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;无效请求: 缺少 &#x27;messages&#x27; 字段&quot;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">        messages = data.get(<span class="string">&quot;messages&quot;</span>, [])</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> messages <span class="keyword">or</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(messages, <span class="built_in">list</span>):</span><br><span class="line">            logger.error(<span class="string">&quot;无效请求: &#x27;messages&#x27; 必须是非空列表&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;无效请求: &#x27;messages&#x27; 必须是非空列表&quot;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">        model = data.get(<span class="string">&quot;model&quot;</span>, <span class="string">&quot;grok-3&quot;</span>)</span><br><span class="line">        user_message = <span class="built_in">next</span>(</span><br><span class="line">            (msg[<span class="string">&quot;content&quot;</span>] <span class="keyword">for</span> msg <span class="keyword">in</span> <span class="built_in">reversed</span>(messages) <span class="keyword">if</span> msg.get(<span class="string">&quot;role&quot;</span>) == <span class="string">&quot;user&quot;</span>),</span><br><span class="line">            <span class="string">&quot;&quot;</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> user_message:</span><br><span class="line">            logger.error(<span class="string">&quot;未找到用户消息&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;未找到用户消息&quot;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 打印请求参数</span></span><br><span class="line">        print_request_params(data, <span class="string">&quot;/v1/chat/completions&quot;</span>)</span><br><span class="line"></span><br><span class="line">        logger.info(<span class="string">f&quot;处理 /v1/chat/completions 请求, 模型: <span class="subst">&#123;model&#125;</span>&quot;</span>)</span><br><span class="line">        headers = &#123;</span><br><span class="line">            <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Authorization&quot;</span>: <span class="string">f&quot;Bearer <span class="subst">&#123;API_KEY&#125;</span>&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            logger.info(<span class="string">f&quot;转发请求到API: <span class="subst">&#123;API_URL&#125;</span>&quot;</span>)</span><br><span class="line">            response = requests.post(API_URL, json=data, headers=headers, timeout=<span class="number">30</span>)</span><br><span class="line">            response.raise_for_status()</span><br><span class="line">            api_response = response.json()</span><br><span class="line">            ollama_response = convert_api_to_ollama_response(api_response, model)</span><br><span class="line">            logger.info(<span class="string">f&quot;收到来自API的响应，模型: <span class="subst">&#123;model&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> jsonify(ollama_response), <span class="number">200</span></span><br><span class="line">        <span class="keyword">except</span> requests.RequestException <span class="keyword">as</span> e:</span><br><span class="line">            logger.error(<span class="string">f&quot;API请求失败: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">f&quot;API请求失败: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>&#125;), <span class="number">500</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        logger.error(<span class="string">f&quot;/v1/chat/completions 服务器错误: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">f&quot;服务器错误: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>&#125;), <span class="number">500</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;启动模拟服务器&quot;&quot;&quot;</span></span><br><span class="line">    logger.info(<span class="string">&quot;正在启动模拟 Ollama 和 API 代理服务器，地址: http://localhost:11434&quot;</span>)</span><br><span class="line">    app.run(host=<span class="string">&quot;0.0.0.0&quot;</span>, port=<span class="number">11434</span>, debug=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250417232425105.png" alt="image-20250417232425105"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250417232529974.png" alt="image-20250417232529974"></p>
+<p><strong>总结</strong></p>
+<p>总的来说，IDEA 2025.1 的 AI 功能值得尝试一下，尤其是通过改区域设置就能方便地开启试用。Agent AI 是个新方向，看看后续发展如何。连接本地模型也给了大家更多选择。</p>
+<p>我就先用到这儿，算是个快速上手记录。如果你也更新了，欢迎交流使用体验，特别是 Agent AI 的实战效果。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com">一只会飞的旺旺</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com/IDEA%202025.1%E6%9B%B4%E6%96%B0-AI%E5%8A%A9%E6%89%8B%E8%AF%95%E7%94%A8%E5%92%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9E%8B%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88/">https://www.wangwangit.com/IDEA 2025.1更新-AI助手试用和第三方模型集成方案/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.wangwangit.com" target="_blank">一只会飞的旺旺</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PDF/">PDF</a></div><div class="post-share"><div class="social-share" data-image="/images/background/4.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/3%E6%AC%BE%E8%B6%85%E5%A5%BD%E7%94%A8%E7%9A%84PDF%E7%A5%9E%E5%99%A8/" title="3款超好用的PDF在线处理神器,学会了职场工作效率翻倍! 📈"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/4.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-28</div><div class="info-item-2">3款超好用的PDF在线处理神器,学会了职场工作效率翻倍! 📈</div></div><div class="info-2"><div class="info-item-1">本文推荐3个功能强大、简单易用的PDF在线处理网站,帮你轻松搞定文件合并、格式转换、压缩等需求,让你的工作学习效率嗖嗖提升!还在等什么,快来试试吧~</div></div></div></a><a class="pagination-related" href="/HTTP%E5%AD%A6%E4%B9%A0/" title="人人都能看懂的HTTP学习笔记"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/4.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-25</div><div class="info-item-2">人人都能看懂的HTTP学习笔记</div></div><div class="info-2"><div class="info-item-1">一份人人都能看懂的HTTP学习笔记,从基础概念到实际应用,通俗易懂,适合初学者和有经验的开发者。包含HTTP请求响应流程、无状态协议、Cookie等核心知识点,帮助你快速掌握HTTP的精髓。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p style="margin-bottom: 15px;">我的个人站点已整合到顶部"我的站点"菜单中，欢迎访问体验！若存在无法访问的情况，可以及时反馈！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223631117_20251104103344206.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程二：零成本搭建个人图床"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床">CloudFlare系列教程二：零成本搭建个人图床</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223792489_20251104103625566.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站">CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223404333_20251104102957089.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"/></a><div class="content"><a class="title" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站">保姆级教程：从零开始，搭建一个属于你自己的AI中转站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223686134_20251104103443881.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址">CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223735785_20251104103528734.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”">CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div></div></div></main><footer id="footer" style="background-image: url(/images/background/4.webp);"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-waline-nine-rho.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('/pluginsSrc/@waline/client/dist/waline.css')
+        .then(() => import('/pluginsSrc/@waline/client/dist/waline.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="https://events.vercount.one/js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>短信转发神器SmsForwarder | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="还在为多张SIM卡、多个手机来回切换查看消息而烦恼？SmsForwarder这款开源神器，让你一部手机掌握所有信息！详细教程，手把手教你玩转短信、来电、应用通知转发！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="短信转发神器SmsForwarder">
+<meta property="og:url" content="https://www.wangwangit.com/2025-03-23-%E7%9F%AD%E4%BF%A1%E8%BD%AC%E5%8F%91%E7%A5%9E%E5%99%A8SmsForwarder/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:description" content="还在为多张SIM卡、多个手机来回切换查看消息而烦恼？SmsForwarder这款开源神器，让你一部手机掌握所有信息！详细教程，手把手教你玩转短信、来电、应用通知转发！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.wangwangit.com/images/background/3.webp">
+<meta property="article:published_time" content="2025-03-23T03:03:00.000Z">
+<meta property="article:modified_time" content="2025-11-12T02:28:07.940Z">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="短信转发">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="效率">
+<meta property="article:tag" content="自动化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.wangwangit.com/images/background/3.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "短信转发神器SmsForwarder",
+  "url": "https://www.wangwangit.com/2025-03-23-%E7%9F%AD%E4%BF%A1%E8%BD%AC%E5%8F%91%E7%A5%9E%E5%99%A8SmsForwarder/",
+  "image": "https://www.wangwangit.com/images/background/3.webp",
+  "datePublished": "2025-03-23T03:03:00.000Z",
+  "dateModified": "2025-11-12T02:28:07.940Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "一只会飞的旺旺",
+      "url": "https://www.wangwangit.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/2025-03-23-%E7%9F%AD%E4%BF%A1%E8%BD%AC%E5%8F%91%E7%A5%9E%E5%99%A8SmsForwarder/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '短信转发神器SmsForwarder',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/background/3.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a><a class="nav-page-title" href="/"><span class="site-name">短信转发神器SmsForwarder</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">短信转发神器SmsForwarder</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-23T03:03:00.000Z" title="发表于 2025-03-23 11:03:00">2025-03-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-12T02:28:07.940Z" title="更新于 2025-11-12 10:28:07">2025-11-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/">教程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2025-11-12 10:28:07&quot;}" hidden></div><p>👋 大家好，我是你们的玩机小能手！今天给大家带来一款超级实用的开源Android应用——SmsForwarder，专治各种消息接收的疑难杂症！</p>
+<p>😩 你是不是也有这样的烦恼？</p>
+<ul>
+<li><strong>多卡用户</strong>：手里好几张SIM卡，工作一张、生活一张、流量一张……每天在多个手机间来回切换，生怕错过重要信息？</li>
+<li><strong>备用机党</strong>：主力机iPhone，备用机Android，但很多App账号都绑定在备用机号码上，收个验证码还得翻箱倒柜找手机？</li>
+<li><strong>消息强迫症</strong>：短信、来电、App通知……一个都不能少！但消息太多，又怕淹没在信息海洋里？</li>
+</ul>
+<p>如果你也有以上困扰，那么恭喜你，找到组织了！SmsForwarder就是你的救星！✨</p>
+<h2 id="SmsForwarder是什么？"><a href="#SmsForwarder是什么？" class="headerlink" title="SmsForwarder是什么？"></a>SmsForwarder是什么？</h2><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503231911512.png" alt="转发手机短信的神器 SmsForwarder 使用详解"></p>
+<p>SmsForwarder是一款开源的Android应用，它可以帮你：</p>
+<ul>
+<li><strong>监控</strong>：实时监控Android手机的短信、来电、App通知。</li>
+<li><strong>转发</strong>：根据你设定的规则，将这些信息转发到指定目标。</li>
+<li><strong>多渠道</strong>：支持钉钉、企业微信、飞书、邮箱、Bark、Webhook、Telegram、Server酱、PushPlus等多种转发渠道。</li>
+<li><strong>远程控制</strong>: 3.0以上版本, 支持远程发短信，查短信，查电话簿，查电量等.</li>
+</ul>
+<p>有了它，你就可以：</p>
+<ul>
+<li><strong>一部手机，掌握所有</strong>：无论多少张SIM卡，多少个App，所有消息都能汇聚到你的主力机上。</li>
+<li><strong>告别焦虑，不再错过</strong>：重要信息实时提醒，再也不用担心错过验证码、重要电话、紧急通知。</li>
+<li><strong>解放双手，高效便捷</strong>：无需来回切换手机，省时省力，效率翻倍！</li>
+</ul>
+<h2 id="如何安装SmsForwarder？"><a href="#如何安装SmsForwarder？" class="headerlink" title="如何安装SmsForwarder？"></a>如何安装SmsForwarder？</h2><p>SmsForwarder的安装非常简单：</p>
+<ol>
+<li><strong>下载APK</strong>：访问SmsForwarder的GitHub仓库：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pppscn/SmsForwarder">https://github.com/pppscn/SmsForwarder</a>，或者酷安等应用市场, 下载最新版本的APK文件。或者前往我的资源站:  <a target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com/">https://ali.wangwangit.com/</a> 公众号目录下下载!</li>
+<li><strong>安装APK</strong>：在Android手机上安装下载好的APK文件。如果提示“未知来源应用”，请在手机设置中允许安装。</li>
+</ol>
+<h2 id="如何配置SmsForwarder？"><a href="#如何配置SmsForwarder？" class="headerlink" title="如何配置SmsForwarder？"></a>如何配置SmsForwarder？</h2><p>安装完成后，我们需要对SmsForwarder进行一些简单的配置。</p>
+<h3 id="1-权限设置"><a href="#1-权限设置" class="headerlink" title="1. 权限设置"></a>1. 权限设置</h3><p>首次打开SmsForwarder，App会请求一些必要的权限，包括：</p>
+<ul>
+<li><strong>短信权限</strong>：用于读取和转发短信。</li>
+<li><strong>电话权限</strong>：用于读取来电信息。</li>
+<li><strong>通知访问权限</strong>：用于读取App通知。</li>
+<li><strong>后台运行权限</strong>: 为了保证软件能够稳定运行，需要允许其在后台运行，不同手机型号设置方法略有不同，具体可以参考软件内的提示或者网络搜索。</li>
+</ul>
+<p>请务必授予这些权限，否则SmsForwarder无法正常工作。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503231913160.png" alt="image-20250323191305006"></p>
+<h3 id="2-通用设置"><a href="#2-通用设置" class="headerlink" title="2. 通用设置"></a>2. 通用设置</h3><p>在SmsForwarder主界面，点击左上角的菜单按钮，进入“通用设置”。</p>
+<ul>
+<li><strong>转发短信广播</strong>：开启后，SmsForwarder会将收到的短信转发到你设定的目标。</li>
+<li><strong>转发通话状态</strong>：开启后，SmsForwarder会将未接来电、已接来电等信息转发到你设定的目标。</li>
+<li><strong>转发应用通知</strong>：开启后，SmsForwarder会将App通知转发到你设定的目标。需要手动选择要转发的应用。</li>
+</ul>
+<h3 id="3-发送通道设置"><a href="#3-发送通道设置" class="headerlink" title="3. 发送通道设置"></a>3. 发送通道设置</h3><p>SmsForwarder支持多种发送通道，你可以根据自己的需求选择合适的通道。</p>
+<ol>
+<li>点击左侧菜单栏的“发送通道”选项。</li>
+<li>点击右下角的“+”号，添加新的发送通道。</li>
+<li>选择你想要使用的发送通道，例如“邮箱”。</li>
+<li>根据提示填写相关信息，例如邮箱地址、密码、SMTP服务器等。</li>
+<li>点击“测试”按钮，测试发送通道是否配置成功。</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503231913882.png" alt="image-20250323191320710"></p>
+<p>这里我以“邮箱”为例，介绍一下如何配置：</p>
+<ul>
+<li><strong>发送方邮箱</strong>：填写你的邮箱地址。</li>
+<li><strong>接收方邮箱</strong>：填写你想要接收转发信息的邮箱地址。</li>
+<li><strong>SMTP服务器</strong>：填写你邮箱的SMTP服务器地址，例如“smtp.163.com”。</li>
+<li><strong>SMTP端口</strong>：填写你邮箱的SMTP端口，一般为25、465或587。</li>
+<li><strong>用户名</strong>：填写你的邮箱账号。</li>
+<li><strong>密码&#x2F;授权码</strong>：填写你的邮箱密码或授权码（部分邮箱需要使用授权码）。</li>
+</ul>
+<p>配置完成后，记得点击“测试”按钮，确保发送通道能够正常工作。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503231913367.png" alt="image-20250323191345317"></p>
+<h3 id="4-转发规则设置"><a href="#4-转发规则设置" class="headerlink" title="4. 转发规则设置"></a>4. 转发规则设置</h3><p>转发规则是SmsForwarder的核心功能，它可以让你根据不同的条件，将不同的信息转发到不同的目标。</p>
+<ol>
+<li>点击左侧菜单栏的“转发规则”选项。</li>
+<li>点击右下角的“+”号，添加新的转发规则。</li>
+<li>设置规则名称、匹配类型(例如: 短信、来电、APP通知)、匹配条件(例如手机号码, 短信内容)、发送通道等。</li>
+</ol>
+<p>这里我以“转发包含‘验证码’的短信到邮箱”为例，介绍一下如何配置：</p>
+<ul>
+<li><strong>规则名称</strong>：填写一个方便你识别的规则名称，例如“验证码转发”。</li>
+<li><strong>匹配类型</strong>: 选择“短信”。</li>
+<li><strong>短信内容</strong>：选择“包含”，并填写“验证码”。</li>
+<li><strong>发送通道</strong>：选择你之前配置好的邮箱发送通道。</li>
+</ul>
+<p>配置完成后，点击“保存”按钮，保存转发规则。</p>
+<p>可以根据需求设置不同的转发规则, 比如:</p>
+<ul>
+<li>将来电号码为”10086”的电话转发到钉钉<ul>
+<li>将”微信”App的通知转发到Telegram</li>
+</ul>
+</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503231914294.png" alt="image-20250323191400149"></p>
+<h3 id="5-开始使用"><a href="#5-开始使用" class="headerlink" title="5. 开始使用"></a>5. 开始使用</h3><p>配置完成后, 点击主界面的启动按钮, SmsForwarder就开始工作了! 当有满足你设置的转发规则的信息时, SmsForwarder就会自动将其转发到你指定的目标.</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503231914087.png" alt="image-20250323191422906"></p>
+<h2 id="高级玩法"><a href="#高级玩法" class="headerlink" title="高级玩法"></a>高级玩法</h2><p>除了基本的短信、来电、通知转发，SmsForwarder还有一些高级玩法：</p>
+<ul>
+<li><strong>自定义模板</strong>：你可以自定义转发消息的模板，添加来源号码、设备名称、SIM卡槽等信息。</li>
+<li><strong>正则表达式</strong>：利用正则表达式，实现更复杂的匹配规则。</li>
+<li><strong>与IFTTT结合</strong>：将SmsForwarder与IFTTT等自动化工具结合，实现更强大的自动化流程。</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
+<li><strong>隐私保护</strong>：SmsForwarder是一款开源应用，代码公开透明，不会收集你的个人信息。但为了安全起见，建议你定期检查App的权限设置，并谨慎选择转发渠道。</li>
+<li><strong>耗电问题</strong>: 默认配置下, SmsForwarder对电量的消耗很小, 如果你开启了过多的功能或者设置了过于复杂的转发规则, 可能会增加耗电量.</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>SmsForwarder是一款功能强大、配置灵活、安全可靠的Android消息转发应用，非常适合多卡用户、备用机党以及对消息管理有较高需求的用户。如果你也想告别消息焦虑，提高效率，不妨试试SmsForwarder吧！👍</p>
+<p>如果你在使用过程中遇到任何问题，欢迎在评论区留言，我会尽力解答。😊</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com">一只会飞的旺旺</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com/2025-03-23-%E7%9F%AD%E4%BF%A1%E8%BD%AC%E5%8F%91%E7%A5%9E%E5%99%A8SmsForwarder/">https://www.wangwangit.com/2025-03-23-短信转发神器SmsForwarder/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.wangwangit.com" target="_blank">一只会飞的旺旺</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%9F%AD%E4%BF%A1%E8%BD%AC%E5%8F%91/">短信转发</a><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/">教程</a><a class="post-meta__tags" href="/tags/%E6%95%88%E7%8E%87/">效率</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a></div><div class="post-share"><div class="social-share" data-image="/images/background/3.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/%E4%B8%8D%E5%AE%B9%E9%94%99%E8%BF%87%E7%9A%84%E9%98%85%E8%AF%BB%E8%BD%AF%E4%BB%B6/" title="不容错过的阅读软件"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/21.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-16</div><div class="info-item-2">不容错过的阅读软件</div></div><div class="info-2"><div class="info-item-1">在这个信息爆炸的时代，读书不仅是获取知识的途径，更是一种精神的修行。古人早已告诉我们，阅读能够磨练我们的思想，提升我们的内涵。每当我们翻开一本书，就像是打开了一个新世界的大门，让我们的心灵得到滋养，视野得以拓宽。</div></div></div></a><a class="pagination-related" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%80%EF%BC%9A%E5%B7%A7%E7%94%A8%20Workers%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%AF%8F%E6%97%A5%E4%BB%BB%E5%8A%A1%E8%87%AA%E5%8A%A8%E5%8C%96/" title="CloudFlare系列教程一：巧用 Workers，实现每日任务自动化"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1760580722483_20251016101151327.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-01</div><div class="info-item-2">CloudFlare系列教程一：巧用 Workers，实现每日任务自动化</div></div><div class="info-2"><div class="info-item-1">我手上有些服务，比如 GLaDOS之类的网站，都需要每天手动签到一下来维持活跃或获取积分。这个操作本身不复杂，但每天重复，就显得很繁琐，也容易忘记。</div></div></div></a><a class="pagination-related" href="/TinyTask%E8%A7%A3%E6%94%BE%E5%8F%8C%E6%89%8B%E8%AE%A9%E7%94%B5%E8%84%91%E8%87%AA%E5%8A%A8%E5%B7%A5%E4%BD%9C%E7%9A%84%E7%A5%9E%E5%99%A8/" title="TinyTask解放双手，让电脑自动工作的神器 🤖"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/27.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-19</div><div class="info-item-2">TinyTask解放双手，让电脑自动工作的神器 🤖</div></div><div class="info-2"><div class="info-item-1">本文详细介绍了一款极简主义的PC自动化工具TinyTask,教你如何利用它录制和回放重复性操作,大幅提升工作效率。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p style="margin-bottom: 15px;">我的个人站点已整合到顶部"我的站点"菜单中，欢迎访问体验！若存在无法访问的情况，可以及时反馈！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SmsForwarder%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">SmsForwarder是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85SmsForwarder%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">如何安装SmsForwarder？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AESmsForwarder%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">如何配置SmsForwarder？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">1. 权限设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%80%9A%E7%94%A8%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.2.</span> <span class="toc-text">2. 通用设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8F%91%E9%80%81%E9%80%9A%E9%81%93%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.3.</span> <span class="toc-text">3. 发送通道设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%BD%AC%E5%8F%91%E8%A7%84%E5%88%99%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.4.</span> <span class="toc-text">4. 转发规则设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"><span class="toc-number">3.5.</span> <span class="toc-text">5. 开始使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E7%8E%A9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">高级玩法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">5.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223631117_20251104103344206.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程二：零成本搭建个人图床"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床">CloudFlare系列教程二：零成本搭建个人图床</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223792489_20251104103625566.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站">CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223404333_20251104102957089.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"/></a><div class="content"><a class="title" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站">保姆级教程：从零开始，搭建一个属于你自己的AI中转站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223686134_20251104103443881.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址">CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223735785_20251104103528734.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”">CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div></div></div></main><footer id="footer" style="background-image: url(/images/background/3.webp);"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-waline-nine-rho.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('/pluginsSrc/@waline/client/dist/waline.css')
+        .then(() => import('/pluginsSrc/@waline/client/dist/waline.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="https://events.vercount.one/js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

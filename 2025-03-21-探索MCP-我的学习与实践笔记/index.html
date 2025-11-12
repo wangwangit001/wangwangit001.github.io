@@ -1,0 +1,696 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>探索MCP-我的学习与实践笔记 | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="你有没有想过，这些 AI 大模型是怎么跟现实世界交互的呢？比如，你怎么让 AI 帮你查天气、订机票、控制家里的智能灯泡？这时候，MCP 就派上用场啦！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="探索MCP-我的学习与实践笔记">
+<meta property="og:url" content="https://www.wangwangit.com/2025-03-21-%E6%8E%A2%E7%B4%A2MCP-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:description" content="你有没有想过，这些 AI 大模型是怎么跟现实世界交互的呢？比如，你怎么让 AI 帮你查天气、订机票、控制家里的智能灯泡？这时候，MCP 就派上用场啦！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.wangwangit.com/images/background/1.webp">
+<meta property="article:published_time" content="2025-03-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-12T02:28:07.939Z">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.wangwangit.com/images/background/1.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "探索MCP-我的学习与实践笔记",
+  "url": "https://www.wangwangit.com/2025-03-21-%E6%8E%A2%E7%B4%A2MCP-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/",
+  "image": "https://www.wangwangit.com/images/background/1.webp",
+  "datePublished": "2025-03-20T16:00:00.000Z",
+  "dateModified": "2025-11-12T02:28:07.939Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "一只会飞的旺旺",
+      "url": "https://www.wangwangit.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/2025-03-21-%E6%8E%A2%E7%B4%A2MCP-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '探索MCP-我的学习与实践笔记',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/background/1.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a><a class="nav-page-title" href="/"><span class="site-name">探索MCP-我的学习与实践笔记</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">探索MCP-我的学习与实践笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-20T16:00:00.000Z" title="发表于 2025-03-21 00:00:00">2025-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-12T02:28:07.939Z" title="更新于 2025-11-12 10:28:07">2025-11-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/">教程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2025-11-12 10:28:07&quot;}" hidden></div><p>👋 今天我们要一起探索Model Context Protocol (MCP)！你可能听说过各种 AI 大模型，比如 ChatGPT、文心一言等等，它们能聊天、写代码、甚至画画，简直无所不能！</p>
+<p>🤔 但是，你有没有想过，这些 AI 大模型是怎么跟现实世界交互的呢？比如，你怎么让 AI 帮你查天气、订机票、控制家里的智能灯泡？这时候，MCP 就派上用场啦！</p>
+<p>🌟 MCP 就像一个“万能插座”，让 AI 大模型可以安全、方便地连接各种各样的“电器”（也就是我们说的工具，比如查天气的 API、控制灯泡的程序等等）。有了 MCP，你的 AI 就能真正地“动起来”，而不仅仅是“说起来”！</p>
+<blockquote>
+<p>你是否曾梦想过，你的 AI 助手不仅能和你聊天，还能帮你完成各种实际任务？比如，当你对 AI 说“帮我预订明天早上 8 点飞往北京的航班”时，它真的能帮你订好机票，而不是仅仅回复你“好的，正在为您搜索航班信息……”？</p>
+</blockquote>
+<p>本文将带你从零开始，用 Python 搭建一个简单的 MCP 应用，让你亲身体验 AI 调用工具的魅力！</p>
+<h2 id="💡-MCP-核心概念"><a href="#💡-MCP-核心概念" class="headerlink" title="💡 MCP 核心概念"></a>💡 MCP 核心概念</h2><p>在正式开始写代码之前，我们需要先了解几个 MCP 的核心概念：</p>
+<ul>
+<li><strong>MCP (Model Context Protocol):</strong> 模型上下文协议。它不是一个具体的软件，而是一套“规则”或者“约定”。这套规则定义了 AI 模型（比如大型语言模型 LLM）如何与外部世界（各种工具、服务、数据）安全、高效地交互。你可以把它想象成一个“翻译官”，让 AI 听懂各种“方言”（不同的工具&#x2F;服务的接口），也能让各种工具&#x2F;服务听懂 AI 的“指令”。</li>
+<li><strong>核心思想:</strong> 将AI模型的功能和对接到AI模型的工具(tool),数据(resource),提示(prompt)分离开, 独立部署, 让AI可以随意连接各种工具,数据以及使用各种提示!</li>
+<li><strong>MCP 主机 (MCP Host):</strong> 运行 AI 模型和 MCP 客户端的应用程序。常见的 MCP 主机有：<ul>
+<li><strong>Claude Desktop:</strong> Anthropic 公司的桌面客户端，内置了 MCP 支持。</li>
+<li><strong>IDE 集成:</strong> 像 VS Code、Cursor 等 IDE 可以通过插件支持 MCP。</li>
+<li><strong>自定义应用:</strong> 你自己开发的任何集成了 MCP 客户端的应用程序。</li>
+</ul>
+</li>
+<li><strong>MCP 客户端 (MCP Client):</strong> 负责与 MCP 服务器通信的组件。它通常集成在 MCP 主机中。客户端的主要职责是：<ul>
+<li>发现和连接 MCP 服务器。</li>
+<li>向 MCP 服务器请求可用的工具、资源、提示等信息。</li>
+<li>根据 AI 模型的指令，调用 MCP 服务器提供的工具。</li>
+<li>将工具的执行结果返回给 AI 模型。</li>
+</ul>
+</li>
+<li><strong>MCP 服务器 (MCP Server):</strong> 提供具体功能（工具）和数据（资源）的程序。你可以把它想象成一个“技能包”，AI 模型可以通过 MCP 客户端“调用”这些技能。MCP 服务器可以：<ul>
+<li>访问本地数据（文件、数据库等）。</li>
+<li>调用远程服务（Web API 等）。</li>
+<li>执行自定义的逻辑。</li>
+</ul>
+</li>
+<li><strong>本地数据源 (Local Data Source):</strong> 位于 MCP 服务器本地的数据，如文件、数据库等。</li>
+<li><strong>远程服务 (Remote Service):</strong> MCP 服务器通过网络访问的服务，如各种 Web API。</li>
+<li><strong>资源 (Resource):</strong>  服务端提供的数据，比如天气信息、歌曲列表等等。</li>
+<li><strong>工具 (Tool):</strong>  服务端提供的功能，比如查询天气、播放音乐等等。</li>
+<li><strong>Prompt:</strong> 预设的提示, 用于引导AI输出.</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/image-20250320165955929.png" alt="image-20250320165955929"></p>
+<h2 id="🛠️-准备工作"><a href="#🛠️-准备工作" class="headerlink" title="🛠️ 准备工作"></a>🛠️ 准备工作</h2><p>在开始之前，我们需要准备一些工具：</p>
+<ol>
+<li><strong>Python 环境:</strong> 确保你已经安装了 Python 3.10 或更高版本。</li>
+<li><strong>文本编辑器:</strong> 推荐使用 VS Code，因为它有很多好用的插件，可以帮助我们更高效地编写代码。</li>
+<li><strong>终端:</strong> 在 Windows 上可以使用 PowerShell 或 CMD，在 macOS 或 Linux 上可以使用 Terminal。</li>
+<li><strong>一点点耐心和好奇心！</strong> 😉</li>
+</ol>
+<h2 id="🏗️-搭建-MCP-服务端"><a href="#🏗️-搭建-MCP-服务端" class="headerlink" title="🏗️ 搭建 MCP 服务端"></a>🏗️ 搭建 MCP 服务端</h2><p>我们的第一个任务是搭建一个 MCP 服务端。这个服务端会提供一个简单的“计算器”工具，让 AI 可以进行加法运算。下面以windows电脑为例,其他系统请参考: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://modelcontextprotocol.io/quickstart">https://modelcontextprotocol.io/quickstart</a></p>
+<ol>
+<li><p><strong>创建项目目录:</strong></p>
+<p>在powershell中执行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> mcp-demo</span><br><span class="line"><span class="built_in">cd</span> mcp-demo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>创建虚拟环境 (推荐):</strong></p>
+<p>用uv创建,更方便快捷! <strong>uv</strong> 通常指一个<strong>环境配置工具</strong>，用于简化开发环境的搭建流程。</p>
+   <figure class="highlight powershell"><figcaption><span>Windows</span></figcaption><table><tr><td class="code"><pre><span class="line">powershell <span class="literal">-ExecutionPolicy</span> ByPass <span class="literal">-c</span> <span class="string">&quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201853428.png" alt="image-20250320185339119"></p>
+<p>有的可能需要手动配置环境变量,可以参考控制台给出的提示进行配置!</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201857955.png" alt="image-20250320185700725"></p>
+<p>下面为创建目录以及激活环境,安装依赖!</p>
+   <figure class="highlight powershell"><figcaption><span>Windows</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment"># Create a new directory for our project</span></span><br><span class="line">uv init calculate</span><br><span class="line"><span class="built_in">cd</span> calculate</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create virtual environment and activate it</span></span><br><span class="line">uv venv</span><br><span class="line">.venv\Scripts\activate</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install dependencies</span></span><br><span class="line">uv add mcp[<span class="type">cli</span>] httpx</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create our server file</span></span><br><span class="line"><span class="built_in">new-item</span> calculate.py</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201858517.png" alt="image-20250320185810239"></p>
+<ol start="3">
+<li><p><strong>打开刚刚创建的目录，并编写以下代码：</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201901191.png" alt="image-20250320190113103"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mcp.server.fastmcp <span class="keyword">import</span> FastMCP</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 FastMCP 服务端实例，命名为 &quot;add-server&quot;</span></span><br><span class="line">mcp = FastMCP(<span class="string">&quot;add-server&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 @mcp.tool() 装饰器定义一个名为 &quot;add&quot; 的工具</span></span><br><span class="line"><span class="meta">@mcp.tool()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a: <span class="built_in">int</span>, b: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    计算两个整数的和。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        a: 第一个整数。</span></span><br><span class="line"><span class="string">        b: 第二个整数。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        两个整数的和。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主程序入口</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment"># 启动服务端，使用 stdio 作为传输方式</span></span><br><span class="line">    mcp.run(transport=<span class="string">&#x27;stdio&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>运行命令测试:</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mcp dev calculate.py</span><br></pre></td></tr></table></figure>
+
+<p>如果一切正常，你应该能在终端看到类似下面的输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Starting MCP inspector...</span><br><span class="line">Proxy server listening on port 3000</span><br><span class="line"></span><br><span class="line">🔍 MCP Inspector is up and running at http://localhost:5173 🚀</span><br></pre></td></tr></table></figure>
+
+<p>这表示你的 MCP 服务已经成功启动了！访问终端输出的地址,即可进行调试!</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201907740.png" alt="image-20250320190729603"></p>
+</li>
+<li><p><strong>客户端调用:</strong> </p>
+<p>我这里使用的是cursor,更多支持的客户端可以查看 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://modelcontextprotocol.io/clients">https://modelcontextprotocol.io/clients</a></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201918729.png" alt="image-20250320191812621"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201919228.png" alt="image-20250320191949133"></p>
+<p>这里的路径请调整为自己的路径,注意必须使用<strong>绝对路径</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;mcpServers&quot;: &#123;</span><br><span class="line">      &quot;add-server&quot;: &#123;</span><br><span class="line">        &quot;command&quot;: &quot;E://mcp-demo//calculate//.venv//Scripts//python.exe&quot;,</span><br><span class="line">        &quot;args&quot;: [&quot;E://mcp-demo//calculate//calculate.py&quot;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置之后,启用刚刚添加的mcp server, 对话框中选择agent,然后提问即可,<strong>注意,启用时会自动启动一个控制台,请不要关闭!</strong> 这个一旦关闭，Cursor 就检测不到你的 MCP 工具</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201921987.png" alt="image-20250320192141894"></p>
+</li>
+</ol>
+<p><strong>Cherry Studio</strong> 中进行调用本地mcp server,使用uvx始终不成功,最终使用下面方式实现! 有知道原因的可以留言指导我一下!! 参考文档:  <a target="_blank" rel="noopener external nofollow noreferrer" href="https://vaayne.com/posts/2025/how-to-use-mcp-in-cherry-studio/">https://vaayne.com/posts/2025/how-to-use-mcp-in-cherry-studio/</a></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201927620.png" alt="image-20250320192750523"></p>
+<h2 id="📱-搭建-MCP-客户端"><a href="#📱-搭建-MCP-客户端" class="headerlink" title="📱 搭建 MCP 客户端"></a>📱 搭建 MCP 客户端</h2><p>接下来，我们要搭建一个 MCP 客户端，参考代码见下面这个地址中的main.py!</p>
+<p>代码地址:  <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/modelcontextprotocol/python-sdk/tree/main/examples/clients/simple-chatbot/mcp_simple_chatbot">https://github.com/modelcontextprotocol/python-sdk/tree/main/examples/clients/simple-chatbot/mcp_simple_chatbot</a></p>
+<p>那么，这份代码是怎么把它们串起来，让 AI 帮你调用工具的呢？主要分三步：</p>
+<h3 id="1-🎁-把工具清单告诉-AI"><a href="#1-🎁-把工具清单告诉-AI" class="headerlink" title="1. 🎁 把工具清单告诉 AI"></a>1. 🎁 把工具清单告诉 AI</h3><p>首先，我们要让 AI 知道 MCP Server 都有哪些工具可用。这一步就像是给 AI 一份“工具清单”。</p>
+<p>这份代码里，有一个 <code>Tool</code> 类，专门用来描述工具的信息，包括：</p>
+<ul>
+<li><strong>name</strong>（工具名称）：比如 “image_generator”（图片生成器）</li>
+<li><strong>description</strong>（工具描述）：告诉 AI 这个工具是干嘛的，比如“根据你的描述生成一张图片”</li>
+<li><strong>input_schema</strong>（输入格式）：告诉 AI 使用这个工具需要提供哪些信息，比如“图片的描述”</li>
+</ul>
+<p>然后，<code>format_for_llm()</code> 方法会把这些信息整理成一段通俗易懂的文字，就像这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Tool: image_generator</span><br><span class="line">Description: 根据你的描述生成一张图片</span><br><span class="line">Arguments:</span><br><span class="line">- description: 你想要生成的图片是什么样的？ (required)</span><br></pre></td></tr></table></figure>
+
+<p>看到了吧？这份“工具清单”是不是很清晰？AI 一看就知 道有哪些工具可以用，以及每个工具怎么用。</p>
+<p>在 <code>ChatSession</code> 类的 <code>start</code> 方法中，程序会：</p>
+<ol>
+<li>从每个 MCP Server 获取工具列表。</li>
+<li>将所有工具的信息格式化成一段文字（<code>tools_description</code>）。</li>
+<li>把这段文字放到一个“系统提示”（<code>system_message</code>）里，告诉 AI：“你有这些工具可以用哦！”</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201940137.png" alt="image-20250320194038055"></p>
+<h3 id="2-🤔-AI-分析你的需求，决定用哪个工具"><a href="#2-🤔-AI-分析你的需求，决定用哪个工具" class="headerlink" title="2. 🤔 AI 分析你的需求，决定用哪个工具"></a>2. 🤔 AI 分析你的需求，决定用哪个工具</h3><p>现在，AI 已经知道了有哪些工具可用。接下来，当你向 AI 提问时，它就会分析你的需求，看看需不需要调用工具。</p>
+<p>比如，你问：“帮我画一张日落时海滩的图片。”</p>
+<p>AI 会想：“嗯，这个需求跟‘图片生成器’工具很匹配，我应该调用它。”</p>
+<p>但是，AI 怎么告诉程序它要调用哪个工具呢？这里有一个关键的约定：</p>
+<p><strong>AI 必须按照特定的 JSON 格式回复！</strong></p>
+<p>代码里的 <code>system_message</code> 特别强调了这一点：</p>
+<blockquote>
+<p>IMPORTANT: When you need to use a tool, you must ONLY respond with the exact JSON object format below, nothing else:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"> <span class="attr">&quot;tool&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tool-name&quot;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;arguments&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">     <span class="attr">&quot;argument-name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;value&quot;</span></span><br><span class="line"> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></blockquote>
+<p>也就是说，如果 AI 想调用“图片生成器”工具，它必须回复一段类似这样的 JSON：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;tool&quot;</span><span class="punctuation">:</span> <span class="string">&quot;image_generator&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;arguments&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;日落时海滩的图片&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>ChatSession</code> 的 <code>process_llm_response</code>方法专门处理AI的JSON回复. 检查是否包含 “tool” 和 “arguments” 键。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201941615.png" alt="image-20250320194146542"></p>
+<h3 id="3-🛠️-执行工具调用，获取结果"><a href="#3-🛠️-执行工具调用，获取结果" class="headerlink" title="3. 🛠️ 执行工具调用，获取结果"></a>3. 🛠️ 执行工具调用，获取结果</h3><p>最后一步，就是根据 AI 的指示，真正地去调用工具了。</p>
+<p><code>ChatSession</code> 类的 <code>process_llm_response</code> 方法会：</p>
+<ol>
+<li>接收到 AI 的回复。</li>
+<li>尝试把回复解析成 JSON 格式。</li>
+<li>如果解析成功，并且发现 AI 要调用工具：<ul>
+<li>找出是哪个 MCP Server 提供了这个工具。</li>
+<li>调用 <code>Server</code> 类的 <code>execute_tool</code> 方法，执行工具。</li>
+<li>把工具的执行结果返回给 AI。</li>
+</ul>
+</li>
+</ol>
+<p><code>Server</code> 类的 <code>execute_tool</code> 方法负责与 MCP Server 通信，发送工具调用请求，并获取结果。它还有重试机制，确保工具调用更可靠。</p>
+<p>最后，AI 会根据工具的返回结果，用自然语言给你一个最终的答复。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201942692.png" alt="image-20250320194216632"></p>
+<p>整个过程就像这样：</p>
+<ol>
+<li>你向 AI 提问。</li>
+<li>AI 分析你的问题，看看需不需要调用工具。</li>
+<li>如果需要，AI 会按照约定的 JSON 格式回复，告诉程序要调用哪个工具，以及参数是什么。</li>
+<li>程序解析 AI 的回复，找到对应的 MCP Server，执行工具调用。</li>
+<li>程序把工具的执行结果返回给 AI。</li>
+<li>AI 根据工具的返回结果，给你一个最终的答复。</li>
+</ol>
+<p>是不是很简单？通过这种方式，AI 就可以借助 MCP Server 的各种工具，完成更复杂的任务，变得更加强大！</p>
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201949221.png" alt="image-20250320194958122"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/202503201948804.png" alt="image-20250320194804597"></p>
+<p>启动代码通过对话就可以实现工具的调用了,然后可以自行调整上面的API调用地址和模型以及提示词进行测试,我个人测试可能还是gemini这个模型调用成功率高一些!</p>
+<h2 id="关于远程服务端部署"><a href="#关于远程服务端部署" class="headerlink" title="关于远程服务端部署"></a>关于远程服务端部署</h2><p>可以去看下Cloudflare最新发布的教程: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://developers.cloudflare.com/agents/guides/remote-mcp-server/">https://developers.cloudflare.com/agents/guides/remote-mcp-server/</a></p>
+<h2 id="✨-总结与展望"><a href="#✨-总结与展望" class="headerlink" title="✨ 总结与展望"></a>✨ 总结与展望</h2><p>通过这个简单的例子，相信你已经对 MCP 有了一个初步的了解。MCP 的强大之处在于，它可以让 AI 大模型与各种各样的工具和服务连接起来，从而实现更加复杂和强大的功能。</p>
+<ul>
+<li><strong>跨平台</strong>: MCP不仅仅支持python, 还有TS&#x2F;JS, Java等版本! 让你可以用自己最熟悉的语言进行开发!</li>
+<li><strong>安全性</strong>: MCP 服务器可以控制权限, 保证你的数据安全!</li>
+<li><strong>错误处理</strong>: 要记得在实际开发中, 对用户的输入,以及AI的返回做校验, 保证程序的稳定!</li>
+<li><strong>异步处理</strong>: MCP 支持异步操作,这对于处理耗时任务（如网络请求、数据库查询）非常重要。</li>
+</ul>
+<p>未来，你可以尝试：</p>
+<ul>
+<li><strong>添加更多工具:</strong>  比如查询天气、搜索新闻、控制智能家居等等。</li>
+<li><strong>使用不同的客户端:</strong>  比如将 MCP 集成到你的 Web 应用、手机 App 中。</li>
+<li><strong>探索更高级的 MCP 特性:</strong>  比如资源管理、Prompt 系统等等。</li>
+</ul>
+<p>MCP 的世界充满了无限可能，期待你用它创造出更多有趣、有用的 AI 应用！✨</p>
+<p>如果你在学习过程中遇到任何问题，或者有任何想法和建议，欢迎随时与我交流！😊</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>给大家推荐一些关于mcp server好用的网站!</p>
+<p><strong>教程</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://modelcontextprotocol.io/introduction">https://modelcontextprotocol.io/introduction</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://vaayne.com/posts/2025/how-to-use-mcp-in-cherry-studio/">https://vaayne.com/posts/2025/how-to-use-mcp-in-cherry-studio/</a></li>
+</ul>
+<p><strong>mcp server资源站</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/punkpeye/awesome-mcp-servers">https://github.com/punkpeye/awesome-mcp-servers</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/modelcontextprotocol/servers">https://github.com/modelcontextprotocol/servers</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://mcpservers.org/">https://mcpservers.org/</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com">一只会飞的旺旺</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com/2025-03-21-%E6%8E%A2%E7%B4%A2MCP-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/">https://www.wangwangit.com/2025-03-21-探索MCP-我的学习与实践笔记/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.wangwangit.com" target="_blank">一只会飞的旺旺</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MCP/">MCP</a><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post-share"><div class="social-share" data-image="/images/background/1.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025-03-22-%E5%85%8D%E8%B4%B9%E9%A2%86%E5%8F%96You-Pro%E4%B8%80%E5%B9%B4%E6%9C%8D%E5%8A%A1/" title="免费领取You Pro一年服务"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/2.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-22</div><div class="info-item-2">免费领取You Pro一年服务</div></div><div class="info-2"><div class="info-item-1">🤔 你是不是也对各种 AI 工具充满了好奇，想体验一下最前沿的人工智能技术？别担心，今天我就来分享一个超级福利，让你免费体验 You.com Pro 一年的高级服务！</div></div></div></a><a class="pagination-related" href="/2025-04-20-AI%E6%B5%AA%E6%BD%AE%E4%B8%8B%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97%EF%BC%9A%E5%88%AB%E8%AE%A9%E7%84%A6%E8%99%91%E6%94%B6%E5%89%B2%E4%BA%86%E4%BD%A0/" title="AI浪潮下的学习指南：别让焦虑收割了你"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/12.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-20</div><div class="info-item-2">AI浪潮下的学习指南：别让焦虑收割了你</div></div><div class="info-2"><div class="info-item-1">是不是感觉被AI的信息淹没了？打开手机，无论是公众号、短视频还是知识付费平台，都在告诉你：“再不学AI就晚了！”、“XXX职业即将消失！”、“抓住AI风口，普通人也能逆袭！”…… 看得人心惶惶，好像再不赶紧报个班、学点什么，明天就要被时代淘汰了。</div></div></div></a><a class="pagination-related" href="/AI%E4%BD%9C%E7%94%BB%E7%BD%91%E7%AB%99%E4%B8%80%E9%94%AE%E6%90%AD%E5%BB%BA%EF%BC%8C%E8%AE%A9%E6%82%A8%E7%9A%84%E5%88%9B%E6%84%8F%E6%97%A0%E9%99%90%E9%87%8A%E6%94%BE/" title="AI作画网站一键搭建，让您的创意无限释放"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/4.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-02</div><div class="info-item-2">AI作画网站一键搭建，让您的创意无限释放</div></div><div class="info-2"><div class="info-item-1">在 Colab 上一键就可以部署好，分分钟生成一大堆美女!</div></div></div></a><a class="pagination-related" href="/AI%E5%8A%A9%E6%89%8B%E6%9D%A5%E4%BA%86!JetBrains%E7%9A%84%E6%96%B0%E7%8E%A9%E6%B3%95/" title="AI 助手来了！JetBrains的新玩法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/27.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-04</div><div class="info-item-2">AI 助手来了！JetBrains的新玩法</div></div><div class="info-2"><div class="info-item-1">今天我要给大家介绍一个非常酷炫的新功能，那就是 JetBrains AI 助手。</div></div></div></a><a class="pagination-related" href="/Azure%20OpenAI%20%E7%94%B3%E8%AF%B7%E4%B8%8E%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="Azure OpenAI申请与使用详细教程"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/6.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-12</div><div class="info-item-2">Azure OpenAI申请与使用详细教程</div></div><div class="info-2"><div class="info-item-1">本教程将向您介绍如何申请和使用 Azure OpenAI 服务。我们将逐步引导您完成整个过程，包括创建 Azure 账户、设置订阅、创建资源组、创建并配置 OpenAI 服务。</div></div></div></a><a class="pagination-related" href="/ChatGPT%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" title="ChatGPT部署教程(新)及常见问题"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/20.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-23</div><div class="info-item-2">ChatGPT部署教程(新)及常见问题</div></div><div class="info-2"><div class="info-item-1">介绍了ChatGPT注册的步骤以及一些常见问题的解答!</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p style="margin-bottom: 15px;">我的个人站点已整合到顶部"我的站点"菜单中，欢迎访问体验！若存在无法访问的情况，可以及时反馈！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-MCP-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">💡 MCP 核心概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">🛠️ 准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8F%97%EF%B8%8F-%E6%90%AD%E5%BB%BA-MCP-%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-number">3.</span> <span class="toc-text">🏗️ 搭建 MCP 服务端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%B1-%E6%90%AD%E5%BB%BA-MCP-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">4.</span> <span class="toc-text">📱 搭建 MCP 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%F0%9F%8E%81-%E6%8A%8A%E5%B7%A5%E5%85%B7%E6%B8%85%E5%8D%95%E5%91%8A%E8%AF%89-AI"><span class="toc-number">4.1.</span> <span class="toc-text">1. 🎁 把工具清单告诉 AI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%F0%9F%A4%94-AI-%E5%88%86%E6%9E%90%E4%BD%A0%E7%9A%84%E9%9C%80%E6%B1%82%EF%BC%8C%E5%86%B3%E5%AE%9A%E7%94%A8%E5%93%AA%E4%B8%AA%E5%B7%A5%E5%85%B7"><span class="toc-number">4.2.</span> <span class="toc-text">2. 🤔 AI 分析你的需求，决定用哪个工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%F0%9F%9B%A0%EF%B8%8F-%E6%89%A7%E8%A1%8C%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96%E7%BB%93%E6%9E%9C"><span class="toc-number">4.3.</span> <span class="toc-text">3. 🛠️ 执行工具调用，获取结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%94%E7%A4%BA"><span class="toc-number">4.4.</span> <span class="toc-text">演示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E7%BD%B2"><span class="toc-number">5.</span> <span class="toc-text">关于远程服务端部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%A8-%E6%80%BB%E7%BB%93%E4%B8%8E%E5%B1%95%E6%9C%9B"><span class="toc-number">6.</span> <span class="toc-text">✨ 总结与展望</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">7.</span> <span class="toc-text">最后</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223631117_20251104103344206.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程二：零成本搭建个人图床"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床">CloudFlare系列教程二：零成本搭建个人图床</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223792489_20251104103625566.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站">CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223404333_20251104102957089.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"/></a><div class="content"><a class="title" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站">保姆级教程：从零开始，搭建一个属于你自己的AI中转站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223686134_20251104103443881.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址">CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223735785_20251104103528734.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”">CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div></div></div></main><footer id="footer" style="background-image: url(/images/background/1.webp);"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-waline-nine-rho.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('/pluginsSrc/@waline/client/dist/waline.css')
+        .then(() => import('/pluginsSrc/@waline/client/dist/waline.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="https://events.vercount.one/js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

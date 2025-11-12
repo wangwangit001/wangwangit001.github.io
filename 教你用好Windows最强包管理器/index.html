@@ -1,0 +1,637 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>教你用好Windows最强包管理器🚀 | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文深入介绍了Windows下的包管理器,包括官方的Winget和第三方的Scoop。通过详细的安装配置教程和使用心得,助你快速掌握这一高效工具,让开发效率倍增!🔥">
+<meta property="og:type" content="article">
+<meta property="og:title" content="教你用好Windows最强包管理器🚀">
+<meta property="og:url" content="https://www.wangwangit.com/%E6%95%99%E4%BD%A0%E7%94%A8%E5%A5%BDWindows%E6%9C%80%E5%BC%BA%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:description" content="本文深入介绍了Windows下的包管理器,包括官方的Winget和第三方的Scoop。通过详细的安装配置教程和使用心得,助你快速掌握这一高效工具,让开发效率倍增!🔥">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.wangwangit.com/images/background/5.webp">
+<meta property="article:published_time" content="2024-04-29T10:25:00.000Z">
+<meta property="article:modified_time" content="2025-11-12T02:28:07.948Z">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="包管理器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.wangwangit.com/images/background/5.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "教你用好Windows最强包管理器🚀",
+  "url": "https://www.wangwangit.com/%E6%95%99%E4%BD%A0%E7%94%A8%E5%A5%BDWindows%E6%9C%80%E5%BC%BA%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/",
+  "image": "https://www.wangwangit.com/images/background/5.webp",
+  "datePublished": "2024-04-29T10:25:00.000Z",
+  "dateModified": "2025-11-12T02:28:07.948Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "一只会飞的旺旺",
+      "url": "https://www.wangwangit.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/%E6%95%99%E4%BD%A0%E7%94%A8%E5%A5%BDWindows%E6%9C%80%E5%BC%BA%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '教你用好Windows最强包管理器🚀',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/background/5.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a><a class="nav-page-title" href="/"><span class="site-name">教你用好Windows最强包管理器🚀</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">教你用好Windows最强包管理器🚀</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-29T10:25:00.000Z" title="发表于 2024-04-29 18:25:00">2024-04-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-12T02:28:07.948Z" title="更新于 2025-11-12 10:28:07">2025-11-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/">教程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2025-11-12 10:28:07&quot;}" hidden></div><p>作为一名Windows开发者,你是否经常为频繁安装卸载软件而烦恼?是否羡慕Linux和macOS上强大的包管理系统?今天就让我来解救你于水火之中,介绍三款高效的Windows包管理神器! 🎉</p>
+<h2 id="什么是包管理器"><a href="#什么是包管理器" class="headerlink" title="什么是包管理器?"></a>什么是包管理器?</h2><p>包管理器是一种自动安装、配置、升级和卸载软件包的工具。它可以解决手动安装软件的诸多痛点:</p>
+<ul>
+<li>🔍 不用再去网上搜索软件,避免下载到假冒软件</li>
+<li>🔗 自动处理软件之间的依赖关系</li>
+<li>⏰ 批量安装多个软件,节约大量时间精力</li>
+<li>🔄 检查并安装软件更新,保持最新版本</li>
+<li>🗑️ 彻底清理软件,不留任何残留文件</li>
+</ul>
+<p>在Linux、macOS等系统中,包管理器已是标配,极大地方便了开发者。而Windows下虽然较晚引入,但近年发展迅速,已初具规模。</p>
+<h2 id="Windows包管理器概览"><a href="#Windows包管理器概览" class="headerlink" title="Windows包管理器概览"></a>Windows包管理器概览</h2><p>目前Windows上主流的包管理器有:</p>
+<ul>
+<li>🪟 Winget - 微软官方出品,集成于Windows商店</li>
+<li>🍫 Chocolatey - 最早的第三方包管理器,功能强大</li>
+<li>🧼 Scoop - 完全开源,配置灵活,个人最爱</li>
+</ul>
+<p>它们各有特色,可以相互补充。我的建议是:</p>
+<ul>
+<li>将Scoop作为主力,定制性最强</li>
+<li>用Winget作为补充,安装Scoop没有的软件</li>
+<li>暂时不推荐Chocolatey,因为我没用过!</li>
+</ul>
+<p>接下来,我会重点介绍Winget和Scoop的安装配置,让你快速上手!</p>
+<h2 id="官方出品-Winget"><a href="#官方出品-Winget" class="headerlink" title="官方出品:Winget"></a>官方出品:Winget</h2><p>Winget已预装在较新的Windows版本(<strong>Windows 10</strong> 1709 及以上版本)中。如果你的系统还没有,可以通过以下两种方式安装:</p>
+<p>官方地址: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/microsoft/winget-cli">https://github.com/microsoft/winget-cli</a></p>
+<h3 id="通过Windows商店安装-推荐"><a href="#通过Windows商店安装-推荐" class="headerlink" title="通过Windows商店安装(推荐)"></a>通过Windows商店安装(推荐)</h3><ol>
+<li>打开Microsoft Store</li>
+<li>搜索”App Installer”</li>
+<li>点击”安装”按钮</li>
+</ol>
+<p>这是最简单的安装方式,而且Winget会随商店自动更新。</p>
+<h3 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h3><p>如果你无法访问商店,也可以手动安装:</p>
+<ol>
+<li>在Winget官方仓库 (<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/microsoft/winget-cli/releases">https://github.com/microsoft/winget-cli/releases</a>) 下载安装包(.msixbundle<br>文件)</li>
+<li>在系统设置中打开”开发者模式”,允许安装任意来源应用</li>
+<li>双击.msixbundle文件进行安装</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/image-20240429180345042.png" alt="image-20240429180345042"></p>
+<p>搞定!现在你可以打开终端,输入<code>winget --version</code>验证安装成功。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/image-20240429180427989.png" alt="image-20240429180427989"></p>
+<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><ul>
+<li>显示简略帮助文档：<code>winget -?</code>（-?可选）；查看特定命令的详细帮助文档：<code>winget [&lt;命令&gt;] -?</code>，如<code>winget install -?</code></li>
+<li>显示软件详细信息：<code>winget show &lt;包名&gt;</code></li>
+<li>搜索软件：<code>winget search &lt;包名&gt;</code></li>
+<li>安装软件：<code>winget install &lt;包名&gt;</code></li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/image-20240429180827624.png" alt="image-20240429180827624"></p>
+<h3 id="使用Winget安装软件"><a href="#使用Winget安装软件" class="headerlink" title="使用Winget安装软件"></a>使用Winget安装软件</h3><p>有了Winget,安装软件就像Linux上使用apt一样简单了!</p>
+<p>比如你要安装Visual Studio Code,只需一行命令:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget install Microsoft.VisualStudioCode </span><br></pre></td></tr></table></figure>
+
+<p>如果你记不清确切的包名,可以用<code>winget search</code>命令搜索:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget search vscode </span><br></pre></td></tr></table></figure>
+
+<p>Winget会列出所有匹配的结果,你可以从中选择想要安装的版本。</p>
+<p>卸载软件也同样简单:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget uninstall vscode</span><br></pre></td></tr></table></figure>
+
+<p>软件升级更是全自动的:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget upgrade</span><br></pre></td></tr></table></figure>
+
+<p>Winget会检查所有已安装的软件,并更新到最新版本,省时省力! 👍</p>
+<h2 id="完全开源-Scoop"><a href="#完全开源-Scoop" class="headerlink" title="完全开源:Scoop"></a>完全开源:Scoop</h2><p>Scoop是一款灵活强大的开源包管理器,深受开发者喜爱。下面介绍安装和基本配置步骤。</p>
+<p>官方地址: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ScoopInstaller/Scoop">https://github.com/ScoopInstaller/Scoop</a></p>
+<h3 id="安装Scoop"><a href="#安装Scoop" class="headerlink" title="安装Scoop"></a>安装Scoop</h3><p>打开PowerShell,输入以下命令:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> get.scoop.sh | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<p>这会自动下载并安装Scoop。安装成功后,你可以输入<code>scoop help</code>查看帮助信息。</p>
+<p>若本机没有代理,可能导致安装失败,可以参考官方地址的其他解决方法!</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/image-20240429181422364.png" alt="image-20240429181422364"></p>
+<h3 id="添加Bucket"><a href="#添加Bucket" class="headerlink" title="添加Bucket"></a>添加Bucket</h3><p>Bucket是Scoop的软件仓库,里面包含了大量实用工具。除了默认的main bucket,你还可以添加extras等第三方bucket:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop bucket add extras</span><br></pre></td></tr></table></figure>
+
+<p>现在你就可以用<code>scoop search</code>命令搜索海量应用了!</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/image-20240429181440058.png" alt="image-20240429181440058"></p>
+<h3 id="配置代理"><a href="#配置代理" class="headerlink" title="配置代理"></a>配置代理</h3><p>如果你的网络环境需要代理,可以用以下命令配置Scoop的代理设置:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop config proxy localhost:<span class="number">1080</span></span><br></pre></td></tr></table></figure>
+
+<p>将代理地址换成你自己的即可。通常来说,Scoop会自动使用系统代理,这一步可以跳过。</p>
+<h3 id="更换下载位置"><a href="#更换下载位置" class="headerlink" title="更换下载位置"></a>更换下载位置</h3><p>Scoop 默认安装位置<code>C:\User\Your Username\scoop</code>，如果想要更改安装位置，比如<code>D:\Scoop</code>，可以在安装之前，先运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$env:SCOOP=&#x27;D:\Scoop&#x27;</span><br><span class="line">[Environment]::SetEnvironmentVariable(&#x27;SCOOP&#x27;, $env:SCOOP, &#x27;User&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>Scoop 会自动将<code>.\Scoop\shims</code>文件添加到系统环境变量，免去 Windows 用户自行添加的麻烦；同时在<code>.\Scoop\apps</code>存放所有已安装的软件，便于统一管理。</p>
+<h3 id="用Scoop管理开发工具"><a href="#用Scoop管理开发工具" class="headerlink" title="用Scoop管理开发工具"></a>用Scoop管理开发工具</h3><p>Scoop非常适合管理各种开发工具,下面以安装Java为例。</p>
+<p>首先搜索可用的JDK版本:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop search jdk</span><br></pre></td></tr></table></figure>
+
+<p>选择你需要的版本,比如JDK11:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop install ojdkbuild11</span><br></pre></td></tr></table></figure>
+
+<p>想要更新或切换版本?没问题!</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop update ojdkbuild11</span><br><span class="line">scoop reset ojdkbuild11</span><br></pre></td></tr></table></figure>
+
+<p><code>scoop update</code>会检查更新,<code>scoop reset</code>可以在不同版本间快速切换,测试不同JDK版本兼容性非常方便。</p>
+<p>另外,Scoop还可以创建隔离的虚拟环境,安装特定版本的工具而不影响全局</p>
+<h2 id="王牌劲旅-Chocolatey"><a href="#王牌劲旅-Chocolatey" class="headerlink" title="王牌劲旅:Chocolatey"></a>王牌劲旅:Chocolatey</h2><p>官网地址: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://chocolatey.org/install">https://chocolatey.org/install</a></p>
+<h3 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h3><p>在安装之前，必须要保证自己电脑满足以下标准：</p>
+<ul>
+<li>Windows 7+ &#x2F; Windows Server 2003+</li>
+<li>PowerShell v2+</li>
+<li>.NET Framework 4+</li>
+</ul>
+<h3 id="下载、安装及检验"><a href="#下载、安装及检验" class="headerlink" title="下载、安装及检验"></a>下载、安装及检验</h3><p>以管理员身份打开<code>PowerShell</code>，运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString(&#x27;https://community.chocolatey.org/install.ps1&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/image-20240429182133701.png" alt="image-20240429182133701"></p>
+<h3 id="基本使用-1"><a href="#基本使用-1" class="headerlink" title="基本使用"></a>基本使用</h3><p>Chocolatey 默认安装在<code>C:\ProgramData\chocolatey</code>（或者通过在 PowerShell 来输入：<code>$env:ChocolateyInstall</code>查看）。使用 Chocolatey 安装软件包的默认本地位置为<code>C:\ProgramData\chocolatey\bin</code>。</p>
+<p>以下七条命令是基本涵盖了 Chocolatey 绝大多数功能，其他进阶玩法，可以详读 <a href="https://sspai.com/link?target=https://docs.chocolatey.org/en-us/choco/commands/" rel="external nofollow noreferrer">官方文档</a>，或者<code>choco &lt;命令&gt; -？</code> 获取详细帮助信息。</p>
+<ul>
+<li>帮助：<code>choco -?</code></li>
+<li>搜索：<code>choco search &lt;包名&gt;</code></li>
+<li>安装：<code>choco install &lt;包名&gt;</code></li>
+<li>卸载：<code>choco uninstall &lt;包名&gt;</code></li>
+<li>升级：<code>choco upgrade &lt;包名&gt;</code></li>
+<li>显示详细信息：<code>choco info &lt;包名&gt;</code></li>
+<li>有可用更新：<code>choco oudated</code></li>
+</ul>
+<p>下面的 GI F以<code>Pandoc</code>为例演示了Chocolatey 从软件的搜索、显示详情信息、下载安装到卸载的全流程。看完之后你一定更加会惊叹包管理器的简便和易用了。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img/92a2d76bd07aeeb9701c350ee732ce57" alt="img"></p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>通过使用Windows的包管理器，你可以大幅提升你的软件管理效率，节省宝贵的时间。现在就开始你的包管理器之旅吧，享受更加轻松的软件管理体验！😊下一期我们将介绍一款管理包管理器的图形化界面,让大家使用更加方便!</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com">一只会飞的旺旺</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com/%E6%95%99%E4%BD%A0%E7%94%A8%E5%A5%BDWindows%E6%9C%80%E5%BC%BA%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/">https://www.wangwangit.com/教你用好Windows最强包管理器/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.wangwangit.com" target="_blank">一只会飞的旺旺</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Windows/">Windows</a><a class="post-meta__tags" href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/">包管理器</a></div><div class="post-share"><div class="social-share" data-image="/images/background/5.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025-03-19-frpmgr-Windows%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E7%A5%9E%E5%99%A8/" title="【小白福音】frpmgr：Windows内网穿透神器，告别繁琐配置！"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/22.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-19</div><div class="info-item-2">【小白福音】frpmgr：Windows内网穿透神器，告别繁琐配置！</div></div><div class="info-2"><div class="info-item-1">还在为frp的命令行配置头疼？frpmgr图形化界面，让内网穿透变得如此简单！本文带你一步步掌握frpmgr的使用，轻松实现远程访问、网站发布等需求。</div></div></div></a><a class="pagination-related" href="/2025-04-16-Scoop%E4%BD%A0%E7%9A%84Windows%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86%E7%A5%9E%E5%99%A8/" title="告别混乱与重装烦恼：Scoop，你的 Windows 软件管理神器！"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/14.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-16</div><div class="info-item-2">告别混乱与重装烦恼：Scoop，你的 Windows 软件管理神器！</div></div><div class="info-2"><div class="info-item-1">还记得吗？每次重装 Windows 系统后，那令人头秃的软件安装环节么?</div></div></div></a><a class="pagination-related" href="/Kasm-Workspaces%E4%BA%91%E7%AB%AF%E5%B7%A5%E4%BD%9C%E7%9A%84%E9%9D%A9%E5%91%BD/" title="Kasm Workspaces：云端工作的革命 🌟"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/19.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-13</div><div class="info-item-2">Kasm Workspaces：云端工作的革命 🌟</div></div><div class="info-2"><div class="info-item-1">Kasm Workspaces是一款强大的开源容器流平台，它能够将云桌面、Web隔离以及OSINT工作负载直接交付到您的Web浏览器中。这意味着您可以通过任何地点的浏览器安全地访问您的工作环境，包括各种应用程序和桌面。🌍</div></div></div></a><a class="pagination-related" href="/WSL2%E4%B8%8A%E5%90%AF%E7%94%A8systemd/" title="WSL2上启用官方systemd"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/25.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-28</div><div class="info-item-2">WSL2上启用官方systemd</div></div><div class="info-2"><div class="info-item-1">微软和Canonical联合声明发布了官方支持的systemd,在安装体验后，个人感觉官方支持的systemd确实比上述两个开源项目体验更佳。很值得有需要在wsl环境中运行docker、nginx、mysql等后台服务的小伙伴来尝鲜。</div></div></div></a><a class="pagination-related" href="/WSL%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97-%E4%BB%8E%E5%AE%89%E8%A3%85%E5%88%B0%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8,%E8%AE%A9%E4%BD%A0%E7%9A%84Windows%E5%A6%82%E8%99%8E%E6%B7%BB%E7%BF%BC/" title="在Windows上畅享Linux开发体验,WSL让你事半功倍 🚀"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/21.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-16</div><div class="info-item-2">在Windows上畅享Linux开发体验,WSL让你事半功倍 🚀</div></div><div class="info-2"><div class="info-item-1">本文详细介绍了WSL的安装方法、常用命令和迁移技巧,是一份全面的WSL入门到进阶指南。通过WSL,你可以在Windows上获得原生Linux开发环境,让开发更高效。文章步骤详细,案例丰富,无论你是小白还是开发者,都能从中受益。快来一起玩转WSL吧!</div></div></div></a><a class="pagination-related" href="/Windows-Copilot%E6%8A%A2%E5%85%88%E4%BD%93%E9%AA%8C/" title="Windows Copilot抢先体验"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/25.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-30</div><div class="info-item-2">Windows Copilot抢先体验</div></div><div class="info-2"><div class="info-item-1">Windows Copilot，一个基于微软Edge浏览器和Bing搜索引擎的智能助手，可以帮助用户更高效地使用Windows 11。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p style="margin-bottom: 15px;">我的个人站点已整合到顶部"我的站点"菜单中，欢迎访问体验！若存在无法访问的情况，可以及时反馈！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">什么是包管理器?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E6%A6%82%E8%A7%88"><span class="toc-number">2.</span> <span class="toc-text">Windows包管理器概览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E5%87%BA%E5%93%81-Winget"><span class="toc-number">3.</span> <span class="toc-text">官方出品:Winget</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87Windows%E5%95%86%E5%BA%97%E5%AE%89%E8%A3%85-%E6%8E%A8%E8%8D%90"><span class="toc-number">3.1.</span> <span class="toc-text">通过Windows商店安装(推荐)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="toc-number">3.2.</span> <span class="toc-text">手动安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Winget%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="toc-number">3.4.</span> <span class="toc-text">使用Winget安装软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E5%85%A8%E5%BC%80%E6%BA%90-Scoop"><span class="toc-number">4.</span> <span class="toc-text">完全开源:Scoop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Scoop"><span class="toc-number">4.1.</span> <span class="toc-text">安装Scoop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0Bucket"><span class="toc-number">4.2.</span> <span class="toc-text">添加Bucket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86"><span class="toc-number">4.3.</span> <span class="toc-text">配置代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E4%B8%8B%E8%BD%BD%E4%BD%8D%E7%BD%AE"><span class="toc-number">4.4.</span> <span class="toc-text">更换下载位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8Scoop%E7%AE%A1%E7%90%86%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">4.5.</span> <span class="toc-text">用Scoop管理开发工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%8B%E7%89%8C%E5%8A%B2%E6%97%85-Chocolatey"><span class="toc-number">5.</span> <span class="toc-text">王牌劲旅:Chocolatey</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E6%8F%90"><span class="toc-number">5.1.</span> <span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E3%80%81%E5%AE%89%E8%A3%85%E5%8F%8A%E6%A3%80%E9%AA%8C"><span class="toc-number">5.2.</span> <span class="toc-text">下载、安装及检验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-1"><span class="toc-number">5.3.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">5.4.</span> <span class="toc-text">结语</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223631117_20251104103344206.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程二：零成本搭建个人图床"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床">CloudFlare系列教程二：零成本搭建个人图床</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223792489_20251104103625566.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站">CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223404333_20251104102957089.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"/></a><div class="content"><a class="title" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站">保姆级教程：从零开始，搭建一个属于你自己的AI中转站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223686134_20251104103443881.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址">CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223735785_20251104103528734.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”">CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div></div></div></main><footer id="footer" style="background-image: url(/images/background/5.webp);"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-waline-nine-rho.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('/pluginsSrc/@waline/client/dist/waline.css')
+        .then(() => import('/pluginsSrc/@waline/client/dist/waline.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="https://events.vercount.one/js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

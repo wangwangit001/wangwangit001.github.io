@@ -1,0 +1,1295 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>人人都能看懂的HTTP学习笔记 | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一份人人都能看懂的HTTP学习笔记,从基础概念到实际应用,通俗易懂,适合初学者和有经验的开发者。包含HTTP请求响应流程、无状态协议、Cookie等核心知识点,帮助你快速掌握HTTP的精髓。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="人人都能看懂的HTTP学习笔记">
+<meta property="og:url" content="https://www.wangwangit.com/HTTP%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:description" content="一份人人都能看懂的HTTP学习笔记,从基础概念到实际应用,通俗易懂,适合初学者和有经验的开发者。包含HTTP请求响应流程、无状态协议、Cookie等核心知识点,帮助你快速掌握HTTP的精髓。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.wangwangit.com/images/background/4.webp">
+<meta property="article:published_time" content="2025-07-25T09:25:00.000Z">
+<meta property="article:modified_time" content="2025-11-12T02:28:07.943Z">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="PDF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.wangwangit.com/images/background/4.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "人人都能看懂的HTTP学习笔记",
+  "url": "https://www.wangwangit.com/HTTP%E5%AD%A6%E4%B9%A0/",
+  "image": "https://www.wangwangit.com/images/background/4.webp",
+  "datePublished": "2025-07-25T09:25:00.000Z",
+  "dateModified": "2025-11-12T02:28:07.943Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "一只会飞的旺旺",
+      "url": "https://www.wangwangit.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/HTTP%E5%AD%A6%E4%B9%A0/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '人人都能看懂的HTTP学习笔记',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/background/4.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a><a class="nav-page-title" href="/"><span class="site-name">人人都能看懂的HTTP学习笔记</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">人人都能看懂的HTTP学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-25T09:25:00.000Z" title="发表于 2025-07-25 17:25:00">2025-07-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-12T02:28:07.943Z" title="更新于 2025-11-12 10:28:07">2025-11-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">27.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>98分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2025-11-12 10:28:07&quot;}" hidden></div><h2 id="HTTP的基本概念"><a href="#HTTP的基本概念" class="headerlink" title="HTTP的基本概念"></a>HTTP的基本概念</h2><h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">  %% 配色和样式</span><br><span class="line">  classDef title fill:#6366f1,stroke:#1e3a8a,color:#fff,stroke-width:2px;</span><br><span class="line">  classDef group fill:#c7d2fe,stroke:#4f46e5,stroke-width:1px;</span><br><span class="line">  classDef detail fill:#eff6ff,stroke:#60a5fa,stroke-width:1px,color:#111827;</span><br><span class="line"></span><br><span class="line">  %% 节点定义</span><br><span class="line">  A[&quot;📘 章1: Web与网络基础&quot;]:::title</span><br><span class="line"></span><br><span class="line">  A --&gt; B[&quot;🧱 网络基石：TCP/IP 协议族&quot;]:::group</span><br><span class="line">  B --&gt; B1[&quot;📐 分层管理&quot;]:::group</span><br><span class="line">  B1 --&gt; B1a[&quot;🌐 应用层 (HTTP, DNS, FTP...)&quot;]:::detail</span><br><span class="line">  B1 --&gt; B1b[&quot;📦 传输层 (TCP, UDP)&quot;]:::detail</span><br><span class="line">  B1 --&gt; B1c[&quot;🛰️ 网络层 (IP, ARP)&quot;]:::detail</span><br><span class="line">  B1 --&gt; B1d[&quot;🧩 链路层 (驱动, 网卡)&quot;]:::detail</span><br><span class="line">  B --&gt; B2[&quot;🔁 通信流程&quot;]:::group</span><br><span class="line">  B2 --&gt; B2a[&quot;📤 封装（从上到下加头）&quot;]:::detail</span><br><span class="line">  B2 --&gt; B2b[&quot;📥 解封装（从下到上拆头）&quot;]:::detail</span><br><span class="line"></span><br><span class="line">  A --&gt; C[&quot;🤝 HTTP 的三大协作伙伴&quot;]:::group</span><br><span class="line">  C --&gt; C1[&quot;📍 IP：负责寻址和路由&quot;]:::detail</span><br><span class="line">  C --&gt; C2[&quot;🔐 TCP：可靠传输（三次握手）&quot;]:::detail</span><br><span class="line">  C --&gt; C3[&quot;🔎 DNS：域名到 IP 的解析&quot;]:::detail</span><br><span class="line"></span><br><span class="line">  A --&gt; D[&quot;🗺️ Web 资源定位&quot;]:::group</span><br><span class="line">  D --&gt; D1[&quot;🆔 URI vs URL&quot;]:::group</span><br><span class="line">  D1 --&gt; D1a[&quot;📎 URI（标识符）是父集&quot;]:::detail</span><br><span class="line">  D1 --&gt; D1b[&quot;📍 URL（定位符）是子集&quot;]:::detail</span><br><span class="line">  D --&gt; D2[&quot;📑 URL 格式&quot;]:::group</span><br><span class="line">  D2 --&gt; D2a[&quot;scheme://user:pass@host:port/path?query#fragment&quot;]:::detail</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP请求-响应流程图"><a href="#HTTP请求-响应流程图" class="headerlink" title="HTTP请求-响应流程图"></a>HTTP请求-响应流程图</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant User as 👤 用户</span><br><span class="line">    participant Browser as 🧭 浏览器 (客户端)</span><br><span class="line">    participant DNS as 🌐 DNS服务器</span><br><span class="line">    participant Server as 🖥️ 服务器</span><br><span class="line"></span><br><span class="line">    User-&gt;&gt;Browser: 输入 www.example.com&lt;br&gt;并回车</span><br><span class="line">    Browser-&gt;&gt;DNS: 查询域名 IP</span><br><span class="line">    DNS--&gt;&gt;Browser: 返回 IP 地址</span><br><span class="line">    Browser-&gt;&gt;Server: 建立TCP连接</span><br><span class="line">    Browser-&gt;&gt;Server: 发送 HTTP 请求&lt;br&gt;(GET / HTTP/1.1)</span><br><span class="line">    Note over Server: 服务器处理请求，查找资源</span><br><span class="line">    Server--&gt;&gt;Browser: 返回 HTTP 响应&lt;br&gt;(200 OK, HTML)</span><br><span class="line">    Browser-&gt;&gt;User: 解析 HTML&lt;br&gt;渲染页面并显示</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="生活案例"><a href="#生活案例" class="headerlink" title="生活案例"></a>生活案例</h3><p>把HTTP通信想象成你去一家图书馆借书。</p>
+<ul>
+<li><strong>你（客户端）</strong> 想借一本书（资源）。</li>
+<li>你知道书的准确位置（URL），比如“三楼社科区A-18架第3排”。</li>
+<li>你填写一张借书单（<strong>HTTP请求</strong>）并交给图书管理员（<strong>服务器</strong>）。</li>
+<li>图书管理员根据单子找到书，连同借阅凭证一起给你（<strong>HTTP响应</strong>）。</li>
+<li>如果书不在或者你没借书证，他会告诉你“没找到”（404）或“请出示证件”（401）。</li>
+</ul>
+<h3 id="真实案例"><a href="#真实案例" class="headerlink" title="真实案例"></a>真实案例</h3><p>在一个电商网站中，当你点击“我的订单”时：</p>
+<ol>
+<li>你的浏览器（前端应用，如Vue&#x2F;React）会发起一个HTTP GET 请求，URL可能是 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://api.ecommerce.com/orders?user_id=123%E3%80%82">https://api.ecommerce.com/orders?user_id=123。</a></li>
+<li>这个请求通过互联网发送到电商的后端API服务器。</li>
+<li>服务器验证你的身份，然后去数据库查询用户123的所有订单信息。</li>
+<li>服务器将订单信息打包成一个JSON格式的字符串，放入HTTP响应体中，并返回给你的浏览器。</li>
+<li>浏览器接收到JSON数据后，动态地将订单列表渲染到页面上。</li>
+</ol>
+<p>在这个案例中，HTTP扮演了前后端数据通信的“信使”角色。</p>
+<h3 id="经典问题"><a href="#经典问题" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>问题: 当你在浏览器地址栏里输入一个URL，然后按下回车，直到你看到页面，这中间发生了什么？</p>
+</blockquote>
+<p><strong>1. 应用层 - URL解析与HTTP请求构建：</strong></p>
+<ul>
+<li>浏览器首先会解析我输入的URL，识别出协议（HTTP&#x2F;HTTPS）、域名、端口、路径等信息。</li>
+<li>它会构建一个HTTP请求报文，最核心的是请求行，比如 GET &#x2F;index.html HTTP&#x2F;1.1，以及包含Host在内的各种请求头。</li>
+</ul>
+<p><strong>2. 应用层 - DNS解析：</strong></p>
+<ul>
+<li>浏览器需要将URL中的域名（比如 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.example.com)解析成服务器的ip地址./">www.example.com）解析成服务器的IP地址。</a></li>
+<li>它会依次查询：浏览器缓存 -&gt; 操作系统缓存 -&gt; 本地Hosts文件 -&gt; 本地DNS服务器。如果都找不到，本地DNS服务器会向根DNS服务器发起递归查询，最终找到目标IP地址。</li>
+</ul>
+<p><strong>3. 传输层 - TCP连接（三次握手）：</strong></p>
+<ul>
+<li>知道了服务器IP和端口（HTTP默认80，HTTPS默认443）后，浏览器会通过TCP协议与服务器建立连接。</li>
+<li>这个过程就是著名的“三次握手”：客户端发送SYN包，服务器回复SYN+ACK包，客户端再回复ACK包，连接建立。如果是HTTPS，这里还会进行TLS握手。</li>
+</ul>
+<p><strong>4. 网络层 - IP寻址与路由：</strong></p>
+<ul>
+<li>TCP将HTTP请求报文分割成TCP报文段，并打包成IP数据包。通过IP寻址和路由器一跳一跳的转发，最终将数据包发送到目标服务器。</li>
+</ul>
+<p><strong>5. 服务器处理请求：</strong></p>
+<ul>
+<li>服务器接收到请求后，Web服务器（如Nginx）会进行处理，可能会将请求转发给后端的业务逻辑（如Node.js, Tomcat）。</li>
+<li>后端应用处理请求，可能涉及数据库查询等操作，然后生成一个HTTP响应报文。</li>
+</ul>
+<p><strong>6. 返回响应与浏览器渲染：</strong></p>
+<ul>
+<li>服务器将HTTP响应报文（包含状态码200 OK和HTML页面内容）通过TCP连接发回给浏览器。</li>
+<li>浏览器接收到响应后，开始解析HTML，构建DOM树。同时，如果HTML中包含CSS、JavaScript、图片等外部资源，浏览器会重复上述过程为每个资源发起新的HTTP请求。</li>
+<li>最终，浏览器将DOM树、CSSOM树结合，进行布局（Layout）和绘制（Paint），将完整的页面呈现给我。</li>
+</ul>
+<p><strong>7. 连接关闭（四次挥手）：</strong></p>
+<ul>
+<li>在HTTP&#x2F;1.1的持久连接下，TCP连接可能不会立即关闭，以便复用。但最终会通过“四次挥手”来断开连接。</li>
+</ul>
+<h3 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h3><h4 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h4><ul>
+<li>流程中的位置：DNS解析阶段</li>
+</ul>
+<ul>
+<li><strong>核心概念：</strong> CDN（Content Delivery Network，内容分发网络）本质上是一个<strong>分布式的缓存系统</strong>。它将网站的静态资源（如图片、CSS、JavaScript文件，甚至部分动态内容）缓存到全球各地、靠近用户的“边缘节点”（Edge Node）上。</li>
+<li><strong>解决的问题：</strong> <strong>物理延迟</strong>。如果你的服务器在纽约，上海的用户访问它，数据来回需要跨越太平洋，光速的限制是无法逾越的。CDN通过让用户访问离他最近的节点来获取资源，极大地缩短了物理距离，从而降低延迟。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant User as 👤 用户&lt;br&gt;(上海)</span><br><span class="line">    participant SmartDNS as 🌐 智能DNS&lt;br&gt;(CDN)</span><br><span class="line">    participant CdnNode as 🏢 CDN边缘节点&lt;br&gt;(香港)</span><br><span class="line">    participant OriginServer as 🖥️ 源服务器&lt;br&gt;(纽约)</span><br><span class="line"></span><br><span class="line">    User-&gt;&gt;SmartDNS: DNS查询&lt;br&gt;www.example.com</span><br><span class="line">    Note over SmartDNS: 检测到用户来自上海&lt;br&gt;（基于IP地理定位）</span><br><span class="line">    SmartDNS--&gt;&gt;User: 返回IP&lt;br&gt;香港CDN节点IP地址</span><br><span class="line"></span><br><span class="line">    User-&gt;&gt;CdnNode: HTTP请求&lt;br&gt;访问资源</span><br><span class="line">    alt 缓存命中 (Cache Hit)</span><br><span class="line">        CdnNode--&gt;&gt;User: 直接返回&lt;br&gt;缓存资源</span><br><span class="line">    else 缓存未命中 (Cache Miss)</span><br><span class="line">        CdnNode-&gt;&gt;OriginServer: 回源请求资源</span><br><span class="line">        OriginServer--&gt;&gt;CdnNode: 返回资源</span><br><span class="line">        Note over CdnNode: 缓存资源&lt;br&gt;并返回给用户</span><br><span class="line">        CdnNode--&gt;&gt;User: 返回资源</span><br><span class="line">    end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><ul>
+<li>流程中的位置：TCP连接建立阶段</li>
+</ul>
+<ul>
+<li><strong>核心概念：</strong> 负载均衡器是服务器集群的“交通警察”。当大量请求涌入时，它会将这些请求根据预设的策略（如轮询、最少连接数、IP哈希）分发到后方的多台Web服务器上。</li>
+<li><strong>解决的问题：</strong> <strong>单点瓶颈和可扩展性</strong>。单个服务器的处理能力是有限的，无法应对高并发场景。负载均衡能将压力均分，使得系统可以通过简单地增加服务器数量（水平扩展）来提升整体处理能力。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    %% 样式定义</span><br><span class="line">    classDef req fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#b91c1c;</span><br><span class="line">    classDef lb fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#a16207;</span><br><span class="line">    classDef server fill:#e0f2fe,stroke:#2563eb,stroke-width:2px,color:#0c4a6e;</span><br><span class="line">    classDef serverN fill:#f3f4f6,stroke:#9ca3af,stroke-dasharray:5 3,color:#6b7280;</span><br><span class="line"></span><br><span class="line">    %% 节点定义</span><br><span class="line">    Request(&quot;🌐 来自CDN/用户的&lt;br&gt;HTTP请求&quot;):::req</span><br><span class="line">    LB(&quot;🎛️ 负载均衡器&quot;):::lb</span><br><span class="line">    Server1(&quot;🖥️ Web服务器 1&quot;):::server</span><br><span class="line">    Server2(&quot;🖥️ Web服务器 2&quot;):::server</span><br><span class="line">    Server3(&quot;🖥️ Web服务器 3&quot;):::server</span><br><span class="line">    ServerN(&quot;🖥️ Web服务器 N&quot;):::serverN</span><br><span class="line"></span><br><span class="line">    %% 分组</span><br><span class="line">    subgraph 数据中心</span><br><span class="line">        LB</span><br><span class="line">        Server1</span><br><span class="line">        Server2</span><br><span class="line">        Server3</span><br><span class="line">        ServerN</span><br><span class="line">        LB --&gt;|分发策略| Server1</span><br><span class="line">        LB --&gt;|分发策略| Server2</span><br><span class="line">        LB --&gt;|分发策略| Server3</span><br><span class="line">        LB --&gt;|分发策略| ServerN</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Request --&gt; LB</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP-2多路复用"><a href="#HTTP-2多路复用" class="headerlink" title="HTTP&#x2F;2多路复用"></a>HTTP&#x2F;2多路复用</h3><ul>
+<li>流程中的位置：浏览器获取页面资源阶段</li>
+<li><strong>核心概念：</strong> HTTP&#x2F;1.1存在“队头阻塞”（Head-of-Line Blocking）问题。虽然浏览器可以开多个TCP连接（通常6-8个），但每个连接同一时间只能处理一个请求-响应。而HTTP&#x2F;2的<strong>多路复用</strong>（Multiplexing）允许在<strong>单个TCP连接</strong>上同时发送和接收多个请求和响应，它们被分解成更小的帧，可以并行、交错地传输。</li>
+<li><strong>解决的问题：</strong> <strong>网络传输效率</strong>。它消除了队头阻塞，减少了TCP连接建立的开销，使得页面资源加载速度更快。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    %% 样式</span><br><span class="line">    classDef http1 fill:#fee2e2,stroke:#ef4444,color:#b91c1c,stroke-width:2px;</span><br><span class="line">    classDef http2 fill:#d1fae5,stroke:#10b981,color:#065f46,stroke-width:2px;</span><br><span class="line">    classDef req fill:#fef9c3,stroke:#eab308,color:#b45309;</span><br><span class="line">    classDef stream fill:#e0e7ff,stroke:#6366f1,color:#312e81;</span><br><span class="line">    classDef compare fill:#f3f4f6,stroke:#a3a3a3,color:#111827,stroke-dasharray:5 3;</span><br><span class="line">    </span><br><span class="line">    %% HTTP/1.1</span><br><span class="line">    subgraph HTTP1[&quot;🌐 HTTP/1.1 (多连接, 队头阻塞)&quot;]</span><br><span class="line">        direction LR</span><br><span class="line">        TCP1(&quot;🔗 TCP连接1&quot;):::http1 --&gt; R1(&quot;📄 请求1&quot;):::req --&gt; R2(&quot;📄 请求2&quot;):::req</span><br><span class="line">        TCP2(&quot;🔗 TCP连接2&quot;):::http1 --&gt; R3(&quot;📄 请求3&quot;):::req --&gt; R4(&quot;📄 请求4&quot;):::req</span><br><span class="line">        TCP3(&quot;🔗 TCP连接3&quot;):::http1 --&gt; R5(&quot;📄 请求5&quot;):::req --&gt; R6(&quot;📄 请求6&quot;):::req</span><br><span class="line">        classDef HTTP1 fill:#fee2e2,stroke:#ef4444,stroke-width:2px;</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    %% HTTP/2</span><br><span class="line">    subgraph HTTP2[&quot;🚀 HTTP/2 (单连接, 多路复用)&quot;]</span><br><span class="line">        direction LR</span><br><span class="line">        subgraph &quot;🔗 一个TCP连接&quot;</span><br><span class="line">            direction TB</span><br><span class="line">            S1(&quot;🔀 流1: 请求HTML&quot;):::stream</span><br><span class="line">            S2(&quot;🔀 流2: 请求CSS&quot;):::stream</span><br><span class="line">            S3(&quot;🔀 流3: 请求JS&quot;):::stream</span><br><span class="line">            S4(&quot;🔀 流4: 请求Img1&quot;):::stream</span><br><span class="line">            S1 &lt;--&gt; S2</span><br><span class="line">            S2 &lt;--&gt; S3</span><br><span class="line">            S3 &lt;--&gt; S4</span><br><span class="line">        end</span><br><span class="line">        classDef HTTP2 fill:#d1fae5,stroke:#10b981,stroke-width:2px;</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    HTTP1 -- &quot;🆚对比&quot; compare --&gt; HTTP2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h2><p>“无状态”是HTTP协议最根本的设计哲学之一。理解它，是理解为何需要Cookie、Session、Token等会话管理技术的起点。这是架构设计和面试中的高频话题。</p>
+<p>在现代的分布式、微服务架构和云原生环境下，服务的“无状态性”变得前所未有的重要。因为一个无状态的服务可以被轻易地水平扩展（简单地增加服务器实例），也可以被负载均衡器自由地调度到任何一台机器上，而无需担心会话数据丢失。<strong>将“无状态”与“可伸缩性(Scalability)”强关联，是现代架构师的必备思维。</strong></p>
+<ul>
+<li><strong>Cookie-Session 时代：</strong> Cookie只在客户端存储一个无意义的session_id，所有用户的具体状态数据（如购物车、登录信息）都保存在<strong>服务器端的内存或数据库</strong>中。</li>
+<li><strong>Token-Based (JWT) 时代：</strong> 为了让后端服务也“无状态”，我们不再在服务器端存储会话数据。取而代之的是，服务器在用户认证成功后，生成一个加密的、包含用户信息的<strong>Token (如JWT)</strong>，并将其发送给客户端。客户端在后续请求中携带这个Token，服务器只需验证Token的合法性即可，无需查询自己的“会话存储”。这使得后端服务可以无限水平扩展。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2025/07/11/ZjEnYaINp3Rv7bs.png" alt="http"></p>
+<h3 id="生活案例-1"><a href="#生活案例-1" class="headerlink" title="生活案例"></a>生活案例</h3><ul>
+<li><strong>无状态协议</strong>就像是与一个记忆力很差的<strong>自动售货机</strong>打交道。你每次投币买东西，它都会给你对应的商品，但它完全不记得你之前买过什么。如果你想连续买两瓶可乐，你必须完整地做两次“投币-按按钮”的操作。</li>
+<li><strong>有状态协议</strong>则像是你和一个熟悉的<strong>酒吧老板</strong>打交道。你第一次去说：“我是张三，以后我的酒都记在账上。” 老板记住了。之后你每次去，只需要说：“老样子，来一杯。” 他就知道该给你什么，并记在你的账上。</li>
+</ul>
+<h3 id="真实案例-1"><a href="#真实案例-1" class="headerlink" title="真实案例"></a>真实案例</h3><p>考虑一个大型电商的“购物车”功能。</p>
+<ul>
+<li><strong>早期设计（有状态）：</strong> 每个用户的购物车内容都存在Web服务器的内存（Session）里。当用户量巨大时，服务器内存会成为瓶颈。如果该服务器宕机，用户的购物车数据就全部丢失了。而且，负载均衡器必须使用“粘性会话”（Sticky Session），把同一个用户的请求始终转发到同一台服务器，这降低了负载均衡的灵活性。</li>
+<li><strong>现代设计（无状态）：</strong> 用户在<strong>未登录</strong>时，购物车信息被加密存储在<strong>客户端的Cookie或LocalStorage</strong>里。用户<strong>登录</strong>后，购物车信息被同步到<strong>服务端的分布式缓存（如Redis）或数据库</strong>中。Web服务器本身不存储任何购物车状态，每次请求过来，它都根据请求中的用户信息（可能是session_id或JWT）去后端存储中查询购物车数据。这样的服务器可以无限水平扩展。</li>
+</ul>
+<h3 id="经典问题-1"><a href="#经典问题-1" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>面试题: 既然HTTP是无状态的，那我们是如何实现用户登录状态的保持的？请比较一下基于Session和基于JWT的两种主要方案。</p>
+</blockquote>
+<p>是的，HTTP的无状态性意味着服务器本身不记录客户端的状态，这就需要我们引入额外的机制来管理会话，其中最主流的就是基于Session和基于Token（特别是JWT）的方案。</p>
+<p><strong>1. 基于Cookie-Session的方案（传统方案）：</strong><br>* <strong>流程：</strong> 客户端首次登录成功后，服务器会创建一个Session对象，里面存储着用户的状态信息（如用户ID、角色等），并为这个Session生成一个唯一的session_id。然后，服务器通过Set-Cookie响应头将这个session_id返回给客户端。客户端浏览器会自动保存这个Cookie。在后续的每次请求中，浏览器都会自动带上这个session_id。服务器收到请求后，通过session_id找到对应的Session，从而识别出用户身份。<br>* <strong>优点：</strong> 状态数据存储在服务端，相对安全；客户端Cookie中只存储无意义的ID，数据量小。<br>* <strong>缺点：</strong> <strong>服务器有状态，不易扩展</strong>。在分布式环境下，需要解决Session共享问题，比如使用粘性会话、Session复制或集中的Session存储（如Redis），这增加了架构复杂性。</p>
+<p><strong>2. 基于JWT（JSON Web Token）的方案（现代主流）：</strong><br>* <strong>流程：</strong> 客户端登录成功后，服务器不再创建Session。而是将用户的核心信息（如用户ID、角色、过期时间）编码成一个JWT字符串。这个JWT本身包含了签名，可以防止被篡改。服务器将这个JWT直接返回给客户端。客户端通常将其存储在LocalStorage或HttpOnly Cookie中。在后续请求中，客户端通过HTTP的Authorization头（通常是Bearer <token>）将JWT发送给服务器。<br>* <strong>优点：</strong> <strong>服务器完全无状态</strong>。服务器无需存储任何会话信息，只需验证JWT签名的有效性即可。这使得后端服务可以非常容易地进行水平扩展。天然地避免了CSRF攻击（如果存储在LocalStorage中）。<br>* <strong>缺点：</strong> Token本身可能较大；一旦签发，在过期前难以强制吊销；由于信息存在客户端，不适合存放敏感数据。</p>
+<p><strong>总结对比：</strong> Session方案将状态的包袱留给了服务端，而JWT方案则将状态（以加密Token的形式）“甩”给了客户端。在当今追求<strong>高可伸缩性、跨域通信和微服务</strong>的架构下，JWT这种<strong>服务端无状态</strong>的方案已成为事实上的主流选择。</p>
+<h3 id="补充知识-1"><a href="#补充知识-1" class="headerlink" title="补充知识"></a>补充知识</h3><h4 id="请求与线程的关系"><a href="#请求与线程的关系" class="headerlink" title="请求与线程的关系"></a>请求与线程的关系</h4><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2025/07/11/irIwBycGYnHtV6g.png" alt="req"></p>
+<p><strong>一个HTTP请求通常会由一个后台线程来处理，但这只是最终呈现的结果。前端请求与后台线程的真正关系，取决于Web服务器的I&#x2F;O模型和并发模型。</strong></p>
+<p>这个关系取决于服务器的并发模型。</p>
+<ol>
+<li>在传统的<strong>阻塞I&#x2F;O模型</strong>下，可以近似地认为<strong>一个请求独占一个线程</strong>。这种模式简单直观，但由于线程开销巨大，无法支持高并发。</li>
+<li>在现代高性能服务器普遍采用的<strong>非阻塞I&#x2F;O（或异步I&#x2F;O）模型</strong>下，这种关系被解耦了。前端的大量请求首先由<strong>少数几个I&#x2F;O线程</strong>来接收和分发，这些I&#x2F;O线程利用事件循环机制，可以高效地管理成千上万的并发连接。而请求中真正的<strong>业务逻辑处理</strong>，则被封装成任务，交由一个<strong>数量固定的后台工作线程池</strong>来执行。</li>
+</ol>
+<p>因此，前端的请求和后台的多线程是<strong>多对多</strong>的关系，但中间通过一个高效的<strong>I&#x2F;O事件分发层</strong>进行了调度。我们Java后台开发中讨论的‘线程共享’，通常指的是工作线程池中的线程共享数据库连接池、缓存等公共资源。而我们说‘这个请求很耗时’，通常是指它在工作线程中执行业务逻辑（比如一个复杂的数据库查询）花费了很长时间，但这并不会阻塞I&#x2F;O线程接收其他新的请求。</p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>Cookie是一种允许服务器在客户端（浏览器）上存储少量文本信息的机制。其核心流程是：</p>
+<ol>
+<li>服务器通过在HTTP响应报文中添加Set-Cookie头部，将信息“种”到客户端。</li>
+<li>客户端收到后，会将这些信息存储起来。</li>
+<li>当客户端再次向<strong>同一个服务器</strong>发起请求时，会自动在HTTP请求报文中添加Cookie头部，将之前存储的信息回传给服务器。</li>
+</ol>
+<p><strong>HttpOnly属性：</strong></p>
+<ul>
+<li><strong>作用：</strong> 这是最重要的安全属性。设置了HttpOnly的Cookie，将<strong>无法通过JavaScript的document.cookie API进行读写</strong>。</li>
+<li><strong>解决的问题：</strong> 有效地防御了绝大部分的<strong>跨站脚本攻击（XSS）</strong>。黑客即使在你的页面注入了恶意脚本，也无法窃取到这个Cookie，从而无法轻易地劫持你的会话。</li>
+<li><strong>业界标准：</strong> 所有承载敏感信息（如session_id, token）的Cookie，<strong>必须</strong>设置为HttpOnly。</li>
+</ul>
+<p><strong>Secure属性：</strong></p>
+<ul>
+<li><strong>作用：</strong> 设置了Secure的Cookie，只有在<strong>HTTPS</strong>连接中才会被发送。在HTTP连接中，浏览器会忽略这个Cookie，不会发送它。</li>
+<li><strong>解决的问题：</strong> 防止Cookie在不安全的HTTP连接中被中间人嗅探和窃取。</li>
+<li><strong>业界标准：</strong> 所有承载敏感信息的Cookie，<strong>必须</strong>设置为Secure。</li>
+</ul>
+<p><strong>SameSite属性：</strong></p>
+<ul>
+<li><strong>作用：</strong> 这是防御**跨站请求伪造（CSRF）**攻击的利器。它定义了浏览器在**跨站请求**时是否应发送Cookie。</li>
+<li><strong>它有三个值：</strong><ul>
+<li>Strict: 最严格。任何跨站请求（比如从A网站点击链接到B网站），都不会携带B网站的Cookie。</li>
+<li>Lax: (目前多数浏览器的默认值) 在一些安全的顶层导航（如点击链接、GET表单）时允许发送Cookie，但在POST请求、img、iframe等加载中则会禁止。</li>
+<li>None: 任何跨站请求都会发送Cookie。但<strong>必须同时设置Secure属性</strong>，否则无效。常用于需要跨域认证的API场景。</li>
+</ul>
+</li>
+<li><strong>解决的问题：</strong> CSRF攻击的核心是利用了用户在A网站的操作，会<strong>自动携带</strong>B网站的Cookie去请求B网站。SameSite属性正是打破了这个“自动携带”的链条。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%%&#123;init: &#123; &quot;themeVariables&quot;: &#123; &quot;sequenceNumberColor&quot;: &quot;#546E7A&quot;, &quot;actorBorder&quot;: &quot;#78909C&quot;, &quot;actorBkg&quot;: &quot;#E3F2FD&quot;, &quot;actorTextColor&quot;: &quot;#1E88E5&quot;, &quot;noteBkgColor&quot;: &quot;#fffde7&quot;, &quot;noteBorderColor&quot;: &quot;#FFD600&quot; &#125;, &quot;theme&quot;: &quot;neo&quot; &#125; &#125;%%</span><br><span class="line">sequenceDiagram</span><br><span class="line">    participant Client as 浏览器</span><br><span class="line">    participant Server as 服务器</span><br><span class="line"></span><br><span class="line">    Client-&gt;&gt;Server: 1. 登录请求 (POST /login) user: a, pass: b</span><br><span class="line">    Note over Server: 验证成功，创建会话</span><br><span class="line">    Server--&gt;&gt;Client: 2. 响应: Set-Cookie: session_id=xyz123 HttpOnly Secure SameSite=Strict</span><br><span class="line">    Note over Client: 浏览器存储了安全 Cookie</span><br><span class="line"></span><br><span class="line">    Client-&gt;&gt;Server: 3. 后续请求 (GET /my/orders) Cookie: session_id=xyz123</span><br><span class="line">    Note over Server: session_id 识别用户，返回数据</span><br><span class="line">    Server--&gt;&gt;Client: 4. 响应: [订单数据]</span><br><span class="line"></span><br><span class="line">    Note over Client: 用户点击了恶意网站链接…</span><br><span class="line">    participant AttackerSite as 恶意网站</span><br><span class="line">    Client-&gt;&gt;AttackerSite: 访问恶意网站</span><br><span class="line">    AttackerSite--&gt;&gt;Client: 页面包含 &lt;img src=&quot;https://server.com/delete_account&quot;&gt;</span><br><span class="line">    Note over Client: 浏览器尝试加载图片，向服务器发起请求（CSRF攻击尝试）</span><br><span class="line">    Note over Client: 因 SameSite=Strict，浏览器拒绝在此跨站请求中发送 Cookie！</span><br><span class="line">    Client-xServer: 请求被发送（但不带 Cookie）</span><br><span class="line">    Note over Server: 服务器因收不到 Cookie，认证失败，CSRF防御成功！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="生活案例-2"><a href="#生活案例-2" class="headerlink" title="生活案例"></a>生活案例</h3><p><strong>Cookie</strong>就像是游乐场的<strong>腕带</strong>。</p>
+<ul>
+<li>你买票入场时（<strong>登录</strong>），工作人员（<strong>服务器</strong>）给你戴上一个腕带（<strong>Set-Cookie</strong>），上面有个独一无二的条形码（<strong>session_id</strong>）。</li>
+<li><strong>HttpOnly</strong>属性就像这个腕带是<strong>一次性锁死</strong>的，你自己用手摘不下来（JS无法读取），只能由专门的机器（浏览器协议）来识别。</li>
+<li><strong>Secure</strong>属性意味着只有在游乐场<strong>官方通道</strong>（HTTPS）才能扫描这个腕带，你在外面的小卖部（HTTP）用不了。</li>
+<li><strong>SameSite&#x3D;Strict</strong>属性就像是规定，这个腕带<strong>只能在游乐场内部</strong>使用。如果你跑到隔壁的商场，想用这个腕带打折，商场的扫描仪（其他网站）会拒绝识别。</li>
+</ul>
+<h3 id="真实案例-2"><a href="#真实案例-2" class="headerlink" title="真实案例"></a>真实案例</h3><p><strong>场景：</strong> 设计一个银行网站的“记住我”功能。</p>
+<ul>
+<li><strong>错误实践：</strong> 将用户的明文用户名和密码保存在普通Cookie中。这是极度危险的，一旦被XSS攻击，用户的凭证将立刻泄露。</li>
+<li><strong>正确实践：</strong><ol>
+<li>用户登录时，如果勾选了“记住我”，服务器会生成一个<strong>长期的、高熵的、随机的令牌（Token）</strong>。</li>
+<li>服务器在数据库中存储这个令牌，并关联到该用户，同时设置一个较长的过期时间（比如30天）。</li>
+<li>服务器通过Set-Cookie将这个令牌返回给客户端，并<strong>必须</strong>设置以下属性：token&#x3D;abc…xyz; Expires&#x3D;…; HttpOnly; Secure; SameSite&#x3D;Lax。</li>
+<li>用户下次访问时，浏览器会自动携带这个令牌Cookie。服务器端的“自动登录”过滤器会检查这个令牌，在数据库中验证其有效性。如果有效，则为用户自动创建一次性的登录会话，实现“记住我”功能。</li>
+</ol>
+</li>
+</ul>
+<h3 id="经典问题-2"><a href="#经典问题-2" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>HttpOnly和SameSite这两个Cookie属性分别是为了解决什么安全问题的？请具体说明。</p>
+</blockquote>
+<p>这两个属性是现代Web安全中用于加固Cookie、防御两大核心攻击的关键手段。</p>
+<ol>
+<li><strong>HttpOnly 主要防御的是跨站脚本攻击（XSS）。</strong> XSS攻击的核心是攻击者在网页中注入了恶意的JavaScript脚本。在没有HttpOnly的情况下，这个脚本可以通过document.cookie窃取到用户的会话Cookie（比如session_id），然后发送到攻击者的服务器，攻击者就可以利用这个Cookie伪装成用户进行操作，这就是“会话劫持”。而设置了HttpOnly属性后，JavaScript就无法再访问这个Cookie，从根本上切断了XSS攻击窃取会话Cookie的路径，极大地提升了安全性。</li>
+<li><strong>SameSite 主要防御的是跨站请求伪造（CSRF）。</strong> CSRF攻击的核心是利用了浏览器在发送跨站请求时会自动携带目标站点Cookie的特性。攻击者会诱导已登录的用户（比如银行网站的用户）去点击一个恶意链接，这个链接会向银行服务器发起一个转账请求。由于浏览器会自动带上银行的Cookie，银行服务器会误以为这是用户的真实操作，从而导致资金被盗。SameSite属性通过限制跨站请求发送Cookie来防御这种攻击。SameSite&#x3D;Strict最为严格，几乎禁止所有跨站Cookie发送；而Lax模式则是一种平衡，它允许在用户主动导航（如点击链接）这种风险较低的场景下发送Cookie，但在高风险的场景（如POST请求或通过<img>、<iframe>发起的请求）下则会阻止，这已经能防御绝大多数CSRF攻击了。</li>
+</ol>
+<p><strong>总结来说，HttpOnly保护Cookie不被“内鬼”（页面内的JS）偷走，而SameSite保护Cookie不被“外人”（其他网站）利用。</strong> 在实际开发中，对敏感Cookie同时设置这两个属性，是构建安全防线的标准操作。</p>
+<h2 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    autonumber</span><br><span class="line"></span><br><span class="line">    participant C1 as Client 1</span><br><span class="line">    participant S1 as Server 1</span><br><span class="line">    participant C2 as Client 2</span><br><span class="line">    participant S2 as Server 2</span><br><span class="line">    participant C3 as Client 3</span><br><span class="line">    participant S3 as Server 3</span><br><span class="line"></span><br><span class="line">    rect rgba(240,248,255,0.4)</span><br><span class="line">    Note over C1,S1: HTTP/1.0 短连接（3个资源）</span><br><span class="line">        C1-&gt;&gt;S1: TCP Handshake</span><br><span class="line">        C1-&gt;&gt;S1: Request 1 (HTML)</span><br><span class="line">        S1--&gt;&gt;C1: Response 1</span><br><span class="line">        C1--&gt;&gt;S1: TCP Teardown</span><br><span class="line"></span><br><span class="line">        C1-&gt;&gt;S1: TCP Handshake</span><br><span class="line">        C1-&gt;&gt;S1: Request 2 (CSS)</span><br><span class="line">        S1--&gt;&gt;C1: Response 2</span><br><span class="line">        C1--&gt;&gt;S1: TCP Teardown</span><br><span class="line"></span><br><span class="line">        C1-&gt;&gt;S1: TCP Handshake</span><br><span class="line">        C1-&gt;&gt;S1: Request 3 (JS)</span><br><span class="line">        S1--&gt;&gt;C1: Response 3</span><br><span class="line">        C1--&gt;&gt;S1: TCP Teardown</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    rect rgba(224,255,255,0.4)</span><br><span class="line">    Note over C2,S2: HTTP/1.1 持久连接</span><br><span class="line">        C2-&gt;&gt;S2: TCP Handshake</span><br><span class="line">        C2-&gt;&gt;S2: Request 1 (HTML)</span><br><span class="line">        S2--&gt;&gt;C2: Response 1</span><br><span class="line">        C2-&gt;&gt;S2: Request 2 (CSS)</span><br><span class="line">        S2--&gt;&gt;C2: Response 2</span><br><span class="line">        C2-&gt;&gt;S2: Request 3 (JS)</span><br><span class="line">        S2--&gt;&gt;C2: Response 3</span><br><span class="line">        Note over C2,S2: Reuse 连接，响应完再发下一个请求</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    rect rgba(255,240,245,0.4)</span><br><span class="line">    Note over C3,S3: HTTP/1.1 管线化（理论）</span><br><span class="line">        C3-&gt;&gt;S3: TCP Handshake</span><br><span class="line">        C3-&gt;&gt;S3: Request 1 (HTML)</span><br><span class="line">        C3-&gt;&gt;S3: Request 2 (CSS)</span><br><span class="line">        C3-&gt;&gt;S3: Request 3 (JS)</span><br><span class="line">        S3--&gt;&gt;C3: Response 1</span><br><span class="line">        S3--&gt;&gt;C3: Response 2</span><br><span class="line">        S3--&gt;&gt;C3: Response 3</span><br><span class="line">        Note over C3,S3: 请求并行发出，但响应需按顺序返回</span><br><span class="line">    end</span><br></pre></td></tr></table></figure>
+
+<h3 id="生活案例-3"><a href="#生活案例-3" class="headerlink" title="生活案例"></a>生活案例</h3><ul>
+<li><strong>短连接</strong>就像是每次去超市买一件商品，你都要完整地经历一次“开车去 -&gt; 停车 -&gt; 进店 -&gt; 结账 -&gt; 开车回家”的流程。买三件商品，就要跑三趟。</li>
+<li><strong>持久连接</strong>就像是你开车到超市后，把车停在停车场，然后进店里把购物车装满，最后统一结账再开车回家。你只跑了一趟，节省了大量的“开车”和“停车”时间（TCP握手和慢启动）。</li>
+<li><strong>管线化</strong>则像是，你把购物清单一口气全扔给一个超市导购员，但他必须严格按照清单的顺序一件一件找齐了，再统一给你。如果第一件商品（比如进口奶酪）特别难找，你就要一直等到他找到为止，即使他已经路过了后面清单上的所有商品。</li>
+</ul>
+<h3 id="真实案例-3"><a href="#真实案例-3" class="headerlink" title="真实案例"></a>真实案例</h3><ul>
+<li>几乎所有现代Web网站的性能都受益于持久连接。以加载一个新闻门户网站为例，主页面index.html加载完成后，浏览器需要继续加载数十个CSS文件、JS文件、logo图片、广告图片、文章缩略图等。</li>
+<li>如果没有持久连接，每个资源的加载都需要一次独立的TCP连接建立和关闭，页面加载时间可能会从2-3秒延长到10秒以上，用户体验将是灾难性的。</li>
+<li><strong>HTTP&#x2F;1.1的持久连接机制</strong>，配合浏览器的<strong>并行连接</strong>（通常对一个域名开6-8个持久连接），是支撑现代复杂网页快速加载的基础。</li>
+</ul>
+<h3 id="经典问题-3"><a href="#经典问题-3" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>HTTP&#x2F;1.1的持久连接相比于HTTP&#x2F;1.0的短连接，主要解决了什么问题？它自身又有什么局限性，而HTTP&#x2F;2又是如何解决这些局限性的？</p>
+</blockquote>
+<p>HTTP&#x2F;1.1的持久连接主要解决了HTTP&#x2F;1.0短连接模型的两大性能瓶颈：</p>
+<ol>
+<li><strong>高昂的连接建立开销：</strong> 短连接模型下，每个HTTP请求都需要经过一次TCP三次握手，这至少会产生一个RTT的延迟。对于包含大量小资源的页面，这些握手延迟累加起来非常可观。持久连接通过复用同一个TCP连接，完全避免了后续请求的握手开销。</li>
+<li><strong>TCP慢启动的性能影响：</strong> 每个新的TCP连接都会经历一个“慢启动”过程，即连接的传输速度会从一个较低的值开始，慢慢提升。对于小文件频繁的Web请求，连接很可能在速度还没达到峰值时就被关闭了，导致TCP的性能优势无法发挥。持久连接由于长时间保持，可以使得连接“预热”，始终工作在较高的传输速率下。</li>
+</ol>
+<p><strong>然而，HTTP&#x2F;1.1的持久连接自身也存在一个核心局限性，那就是队头阻塞（Head-of-Line Blocking）：</strong></p>
+<ul>
+<li>在一个TCP连接上，虽然可以发送多个请求，但响应必须按请求的顺序串行返回。如果第一个请求的服务器处理时间很长，它就会阻塞后面所有请求的响应，即使后面的响应早已准备就绪。虽然管线化（Pipelining）技术试图解决这个问题，但由于其自身的复杂性和兼容性问题，并未被广泛采用。</li>
+</ul>
+<p><strong>HTTP&#x2F;2则通过引入“多路复用”（Multiplexing）机制，完美地解决了队头阻塞问题：</strong></p>
+<ul>
+<li>HTTP&#x2F;2允许在<strong>单个TCP连接</strong>上，将多个请求&#x2F;响应分割成更小的、独立的<strong>帧（Frame）</strong>，并将它们交错地发送和接收。每个帧都带有自己的流标识符（Stream ID），所以接收端可以根据ID将它们重新组装成完整的请求或响应。这样，一个慢请求的响应就不会再阻塞其他快速的响应，真正实现了并行传输。</li>
+</ul>
+<h2 id="HTTP报文结构"><a href="#HTTP报文结构" class="headerlink" title="HTTP报文结构"></a>HTTP报文结构</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    subgraph &quot;HTTP/1.1 报文 (纯文本)&quot;</span><br><span class="line">        direction TB</span><br><span class="line">        A[&quot;&lt;b&gt;请求行:&lt;/b&gt; GET /index.html HTTP/1.1\r\n&quot;]:::request</span><br><span class="line">        B[&quot;&lt;b&gt;首部:&lt;/b&gt; Host: example.com\r\nUser-Agent: ...\r\n&quot;]:::headers</span><br><span class="line">        C[&quot;&lt;b&gt;空行:&lt;/b&gt; \r\n&quot;]:::emptyline</span><br><span class="line">        D[&quot;&lt;b&gt;(无主体)&lt;/b&gt;&quot;]:::noBody</span><br><span class="line">        A --&gt; B --&gt; C --&gt; D</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph &quot;HTTP/2 报文 (二进制帧流)&quot;</span><br><span class="line">        direction LR</span><br><span class="line">        H1[HEADERS Frame&lt;br&gt;包含:method, path, host等&lt;br&gt;&lt;b&gt;经过HPACK压缩&lt;/b&gt;]:::headers2 --&gt; D1[DATA Frame&lt;br&gt;可选的主体数据]:::data</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    classDef request fill:#f9f,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef headers fill:#ccf,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef emptyline fill:#fff,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef noBody fill:#fdd,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef headers2 fill:#ddf,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef data fill:#cfc,stroke:#333,stroke-width:2px;</span><br><span class="line">    class A,B,C,D,H1,D1 fill:#fff,stroke:#ddd,stroke-width:1px;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="生活案例-4"><a href="#生活案例-4" class="headerlink" title="生活案例"></a>生活案例</h3><ul>
+<li><strong>HTTP&#x2F;1.1的报文</strong>就像一封传统的<strong>信件</strong>。有信封上的地址和收件人（<strong>起始行</strong>），有信头写的日期和主题（<strong>首部</strong>），还有信纸上的正文内容（<strong>主体</strong>）。它们是作为一个整体寄送的。</li>
+<li><strong>HTTP&#x2F;2的报文</strong>则像是把这封信的内容拆分成了很多张标准大小的<strong>卡片（帧）</strong>，并进行了编码。HEADERS帧就像是包含了所有收发件人信息的“地址卡”，DATA帧就像是一张张写着正文内容的“内容卡”。这些卡片可以和其他信件的卡片混在一起（<strong>多路复用</strong>）寄送，到了目的地再根据信件编号重新组装起来。</li>
+</ul>
+<h3 id="真实案例-4"><a href="#真实案例-4" class="headerlink" title="真实案例"></a>真实案例</h3><p>当你在Chrome开发者工具（F12）的Network面板中查看一个请求时，你看到的“Headers”和“Payload”&#x2F;“Response”标签页，就是对HTTP报文逻辑结构的完美呈现。</p>
+<ul>
+<li><strong>General</strong> 和 <strong>Request&#x2F;Response Headers</strong> 部分对应<strong>起始行和首部</strong>。</li>
+<li><strong>Payload</strong>（对于POST）或 <strong>Response</strong>（对于GET）标签页的内容对应<strong>主体</strong>。</li>
+</ul>
+<h3 id="经典问题-4"><a href="#经典问题-4" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>HTTP&#x2F;1.1和HTTP&#x2F;2在报文结构上最核心的区别是什么？这个区别带来了什么好处？</p>
+</blockquote>
+<p>最核心的区别在于，<strong>HTTP&#x2F;1.1是一个文本协议，其报文结构是基于文本的，而HTTP&#x2F;2是一个二进制协议，它引入了全新的帧（Frame）层。</strong></p>
+<p>具体来说：</p>
+<ol>
+<li><strong>HTTP&#x2F;1.1</strong>的报文是由可读的ASCII文本构成的，包括起始行、首部和主体，它们之间通过换行符（CRLF）分隔。这种格式对人类友好，但对机器解析效率不高，且存在安全注入的风险。</li>
+<li><strong>HTTP&#x2F;2</strong>则将一个逻辑上的请求或响应，在传输时分解为多个二进制编码的帧。比如，所有首部信息被打包到一个HEADERS帧中，而响应主体则被放入一个或多个DATA帧中。</li>
+</ol>
+<p>这个从“文本”到“二进制帧”的根本转变，带来了两大革命性的好处：</p>
+<ul>
+<li><strong>实现了多路复用（Multiplexing）：</strong> 来自不同请求的帧可以在同一个TCP连接上交错传输，每个帧都带有流ID，从而解决了HTTP&#x2F;1.1的队头阻塞问题，极大地提高了并发传输效率。</li>
+<li><strong>实现了头部压缩（HPACK）：</strong> 由于首部被独立成HEADERS帧，HTTP&#x2F;2可以对大量重复的头部字段（如User-Agent, Accept等）使用HPACK算法进行高效压缩，显著减少了请求的体积，这在移动网络环境下尤其重要。</li>
+</ul>
+<h2 id="内容编码与传输编码"><a href="#内容编码与传输编码" class="headerlink" title="内容编码与传输编码"></a>内容编码与传输编码</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    subgraph &quot;服务器处理流程&quot;</span><br><span class="line">        direction TB</span><br><span class="line">        A[原始资源&lt;br&gt;&lt;b&gt;实体主体&lt;/b&gt;&lt;br&gt;例如: 10KB的HTML]:::raw</span><br><span class="line">        B[Content-Encoding: gzip&lt;br&gt;压缩后的实体主体&lt;br&gt;例如: 2KB]:::encoded</span><br><span class="line">        C[Transfer-Encoding: chunked&lt;br&gt;将压缩后的数据分块&lt;br&gt;例如: Chunk1+Chunk2...]:::chunked</span><br><span class="line">        D[通过TCP连接发送&lt;br&gt;&lt;b&gt;报文主体&lt;/b&gt;]:::transferred</span><br><span class="line">        A --&gt;|Step 1: 内容编码| B --&gt;|Step 2: 传输编码| C --&gt; D</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    subgraph &quot;编码目的&quot;</span><br><span class="line">        Content_Encoding[&quot;&lt;b&gt;内容编码 (Content-Encoding)&lt;/b&gt;&lt;br&gt;为&lt;b&gt;资源&lt;/b&gt;瘦身, 节省带宽&lt;br&gt;作用于&lt;b&gt;实体主体&lt;/b&gt;&quot;]:::purpose</span><br><span class="line">        Transfer_Encoding[&quot;&lt;b&gt;传输编码 (Transfer-Encoding)&lt;/b&gt;&lt;br&gt;为&lt;b&gt;传输&lt;/b&gt;服务, 改变报文结构&lt;br&gt;作用于&lt;b&gt;报文主体&lt;/b&gt;&quot;]:::purpose</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    style Content_Encoding fill:#cde,stroke:#333,stroke-width:2px</span><br><span class="line">    style Transfer_Encoding fill:#fce,stroke:#333,stroke-width:2px</span><br><span class="line">    classDef raw fill:#f9f,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef encoded fill:#ccf,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef chunked fill:#cfc,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef transferred fill:#fdd,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef purpose fill:#fff,stroke:#333,stroke-width:2px;</span><br><span class="line"></span><br><span class="line">    class A,B,C,D Content_Encoding,Transfer_Encoding;</span><br></pre></td></tr></table></figure>
+
+<h3 id="生活案例-5"><a href="#生活案例-5" class="headerlink" title="生活案例"></a>生活案例</h3><p>想象你要寄送一个大型的<strong>乐高模型（原始资源）</strong>。</p>
+<ul>
+<li><strong>内容编码 (gzip&#x2F;Brotli)</strong>：你发现直接寄送盒子太大、运费太贵。于是你把乐高模型<strong>拆散成一个个零件</strong>，并用<strong>真空压缩袋</strong>把它们打包起来。这样体积就大大减小了。这个“真空压缩”的过程，就是<strong>内容编码</strong>，它改变了“内容”本身（从组装好的模型变成了零件袋），目的是让它变得更小。</li>
+<li><strong>传输编码 (chunked)</strong>：现在你有一包压缩好的零件，但你没有一个足够大的箱子一次装下。于是你决定<strong>分批寄送</strong>。你找了几个小盒子，在第一个盒子上写“第1箱，共3箱”，在第二个盒子上写“第2箱，共3箱”… 这就是<strong>分块传输编码</strong>。它没有改变盒子里的内容（零件还是那些零件），而是改变了“寄送的方式”（从一个大包裹变成几个小包裹）。</li>
+</ul>
+<h3 id="真实案例-5"><a href="#真实案例-5" class="headerlink" title="真实案例"></a>真实案例</h3><ul>
+<li><strong>内容编码 (gzip&#x2F;Brotli)：</strong> 你打开任何一个现代网站，查看其HTML、CSS、JS文件的网络请求，你都会在响应头中看到Content-Encoding: gzip或Content-Encoding: br。这表明服务器对这些文本资源进行了压缩，你的浏览器在接收到后会自动解压。这是前端性能优化的标准操作。</li>
+<li><strong>传输编码 (chunked)：</strong> 当你访问一个需要大量后台计算的报表页面时，比如“生成过去一年的销售报告”。服务器可能不会等所有数据都计算完毕（可能需要几十秒），而是采用<strong>流式处理</strong>：每计算出一部分数据，就立刻通过<strong>分块传输</strong>将这部分数据发送给浏览器。这样，用户很快就能看到页面的头部和第一部分数据，而不是面对一个长时间的白屏等待。你在开发者工具中会看到响应头里有Transfer-Encoding: chunked，并且看不到Content-Length头。</li>
+</ul>
+<h3 id="经典问题-5"><a href="#经典问题-5" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>Content-Encoding和Transfer-Encoding这两个HTTP头部有什么区别？</p>
+</blockquote>
+<p>Content-Encoding和Transfer-Encoding虽然都涉及“编码”，但它们是HTTP中两个完全不同层面、用于解决不同问题的机制。</p>
+<ol>
+<li><strong>目的不同：</strong><ul>
+<li>Content-Encoding（内容编码）的目的是<strong>压缩实体主体</strong>，减少传输数据的大小，从而节省带宽、加快传输速度。常见的编码有gzip, deflate, br。它作用的对象是<strong>资源本身</strong>。</li>
+<li>Transfer-Encoding（传输编码）的目的是<strong>改变报文的传输方式</strong>，以利于网络传输。目前唯一的标准值是chunked（分块传输）。它解决的是服务器无法在传输前确定整个响应体大小的问题（比如动态生成的内容），使得服务器可以流式地发送数据。它作用的对象是<strong>整个报文</strong>的结构。</li>
+</ul>
+</li>
+<li><strong>作用位置不同：</strong><ul>
+<li>内容编码是在<strong>服务器生成响应后，发送给客户端前</strong>对实体主体进行的“端到端”编码。客户端接收后需要先解码，才能得到原始的实体内容。</li>
+<li>传输编码是<strong>逐跳</strong>的，它只在相邻的两个节点间有效。一个代理接收到chunked编码的报文后，必须先解码（将分块数据合并），然后再决定是否以chunked或其他方式转发给下一个节点。</li>
+</ul>
+</li>
+<li><strong>与Content-Length的关系：</strong><ul>
+<li>当使用Content-Encoding时，Content-Length头部的值是**编码后（压缩后）**的实体主体大小。</li>
+<li>当使用Transfer-Encoding: chunked时，<strong>必须不能</strong>出现Content-Length头部，因为内容的长度是未知的，由最后一个大小为0的块来表示结束。</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结来说，Content-Encoding是给“货物”做真空包装，而Transfer-Encoding是改变“送货”的方式。</strong></p>
+<h2 id="范围请求"><a href="#范围请求" class="headerlink" title="范围请求"></a>范围请求</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    subgraph &quot;服务器上的完整资源 (比如一个10MB的视频文件)&quot;</span><br><span class="line">        A[0MB] --&gt; B[2MB] --&gt; C[4MB] --&gt; D[6MB] --&gt; E[8MB] --&gt; F[10MB]</span><br><span class="line">        style A fill:#eee,stroke:#333</span><br><span class="line">        style B fill:#eee,stroke:#333</span><br><span class="line">        style C fill:#eee,stroke:#333</span><br><span class="line">        style D fill:#eee,stroke:#333</span><br><span class="line">        style E fill:#eee,stroke:#333</span><br><span class="line">        style F fill:#eee,stroke:#333</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph &quot;客户端的操作与请求&quot;</span><br><span class="line">        direction LR</span><br><span class="line">        P1[&quot;1. 正常播放&lt;br&gt;请求 Range: bytes=0-1999999&quot;] --&gt;|获取前2MB| S1[服务器]</span><br><span class="line">        P2[&quot;2. 拖动进度条到中段&lt;br&gt;请求 Range: bytes=4000000-5999999&quot;] --&gt;|只获取4-6MB| S1</span><br><span class="line">        P3[&quot;3. 多线程下载&lt;br&gt;T1: Range: 0-4999999&lt;br&gt;T2: Range: 5000000-&quot;] --&gt;|同时请求两部分| S1</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    S1 -- &quot;响应: 206 Partial Content&lt;br&gt;Content-Range: bytes 0-1999999/10000000&quot; --&gt; P1</span><br><span class="line">    S1 -- &quot;响应: 206 Partial Content&lt;br&gt;Content-Range: bytes 4000000-5999999/10000000&quot; --&gt; P2</span><br><span class="line">    S1 -- &quot;响应: 206 Partial Content (给T1)&lt;br&gt;响应: 206 Partial Content (给T2)&quot; --&gt; P3</span><br><span class="line"></span><br><span class="line">    style P1 fill:#ccf,stroke:#333,stroke-width:2px;</span><br><span class="line">    style P2 fill:#ccf,stroke:#333,stroke-width:2px;</span><br><span class="line">    style P3 fill:#ccf,stroke:#333,stroke-width:2px;</span><br><span class="line">    style S1 fill:#ddf,stroke:#333,stroke-width:2px;</span><br><span class="line">    class P1,P2,P3,S1 fill:#fff,stroke:#ddd,stroke-width:1px;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol>
+<li><strong>多线程下载器的工作原理：</strong> 现代的下载工具（如迅雷、IDM）和一些浏览器插件，正是利用了范围请求的**多部分请求（Multipart Ranges）**能力来加速下载。它们会同时对一个资源发起多个范围请求，每个请求下载文件的一部分，最后在本地将这些部分拼接起来。</li>
+<li><strong>视频流媒体的“拖动”播放：</strong> 当你在B站或YouTube上观看视频并拖动进度条时，你实际上触发了一个新的范围请求。播放器会计算出你想看的时间点对应于整个视频文件（比如一个mp4文件）的哪个字节范围，然后向服务器发起一个Range请求，只获取那一小段数据，从而实现快速的“空降”播放，而无需下载整个文件。</li>
+<li><strong>大文件上传的断点续传：</strong> 虽然范围请求主要用于下载，但其理念也被应用于上传。客户端可以先向服务器查询已上传了多少字节，然后通过类似Content-Range的机制（通常是自定义头部）从断点处继续上传剩余部分。</li>
+</ol>
+<h3 id="生活案例-6"><a href="#生活案例-6" class="headerlink" title="生活案例"></a>生活案例</h3><p>想象你在读一本非常厚的<strong>电子书（资源）</strong>。</p>
+<ul>
+<li><strong>没有范围请求：</strong> 你每次打开书，都必须从第一页开始下载整本书，即使你只想看第500页。</li>
+<li><strong>有范围请求：</strong> 你可以直接告诉服务器：“我只想看第500页到第510页的内容”（Range: pages&#x3D;500-510，如果是字节就是bytes&#x3D;…）。服务器就只把这10页的内容发给你，非常高效。这就是<strong>断点续传和跳转阅读</strong>的原理。</li>
+</ul>
+<h3 id="真实案例-6"><a href="#真实案例-6" class="headerlink" title="真实案例"></a>真实案例</h3><p>除了上面提到的视频播放和下载工具，<strong>云存储服务</strong>（如阿里云OSS、AWS S3）的API也大量使用了范围请求。当你需要从云端下载一个几GB大的备份文件时，它们的SDK（软件开发工具包）在底层就是利用范围请求，将文件分块下载，并支持在网络中断后从失败的块开始续传，大大提升了大文件操作的稳定性和效率。</p>
+<h3 id="经典问题-6"><a href="#经典问题-6" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>HTTP的206状态码是什么含义？它通常与哪两个头部字段一起工作来实现什么功能？</p>
+</blockquote>
+<p>206 Partial Content是HTTP中一个表示<strong>部分内容</strong>的成功状态码。它表明服务器成功处理了客户端的<strong>范围请求（Range Request）</strong>，并且响应体中只包含了资源的一部分，而不是全部。</p>
+<p>它通常与以下两个核心的头部字段协同工作：</p>
+<ol>
+<li><strong>请求头：Range</strong><ul>
+<li>由客户端发送，用于告诉服务器它想要获取资源的哪个或哪些部分。其值的单位最常见的是bytes，例如Range: bytes&#x3D;0-499表示请求资源的前500个字节。</li>
+</ul>
+</li>
+<li><strong>响应头：Content-Range</strong><ul>
+<li>由服务器在返回206响应时发送，用于告诉客户端这次返回的部分内容在整个资源中的位置。它的格式通常是bytes <start>-<end>&#x2F;<total>，例如Content-Range: bytes 0-499&#x2F;1234，表示这次发送的是第0到499字节，而整个资源的总长度是1234字节。</li>
+</ul>
+</li>
+</ol>
+<p>这套机制协同工作的核心功能是<strong>实现资源的部分获取</strong>，其最重要的两大应用场景是：</p>
+<ul>
+<li><strong>断点续传：</strong> 当下载大文件时，如果网络中断，客户端可以记录下已下载的字节数，然后通过Range头请求剩余的部分，服务器返回206响应，从而实现从断点继续下载。</li>
+<li><strong>流媒体播放：</strong> 在线视频播放器通过发送带有不同字节范围的Range请求，来获取用户当前想观看或者预加载的视频片段，实现了“即点即播”和进度条拖动的功能。</li>
+</ul>
+<h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A[章4: HTTP状态码] </span><br><span class="line">    A1[1xx: 信息性]:::info</span><br><span class="line">    A2[2xx: 成功]:::success</span><br><span class="line">    A3[3xx: 重定向]:::redirect</span><br><span class="line">    A4[4xx: 客户端错误]:::clientError</span><br><span class="line">    A5[5xx: 服务器错误]:::serverError</span><br><span class="line"></span><br><span class="line">    A --&gt; A1</span><br><span class="line">    A --&gt; A2</span><br><span class="line">    A --&gt; A3</span><br><span class="line">    A --&gt; A4</span><br><span class="line">    A --&gt; A5</span><br><span class="line"></span><br><span class="line">    A1 --&gt; B1[100 Continue]</span><br><span class="line">    A2 --&gt; B2[200 OK]</span><br><span class="line">    A2 --&gt; B3[204 No Content]</span><br><span class="line">    A2 --&gt; B4[206 Partial Content]</span><br><span class="line">    A3 --&gt; B5[301 Moved Permanently - 面试重点]</span><br><span class="line">    A3 --&gt; B6[302 Found - 面试重点]</span><br><span class="line">    A3 --&gt; B7[304 Not Modified - 面试重点]</span><br><span class="line">    A3 --&gt; B8[307 Temporary Redirect]</span><br><span class="line">    A4 --&gt; B9[400 Bad Request]</span><br><span class="line">    A4 --&gt; B10[401 Unauthorized]</span><br><span class="line">    A4 --&gt; B11[403 Forbidden]</span><br><span class="line">    A4 --&gt; B12[404 Not Found]</span><br><span class="line">    A5 --&gt; B13[500 Internal Server Error]</span><br><span class="line">    A5 --&gt; B14[502 Bad Gateway]</span><br><span class="line">    A5 --&gt; B15[503 Service Unavailable]</span><br><span class="line"></span><br><span class="line">    classDef info fill:#cfe,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef success fill:#cfc,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef redirect fill:#ffb,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef clientError fill:#fcc,stroke:#333,stroke-width:2px;</span><br><span class="line">    classDef serverError fill:#fdd,stroke:#333,stroke-width:2px;</span><br><span class="line">    class A1,A2,A3,A4,A5 fill:#fff,stroke:#ddd,stroke-width:1px;</span><br><span class="line">    class B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13,B14,B15 fill:#fff,stroke:#ddd,stroke-width:1px;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3xx重定向状态码"><a href="#3xx重定向状态码" class="headerlink" title="3xx重定向状态码"></a>3xx重定向状态码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant B as 浏览器/搜索引擎</span><br><span class="line">    participant S1 as 旧地址 (example.com/old)</span><br><span class="line">    participant S2 as 新地址 (example.com/new)</span><br><span class="line"></span><br><span class="line">    %% Permanent Redirect (301)</span><br><span class="line">    B-&gt;&gt;S1: GET /old</span><br><span class="line">    S1--&gt;&gt;B: 301 Moved Permanently&lt;br&gt;Location: /new</span><br><span class="line">    B-&gt;&gt;S2: GET /new</span><br><span class="line">    Note over B: 记住! 下次直接访问/new</span><br><span class="line">    B-&gt;&gt;S2: (下次) GET /new</span><br><span class="line"></span><br><span class="line">    %% Temporary Redirect (302/307)</span><br><span class="line">    B-&gt;&gt;S1: GET /old</span><br><span class="line">    S1--&gt;&gt;B: 302 Found&lt;br&gt;Location: /new</span><br><span class="line">    B-&gt;&gt;S2: GET /new</span><br><span class="line">    Note over B: 只是临时跳转, 下次还访问/old</span><br><span class="line">    B-&gt;&gt;S1: (下次) GET /old</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><strong>301 Moved Permanently (永久重定向):</strong> 表示请求的资源已被<strong>永久</strong>地移动到了新的URL。浏览器和搜索引擎在收到301后，会更新自己的书签和索引，未来会直接访问新的URL。</li>
+<li><strong>302 Found (临时重定向):</strong> 表示请求的资源<strong>临时</strong>被移动到了新的URL。浏览器和搜索引擎不会更新记录，下次还是会访问原始的URL。</li>
+<li><strong>304 Not Modified (未修改):</strong> 这是服务器对一个<strong>附带条件的请求</strong>（Conditional Request，通常是带有If-Modified-Since或If-None-Match头部）的回应。它告诉客户端，你本地缓存的资源还是最新的，直接用缓存吧，我这次就不给你发内容了。</li>
+</ul>
+<h4 id="生活案例-7"><a href="#生活案例-7" class="headerlink" title="生活案例"></a>生活案例</h4><ul>
+<li><strong>301 永久重定向</strong>：你搬家了，你去邮局办理了<strong>地址永久迁移</strong>。从此以后，所有寄给你的信件，邮局都会<strong>直接改投到你的新家</strong>，并且会通知你的朋友们：“他搬家了，以后请直接寄到新地址。”</li>
+<li><strong>302&#x2F;307 临时重定向</strong>：你只是去朋友家<strong>暂住几天</strong>。你告诉邮局，这几天的信件<strong>临时转寄</strong>到朋友家。邮局不会更改你的档案，你的朋友们也不知道你出门了，信件还是会先寄到你家，再由邮局转送。</li>
+</ul>
+<h4 id="真实案例-7"><a href="#真实案例-7" class="headerlink" title="真实案例"></a>真实案例</h4><ul>
+<li><strong>301 永久重定向的典型应用：</strong><ul>
+<li><strong>网站换域名：</strong> 当公司将域名从 old-brand.com 更换为 new-brand.com 时，必须在旧域名的服务器上配置对所有请求返回301，指向新域名对应的页面。这对**SEO（搜索引擎优化）**至关重要，它能告诉搜索引擎将旧域名的权重和排名**全部转移**到新域名上。</li>
+<li><strong>URL规范化：</strong> 确保 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://example.com、http//www.example.com">http://example.com、http://www.example.com</a> 等多个入口都301重定向到唯一的、规范的URL（比如 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.example.com),避免搜索引擎认为这是重复内容./">https://www.example.com），避免搜索引擎认为这是重复内容。</a></li>
+</ul>
+</li>
+<li><strong>302&#x2F;307 临时重定向的典型应用：</strong><ul>
+<li><strong>未登录用户访问受限页面：</strong> 用户访问 my.example.com&#x2F;dashboard，服务器发现用户未登录，会返回一个302&#x2F;307重定向到登录页 my.example.com&#x2F;login，并在URL中附带一个参数告诉登录页登录成功后应该跳回dashboard。</li>
+<li><strong>服务维护：</strong> 网站进行短暂维护时，可以临时将所有请求302重定向到一个静态的“维护中”页面。</li>
+</ul>
+</li>
+</ul>
+<h4 id="经典问题-7"><a href="#经典问题-7" class="headerlink" title="经典问题"></a>经典问题</h4><blockquote>
+<p> 301和302在实际应用中，特别是对SEO，有什么本质区别？</p>
+</blockquote>
+<p>301和302最本质的区别在于它们向客户端和搜索引擎传递的<strong>语义</strong>完全不同，这直接影响了<strong>缓存行为和SEO权重</strong>。</p>
+<ol>
+<li><strong>301 (永久重定向)</strong> 告诉浏览器和搜索引擎：“这个地址<strong>永远废弃</strong>了，请以后都去访问新的地址”。因此：<ul>
+<li><strong>浏览器行为：</strong> 浏览器会强烈地缓存这个重定向关系。在缓存有效期内，下次访问旧地址时，它可能<strong>不再向旧地址发请求</strong>，而是直接从本地缓存读取新地址并发起请求。</li>
+<li><strong>SEO影响：</strong> 这是对SEO最友好的方式。搜索引擎会理解为网站<strong>权重和排名的永久性转移</strong>，它会把旧URL积累的“链接权重”（link juice）几乎全部传递给新的URL。</li>
+</ul>
+</li>
+<li><strong>302 (临时重定向)</strong> 告诉浏览器和搜索引擎：“这个地址<strong>只是临时不在</strong>，请这次先去新地址访问，但下次还应该来访问我这个旧地址”。因此：<ul>
+<li><strong>浏览器行为：</strong> 浏览器<strong>不会缓存</strong>这个重定向关系，每次访问旧地址时，它还是会先请求旧地址，然后再根据服务器的302响应进行跳转。</li>
+<li><strong>SEO影响：</strong> 搜索引擎会认为旧URL依然是主体，<strong>不会将权重传递给新URL</strong>。如果长期错误地使用302进行永久性的域名或URL更换，将导致新页面的权重始终无法提升，对SEO是灾难性的。</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结来说，网站改版、换域名等永久性变更必须使用301；而像登录跳转、服务临时维护等临时性跳转，则应该使用302（或者更精确的303&#x2F;307）。</strong></p>
+<h3 id="4xx-客户端错误-5xx-服务器错误"><a href="#4xx-客户端错误-5xx-服务器错误" class="headerlink" title="4xx 客户端错误 &amp; 5xx 服务器错误"></a>4xx 客户端错误 &amp; 5xx 服务器错误</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant Client as 客户端</span><br><span class="line">    participant Gateway as API网关 (Nginx)</span><br><span class="line">    participant ServiceA as 后端服务A</span><br><span class="line"></span><br><span class="line">    %% 场景一: 触发 502 Bad Gateway</span><br><span class="line">    Client -&gt;&gt; Gateway: 请求 /service-a/data</span><br><span class="line">    Gateway -&gt;&gt; ServiceA: 转发请求</span><br><span class="line">    Note over ServiceA: 服务A内部崩溃或&lt;br&gt;配置错误, 返回了&lt;br&gt;一个无效的响应/或直接断开连接</span><br><span class="line">    ServiceA --x Gateway: 返回无效响应 / 连接重置</span><br><span class="line">    Gateway --&gt;&gt; Client: &lt;b&gt;502 Bad Gateway&lt;/b&gt;</span><br><span class="line"></span><br><span class="line">    %% 场景二: 触发 504 Gateway Timeout</span><br><span class="line">    Client -&gt;&gt; Gateway: 请求 /service-a/report</span><br><span class="line">    Gateway -&gt;&gt; ServiceA: 转发请求</span><br><span class="line">    Note over ServiceA: 这是一个非常耗时的&lt;br&gt;报表计算任务</span><br><span class="line">    loop 等待响应 (例如超过30秒)</span><br><span class="line">        ServiceA -&gt;&gt; ServiceA: 仍在处理中...</span><br><span class="line">    end</span><br><span class="line">    Note over Gateway: 等待超时!</span><br><span class="line">    Gateway --&gt;&gt; Client: &lt;b&gt;504 Gateway Timeout&lt;/b&gt;</span><br><span class="line"></span><br><span class="line">    %% 场景三: 触发 401 Unauthorized</span><br><span class="line">    Client -&gt;&gt; Gateway: 请求 /service-a/secure-data</span><br><span class="line">    Gateway -&gt;&gt; ServiceA: 转发请求</span><br><span class="line">    Note over ServiceA: 服务A检查权限，&lt;br&gt;但客户端未提供有效的认证信息</span><br><span class="line">    ServiceA --x Gateway: 返回 401 Unauthorized</span><br><span class="line">    Gateway --&gt;&gt; Client: &lt;b&gt;401 Unauthorized&lt;/b&gt;</span><br><span class="line"></span><br><span class="line">    %% 场景四: 触发 403 Forbidden</span><br><span class="line">    Client -&gt;&gt; Gateway: 请求 /service-a/private-data</span><br><span class="line">    Gateway -&gt;&gt; ServiceA: 转发请求</span><br><span class="line">    Note over ServiceA: 客户端提供的认证信息&lt;br&gt;无权访问此资源</span><br><span class="line">    ServiceA --x Gateway: 返回 403 Forbidden</span><br><span class="line">    Gateway --&gt;&gt; Client: &lt;b&gt;403 Forbidden&lt;/b&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><strong>4xx (Client Error):</strong> 表明错误是由<strong>客户端</strong>引起的。比如，客户端请求了一个不存在的URL，或者没有提供有效的认证信息。<ul>
+<li><strong>401 (Unauthorized):</strong> <strong>“未认证”</strong>。表示当前请求需要用户认证，但客户端没有提供认证信息，或者认证信息无效（比如Token错误或过期）。它暗示客户端<strong>应该去认证</strong>（或重新认证）。</li>
+<li><strong>403 (Forbidden):</strong> <strong>“未授权”</strong>。表示服务器已经成功识别了客户端的身份，但该用户<strong>没有权限</strong>访问这个资源。它暗示认证是没用的，换个有权限的账号来吧。例如，普通用户尝试访问管理员才能访问的后台接口。</li>
+</ul>
+</li>
+<li><strong>5xx (Server Error):</strong> 表明错误发生在<strong>服务器端</strong>。服务器清楚地知道自己出了问题，无法完成一个看起来有效的请求。<ul>
+<li><strong>502 (Bad Gateway):</strong> 通常是你的<strong>网关（如Nginx）</strong> 尝试去请求后端的<strong>上游服务（如一个Node.js应用）</strong>，但上游服务出了问题，返回了一个无效的响应，或者<strong>上游服务直接挂了，连接被拒绝</strong>。网关无法理解这个响应，于是返回502。<strong>核心是：连接已建立，但上游服务没正常工作。</strong></li>
+<li><strong>504 (Gateway Timeout):</strong> 网关向上游服务发起了请求，但上游服务<strong>在网关设定的超时时间内，一直没有返回任何响应</strong>。网关等不及了，就返回504。<strong>核心是：上游服务活着，但处理太慢了。</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="生活案例-8"><a href="#生活案例-8" class="headerlink" title="生活案例"></a>生活案例</h4><ul>
+<li><strong>4xx 客户端错误</strong> 就像是你去银行办业务：<ul>
+<li><strong>400 Bad Request:</strong> 你填的表单格式不对，业务员看不懂。</li>
+<li><strong>401 Unauthorized:</strong> 你没带身份证，业务员要求你先证明你是你。</li>
+<li><strong>403 Forbidden:</strong> 你带了身份证，但你想查别人的账户，业务员告诉你“你没这个权限”。</li>
+<li><strong>404 Not Found:</strong> 你要办的这个业务，银行根本就没有。</li>
+</ul>
+</li>
+<li><strong>5xx 服务器错误</strong> 则是银行内部的问题：<ul>
+<li><strong>500 Internal Server Error:</strong> 你的请求完全合规，但银行的电脑系统突然死机了。</li>
+<li><strong>502 Bad Gateway:</strong> 你找的大堂经理（网关）去后台找柜员（上游服务）办业务，结果那个柜员给了他一张错误的单据，经理没法处理。</li>
+<li><strong>503 Service Unavailable:</strong> 银行正在年终决算，所有窗口都暂停服务。</li>
+<li><strong>504 Gateway Timeout:</strong> 大堂经理把你的申请交到后台了，但那个业务流程太复杂，后台一直没办完，经理等得不耐烦了，只能告诉你“超时了”。</li>
+</ul>
+</li>
+</ul>
+<h4 id="真实案例-8"><a href="#真实案例-8" class="headerlink" title="真实案例"></a>真实案例</h4><p>在一次线上问题排查中，监控系统报警大量出现502 Bad Gateway错误。</p>
+<ol>
+<li><strong>第一反应：</strong> 这不是客户端的问题，也不是网关本身的问题，而是<strong>网关后面的上游服务出了问题</strong>。</li>
+<li><strong>排查路径：</strong> 登录到API网关（Nginx）服务器，查看错误日志（error.log）。</li>
+<li><strong>发现日志：</strong> 日志中大量出现类似 (111: Connection refused) while connecting to upstream, client: … 的错误。</li>
+<li><strong>定位问题：</strong> Connection refused（连接被拒绝）是一个非常明确的信号，它表明网关尝试去连接上游服务的IP和端口时，上游服务<strong>进程已经不存在或者端口没有被监听</strong>。</li>
+<li><strong>解决问题：</strong> 登录到上游服务所在的服务器，发现对应的应用进程确实已经崩溃。重启服务后，问题解决。</li>
+</ol>
+<h4 id="经典问题-8"><a href="#经典问题-8" class="headerlink" title="经典问题"></a>经典问题</h4><blockquote>
+<p>用户反馈网站打不开，你作为后端开发，会如何排查？如果抓包发现返回了502，这通常意味着什么？</p>
+</blockquote>
+<p>网站打不开的原因有很多，我会从客户端到服务器逐层排查。但如果明确返回了502状态码，那么排查的焦点就可以非常集中。</p>
+<p>502 Bad Gateway是一个服务器端的错误码，但它特指作为<strong>网关或代理</strong>的服务器，在尝试访问上游服务器时，收到了一个<strong>无效的响应</strong>。在现代微服务架构中，这通常是API网关（比如Nginx）返回的。</p>
+<p>收到502，我基本可以断定：</p>
+<ol>
+<li><strong>客户端到网关的网络是通的</strong>。</li>
+<li><strong>网关本身是正常工作的</strong>。</li>
+<li><strong>问题出在网关与某个上游后端服务之间的通信上</strong>。</li>
+</ol>
+<p>我会立刻采取以下排查步骤：</p>
+<ol>
+<li><strong>定位上游服务：</strong> 首先，我会根据用户访问的URL路径，去Nginx的配置文件中查找这个请求被proxy_pass到了哪个具体的上游服务（upstream）。</li>
+<li><strong>查看网关日志：</strong> 登录Nginx服务器，查看error.log。502错误通常伴随着具体的错误原因，最常见的有：<ul>
+<li>connect() failed (111: Connection refused)：这说明上游服务进程挂了，或者防火墙阻止了连接。我会立刻去检查上游服务的健康状态。</li>
+<li>upstream prematurely closed connection：这说明连接建立了，但上游服务在返回完整响应前就提前关闭了连接，很可能是上游服务代码内部发生了崩溃。</li>
+<li>upstream sent invalid header：上游服务返回的HTTP响应头不规范，Nginx无法解析。</li>
+</ul>
+</li>
+<li><strong>检查上游服务：</strong> 根据网关日志的线索，直接去排查对应的上游服务。查看它的应用日志、系统资源（CPU、内存）使用情况，确定它为什么没有正常响应网关的请求。</li>
+</ol>
+<h2 id="HTTP首部"><a href="#HTTP首部" class="headerlink" title="HTTP首部"></a>HTTP首部</h2><h3 id="缓存控制首部"><a href="#缓存控制首部" class="headerlink" title="缓存控制首部"></a>缓存控制首部</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A(开始: 浏览器准备发起请求) --&gt; B&#123;检查本地缓存&#125;;</span><br><span class="line">    B -- 有缓存 --&gt; C&#123;检查强制缓存&#125;;</span><br><span class="line">    B -- 无缓存 --&gt; I(直接向服务器发起请求);</span><br><span class="line"></span><br><span class="line">    C -- 缓存有效 --&gt; D[直接使用缓存, 状态码200];</span><br><span class="line">    C -- 缓存无效 --&gt; E[发起协商缓存请求, 携带If-None-Match 或 If-Modified-Since];</span><br><span class="line"></span><br><span class="line">    E --&gt; F&#123;服务器验证&#125;;</span><br><span class="line">    F -- 资源未改变 --&gt; G[返回304 Not Modified];</span><br><span class="line">    F -- 资源已改变 --&gt; H[返回200 OK和新资源];</span><br><span class="line"></span><br><span class="line">    G --&gt; K(浏览器使用本地缓存并更新过期时间);</span><br><span class="line">    H --&gt; L(浏览器使用新资源并更新缓存);</span><br><span class="line">    I --&gt; H;</span><br><span class="line"></span><br><span class="line">    subgraph &quot;客户端决策区&quot;</span><br><span class="line">        A; B; C; E;</span><br><span class="line">    end</span><br><span class="line">    subgraph &quot;服务器决策区&quot;</span><br><span class="line">        F;</span><br><span class="line">    end</span><br><span class="line">    subgraph &quot;最终结果&quot;</span><br><span class="line">         D; K; L;</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    style D fill:#cde,stroke:#333,stroke-width:2px</span><br><span class="line">    style K fill:#cde,stroke:#333,stroke-width:2px</span><br></pre></td></tr></table></figure>
+
+
+
+<p>HTTP缓存分为两大类：**强制缓存（也叫强缓存）*<em>和*<em>协商缓存</em></em>。</p>
+<ul>
+<li><p><strong>强制缓存 (Strong Caching):</strong> 浏览器在发起请求前，先检查本地缓存的副本是否<strong>在有效期内</strong>。如果在，就<strong>不向服务器发送任何请求</strong>，直接使用本地副本，HTTP状态码是 200 OK (from memory cache &#x2F; from disk cache)。</p>
+</li>
+<li><p><strong>协商缓存 (Negotiation Caching):</strong> 当强制缓存失效（过期）后，浏览器会向服务器<strong>发起一个验证请求</strong>。服务器根据请求中的验证信息判断资源是否有更新。如果没有更新，服务器返回一个<strong>极小的304 Not Modified响应</strong>，不包含响应体，告诉浏览器继续使用本地缓存。如果有更新，才返回200 OK和新的完整资源。</p>
+</li>
+<li><p><strong>Cache-Control的绝对统治地位：</strong> 《图解HTTP》中提到的Pragma: no-cache是HTTP&#x2F;1.0的产物，用于兼容性。Expires也是HTTP&#x2F;1.0的，它使用<strong>绝对时间</strong>，如果客户端和服务器时间不同步，就会出问题。在HTTP&#x2F;1.1中，Cache-Control使用<strong>相对时间</strong>（如 max-age&#x3D;3600 秒），并且指令更丰富，<strong>已完全取代了Expires</strong>。当Cache-Control和Expires同时存在时，Cache-Control的优先级更高。</p>
+</li>
+<li><p><strong>ETag优于Last-Modified：</strong></p>
+<ul>
+<li>Last-Modified（最后修改时间）是协商缓存的一种验证方式，但它存在两个问题：1) 时间戳的精度只能到秒，一秒内多次修改无法识别；2) 某些服务器上，只是打开文件但未修改，也可能导致修改时间变化。</li>
+<li>ETag（实体标签）是服务器为资源生成的唯一标识符（类似文件指纹）。只要资源内容有任何变动，ETag就会改变。它比Last-Modified更精确、更可靠。</li>
+<li><strong>业界标准：</strong> 当ETag和Last-Modified同时存在时，服务器<strong>必须优先使用ETag</strong> 来进行验证。</li>
+</ul>
+</li>
+</ul>
+<h4 id="生活案例-9"><a href="#生活案例-9" class="headerlink" title="生活案例"></a>生活案例</h4><ul>
+<li><strong>强制缓存</strong>就像是你冰箱里的<strong>牛奶</strong>。你每次想喝牛奶时，都会先看一眼保质期（Expires &#x2F; Cache-Control: max-age）。只要还在保质期内，你就直接拿出来喝，根本不用出门去超市问。</li>
+<li><strong>协商缓存</strong>就像是牛奶过期了，但你觉得可能还能喝。你不会直接扔掉，而是会<strong>打开闻一闻</strong>（发起协商缓存请求）。如果闻起来没问题（304 Not Modified），你就继续喝了。如果闻起来坏了（200 OK + 新牛奶），你才会去超市买一瓶新的回来。ETag就像是牛奶包装上的一个独特的批次码，比单看生产日期更可靠。</li>
+</ul>
+<h4 id="真实案例-9"><a href="#真实案例-9" class="headerlink" title="真实案例"></a>真实案例</h4><p> 前端性能优化中对不同资源设置缓存策略。</p>
+<ul>
+<li><strong>不常变动的资源（如库文件 antd.js, vue.js, logo图片）：</strong><ul>
+<li><strong>策略：</strong> 设置一个非常长的<strong>强制缓存</strong>时间。比如 Cache-Control: public, max-age&#x3D;31536000 (一年)。</li>
+<li><strong>配合：</strong> 文件名中通常会带上内容的哈希值，如antd.a3b4c5.js。一旦文件内容有变动，哈希值会变，文件名也变了，这会触发一个新的URL请求。这种策略叫**“内容哈希命名”（Content-addressable storage）**。</li>
+<li><strong>效果：</strong> 用户第一次访问后，这些资源会被永久缓存，后续访问速度极快。</li>
+</ul>
+</li>
+<li><strong>经常变动的资源（如业务逻辑index.js, 主index.html）：</strong><ul>
+<li><strong>策略：</strong> 不设置或设置很短的强制缓存，但<strong>必须开启协商缓存</strong>。比如 Cache-Control: no-cache。no-cache并不是“不缓存”，而是“每次都必须去服务器验证一下”。</li>
+<li><strong>效果：</strong> 保证了用户总能获取到最新的业务逻辑，同时在逻辑未变时，又能通过304响应来利用本地缓存，节省带宽。</li>
+</ul>
+</li>
+</ul>
+<h4 id="经典问题-9"><a href="#经典问题-9" class="headerlink" title="经典问题"></a>经典问题</h4><blockquote>
+<p>请详细描述一下浏览器的缓存机制，特别是强制缓存和协商缓存的区别和联系。</p>
+</blockquote>
+<p>浏览器缓存是HTTP性能优化的核心机制，它主要分为强制缓存和协商缓存两大类，两者是协同工作的。</p>
+<p><strong>1. 强制缓存（Strong Caching）：</strong><br>* <strong>触发机制：</strong> 浏览器在请求资源前，会先检查本地缓存的副本是否在有效期内。<br>* <strong>相关头部：</strong> 主要由服务器响应中的Cache-Control头（HTTP&#x2F;1.1，优先级高）和Expires头（HTTP&#x2F;1.0）控制。Cache-Control: max-age&#x3D;3600表示资源在3600秒内有效。<br>* <strong>表现：</strong> 如果缓存有效，浏览器<strong>不会向服务器发送任何请求</strong>，而是直接从本地内存或磁盘中读取资源，网络请求的状态码会是200 OK (from memory cache&#x2F;disk cache)，速度极快。</p>
+<p><strong>2. 协商缓存（Negotiation Caching）：</strong><br>* <strong>触发机制：</strong> 当强制缓存过期后（或者收到了Cache-Control: no-cache指令），浏览器<strong>必须向服务器发起一次验证请求</strong>。<br>* <strong>相关头部：</strong> 这个验证请求会携带一些“凭证”：<br>* If-None-Match: 携带上一次响应中的ETag值。<br>* If-Modified-Since: 携带上一次响应中的Last-Modified值。<br>* <strong>服务器行为：</strong> 服务器收到请求后，会用这些凭证与当前资源进行比对。<br>* 如果资源<strong>未改变</strong>，服务器返回一个<strong>304 Not Modified</strong>状态码，响应体为空，告诉浏览器“你本地的版本还能用”。<br>* 如果资源<strong>已改变</strong>，服务器返回一个<strong>200 OK</strong>状态码，并在响应体中附上<strong>全新的资源内容</strong>和新的ETag&#x2F;Last-Modified。</p>
+<p><strong>区别与联系：</strong></p>
+<ul>
+<li><strong>联系：</strong> 两者是前后衔接的流程。浏览器总是<strong>先检查强制缓存</strong>，强制缓存失效后，<strong>再发起协商缓存</strong>。</li>
+<li><strong>区别：</strong> 强制缓存的核心是**“不问”<strong>，在有效期内完全不与服务器通信；而协商缓存的核心是</strong>“要问”**，每次都会与服务器通信，但服务器可能只返回一个极简的304响应，而不是完整的资源。</li>
+</ul>
+<p>在性能上，<strong>强制缓存 &gt; 协商缓存（命中304） &gt; 无缓存（完整200）</strong>。</p>
+<h3 id="内容协商相关首部"><a href="#内容协商相关首部" class="headerlink" title="内容协商相关首部"></a>内容协商相关首部</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant Client as 浏览器</span><br><span class="line">    participant Server as 服务器</span><br><span class="line"></span><br><span class="line">    Client-&gt;&gt;Server: 发起请求 (GET /article/123)</span><br><span class="line">    Note right of Client: 请求头: Accept-Language: zh-CN, Accept-Encoding: br, gzip</span><br><span class="line">    Server-&gt;&gt;Server: 解析请求头，选择压缩方式</span><br><span class="line">    Server--&gt;&gt;Client: 返回响应 (200 OK)</span><br><span class="line">    Note right of Client: Content-Language: zh-CN, Content-Encoding: br</span><br><span class="line"></span><br><span class="line">    Note over Client: 浏览器解压并渲染页面</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><strong>Accept头部的“退化”与“重生”：</strong><ul>
+<li><strong>传统Web页面：</strong> 在过去，浏览器发送的Accept头部非常复杂，比如Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;webp,<em>&#x2F;</em>;q&#x3D;0.8。它试图告诉服务器它能处理的各种内容类型。但实际上，大多数Web服务器都<strong>忽略</strong>了这个复杂的头部，因为它们通常只返回text&#x2F;html。</li>
+<li><strong>现代API（RESTful）：</strong> Accept头部在API交互中迎来了<strong>重生</strong>。一个设计良好的RESTful API，其同一个端点（URL）可以根据客户端Accept头部的不同，返回不同格式的数据。例如：<ul>
+<li>GET &#x2F;api&#x2F;users&#x2F;1 + Accept: application&#x2F;json -&gt; 返回JSON格式的用户数据。</li>
+<li>GET &#x2F;api&#x2F;users&#x2F;1 + Accept: application&#x2F;xml -&gt; 返回XML格式的用户数据。<br>这使得API具有更好的灵活性和向后兼容性。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>权重值q：</strong> q因子（quality value）是内容协商的量化工具，范围从0到1。它告诉服务器不同选项的<strong>优先级</strong>。例如 Accept-Language: fr-CH, fr;q&#x3D;0.9, en;q&#x3D;0.8 表示客户端最想要瑞士法语，其次是普通法语，再次是英语。</li>
+<li><strong>Accept-Encoding的重要性：</strong> 这是内容协商中<strong>最常用、最有效</strong>的首部。浏览器通过发送 Accept-Encoding: gzip, deflate, br 告诉服务器它支持这三种解压算法，服务器则可以从中选择一种来压缩响应体，显著减少传输体积。</li>
+</ul>
+<h4 id="生活案例-10"><a href="#生活案例-10" class="headerlink" title="生活案例"></a>生活案例</h4><p>内容协商就像你去一家<strong>国际餐厅</strong>点菜。</p>
+<ul>
+<li>你对服务员（<strong>服务器</strong>）说：“我想点一份牛排（<strong>URL</strong>），我能看懂<strong>中文和英文菜单</strong>（Accept-Language），我喜欢吃<strong>七分熟</strong>的（Accept的一个变体，表示偏好），而且我<strong>不吃辣</strong>（Accept-Encoding的一个变体，表示能力限制）。”</li>
+<li>服务员（<strong>服务器</strong>）听了你的要求，去厨房看了一下，发现今天有中文菜单，并且可以做七分熟不辣的牛排。</li>
+<li>最后，他给你端上了<strong>七分熟的牛排</strong>，并附上了一张<strong>中文账单</strong>（Content-Language: zh）。</li>
+</ul>
+<h4 id="真实案例-10"><a href="#真实案例-10" class="headerlink" title="真实案例"></a>真实案例</h4><p>设计一个图片服务API，需要为不同设备提供最优化的图片格式。</p>
+<ul>
+<li><strong>背景：</strong> 现代浏览器（如Chrome）支持一种名为 <strong>WebP</strong> 的新图片格式，它在同等画质下比JPEG和PNG的体积小很多。但老浏览器不支持。</li>
+<li><strong>实现：</strong><ol>
+<li>服务器上为同一张图片存储多个版本，如 image.jpg, image.png, image.webp。</li>
+<li>现代浏览器发起的图片请求，其Accept头会包含image&#x2F;webp，例如：Accept: image&#x2F;avif,image&#x2F;webp,image&#x2F;apng,image&#x2F;<em>,</em>&#x2F;*;q&#x3D;0.8。</li>
+<li>服务器（或CDN边缘节点）接收到请求后，检查Accept头部。如果发现其中包含image&#x2F;webp，就<strong>优先返回image.webp文件</strong>。</li>
+<li>如果Accept头中没有image&#x2F;webp（说明是老浏览器），则根据情况返回image.jpg或image.png。</li>
+</ol>
+</li>
+<li><strong>效果：</strong> 通过内容协商，为现代浏览器用户提供了加载速度更快的WebP图片，同时保持了对老浏览器的兼容性，实现了渐进式增强的性能优化。</li>
+</ul>
+<h4 id="经典问题-10"><a href="#经典问题-10" class="headerlink" title="经典问题"></a>经典问题</h4><blockquote>
+<p>Accept-Encoding和Content-Encoding是如何配合工作的？这个机制有什么好处？</p>
+</blockquote>
+<p>Accept-Encoding和Content-Encoding是HTTP内容协商中用于<strong>传输压缩</strong>的一对核心请求&#x2F;响应头，它们共同实现了一种高效的数据传输机制。</p>
+<p><strong>工作流程如下：</strong></p>
+<ol>
+<li><strong>客户端声明能力：</strong> 浏览器在发起请求时，通过Accept-Encoding请求头告诉服务器自己支持哪些解压算法。例如：Accept-Encoding: gzip, deflate, br，这表示浏览器能处理gzip、deflate和brotli这三种格式的压缩数据。</li>
+<li><strong>服务器选择并执行压缩：</strong> 服务器收到请求后，会检查这个头部。如果服务器也支持这些算法，并且认为对响应内容进行压缩是有益的（通常对文本类资源有效），它就会选择其中一种算法（通常是压缩率最高的Brotli或最通用的gzip）来压缩响应体。</li>
+<li><strong>服务器告知压缩方式：</strong> 服务器在返回的HTTP响应中，通过Content-Encoding响应头明确告知客户端，它实际使用了哪种算法进行压缩。例如：Content-Encoding: br。</li>
+<li><strong>客户端解码：</strong> 浏览器接收到响应后，根据Content-Encoding头的值，调用相应的解压算法对响应体进行解压，最终得到原始的、可渲染的内容。</li>
+</ol>
+<p><strong>这个机制最大的好处是：</strong></p>
+<ul>
+<li><strong>显著减少了网络传输的数据量</strong>，通常能将HTML&#x2F;CSS&#x2F;JS等文本资源压缩到原始大小的20%-30%，从而<strong>大大加快了页面加载速度，降低了带宽成本，并改善了用户体验</strong>，尤其是在移动网络环境下效果非常明显。这是一种对客户端和服务器都非常有益的双赢机制。</li>
+</ul>
+<h3 id="连接管理首部"><a href="#连接管理首部" class="headerlink" title="连接管理首部"></a>连接管理首部</h3><ul>
+<li><strong>Connection 首部：</strong> 这是一个非常特殊的“元”首部，它有两个核心作用：<ol>
+<li><strong>控制连接的关闭&#x2F;保持：</strong> 它的值可以是close或keep-alive。在HTTP&#x2F;1.1中，默认是持久连接，所以通常只有在想明确关闭连接时，才会发送 Connection: close。</li>
+<li><strong>标识“逐跳”首部：</strong> 这是它更复杂也更重要的作用。Connection首部可以列出一些其他的首部字段名，这些被列出的首部字段被认为是“逐跳”的，<strong>绝不能</strong>被代理服务器转发到下一跳。</li>
+</ol>
+</li>
+<li><strong>Keep-Alive 首部：</strong> 这是一个<strong>已过时</strong>的、非标准的头部，最初在HTTP&#x2F;1.0的持久连接中被引入。它通常包含一些参数，比如 timeout（连接空闲超时时间）和 max（此连接上可处理的最大请求数）。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant C as 客户端</span><br><span class="line">    participant P as 代理服务器</span><br><span class="line">    participant S as 源服务器</span><br><span class="line"></span><br><span class="line">    Note over C,S: 客户端想升级到WebSocket协议</span><br><span class="line">    C-&gt;&gt;P: 请求:&lt;br&gt;Host: ...&lt;br&gt;&lt;b&gt;Upgrade: websocket&lt;/b&gt;&lt;br&gt;&lt;b&gt;Connection: Upgrade&lt;/b&gt;</span><br><span class="line"></span><br><span class="line">    Note over P: 代理服务器处理...</span><br><span class="line">    Note over P: 1. 看到Connection: Upgrade&lt;br&gt;2. 知道Upgrade是逐跳首部&lt;br&gt;3. &lt;b&gt;删除这两个首部&lt;/b&gt;再转发</span><br><span class="line">    P-&gt;&gt;S: 转发后的请求:&lt;br&gt;Host: ...&lt;br&gt;(Upgrade和Connection已被删除)</span><br><span class="line">    </span><br><span class="line">    Note over S: 源服务器收到的是一个普通的HTTP请求</span><br></pre></td></tr></table></figure>
+
+<h4 id="经典问题-11"><a href="#经典问题-11" class="headerlink" title="经典问题"></a>经典问题</h4><blockquote>
+<p>Connection头部字段有什么作用？</p>
+</blockquote>
+<p>Connection头部在HTTP&#x2F;1.1中是一个非常重要的“逐跳”首部（hop-by-hop header），它主要有两个核心作用：</p>
+<ol>
+<li><strong>控制连接的状态：</strong> 它的值可以是keep-alive或close。在HTTP&#x2F;1.1中，连接默认是持久的，所以我们通常只在需要明确指示在响应后关闭连接时，才会发送Connection: close。这可以用来优雅地通知对端，这是我最后一个请求&#x2F;响应了。</li>
+<li><strong>管理逐跳首部：</strong> 这是它更底层、更关键的作用。Connection头部的值可以是一个逗号分隔的<strong>其他首部字段名列表</strong>。所有被列在这里的首部字段，都被认为是“逐跳”的，即它们只对当前的单次TCP连接有效，<strong>绝不能被代理服务器转发给下一个节点</strong>。在转发报文前，代理必须删除Connection首部以及它里面列出的所有首部。最典型的例子就是Upgrade头部（用于协议升级，如WebSocket），它总是与Connection: Upgrade一起出现，以确保只有直接相连的服务器才会处理这个升级请求。</li>
+</ol>
+<h2 id="TCP-IP基础"><a href="#TCP-IP基础" class="headerlink" title="TCP&#x2F;IP基础"></a>TCP&#x2F;IP基础</h2><h3 id="OSI七层-TCP-IP四层模型及协议对应关系"><a href="#OSI七层-TCP-IP四层模型及协议对应关系" class="headerlink" title="OSI七层 &amp; TCP&#x2F;IP四层模型及协议对应关系"></a>OSI七层 &amp; TCP&#x2F;IP四层模型及协议对应关系</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TD</span><br><span class="line">  %% OSI 七层模型</span><br><span class="line">  subgraph OSI七层模型</span><br><span class="line">    OSI7[&quot;应用层&lt;br&gt;🌐&quot;]:::osi7</span><br><span class="line">    OSI6[&quot;表示层&lt;br&gt;📝&quot;]:::osi6</span><br><span class="line">    OSI5[&quot;会话层&lt;br&gt;🔗&quot;]:::osi5</span><br><span class="line">    OSI4[&quot;传输层&lt;br&gt;📦&quot;]:::osi4</span><br><span class="line">    OSI3[&quot;网络层&lt;br&gt;🌍&quot;]:::osi3</span><br><span class="line">    OSI2[&quot;数据链路层&lt;br&gt;🪢&quot;]:::osi2</span><br><span class="line">    OSI1[&quot;物理层&lt;br&gt;⚡&quot;]:::osi1</span><br><span class="line">    OSI7--&gt;OSI6--&gt;OSI5--&gt;OSI4--&gt;OSI3--&gt;OSI2--&gt;OSI1</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  %% TCP/IP 四层模型</span><br><span class="line">  subgraph TCPIP四层模型</span><br><span class="line">    TCP4[&quot;应用层&lt;br&gt;🌐&quot;]:::tcp4</span><br><span class="line">    TCP3[&quot;传输层&lt;br&gt;📦&quot;]:::tcp3</span><br><span class="line">    TCP2[&quot;网络层&lt;br&gt;🌍&quot;]:::tcp2</span><br><span class="line">    TCP1[&quot;链路层&lt;br&gt;🪢&quot;]:::tcp1</span><br><span class="line">    TCP4--&gt;TCP3--&gt;TCP2--&gt;TCP1</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  %% 协议举例</span><br><span class="line">  subgraph 协议</span><br><span class="line">    APP[&quot;HTTP&lt;br&gt;FTP&lt;br&gt;SMTP&lt;br&gt;DNS&lt;br&gt;Telnet&quot;]:::app</span><br><span class="line">    TRANS[&quot;TCP&lt;br&gt;UDP&quot;]:::trans</span><br><span class="line">    NET[&quot;IP&lt;br&gt;ICMP&lt;br&gt;ARP&quot;]:::net</span><br><span class="line">    LINK[&quot;Ethernet&lt;br&gt;PPP&lt;br&gt;Wi-Fi&quot;]:::link</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  %% 对应关系</span><br><span class="line">  TCP4---APP</span><br><span class="line">  OSI7 &amp; OSI6 &amp; OSI5---APP</span><br><span class="line">  TCP3---TRANS</span><br><span class="line">  OSI4---TRANS</span><br><span class="line">  TCP2---NET</span><br><span class="line">  OSI3---NET</span><br><span class="line">  TCP1---LINK</span><br><span class="line">  OSI2 &amp; OSI1---LINK</span><br><span class="line"></span><br><span class="line">  %% 样式</span><br><span class="line">  classDef osi7 fill:#e0e7ff,stroke:#6366f1,stroke-width:2px;</span><br><span class="line">  classDef osi6 fill:#c7d2fe,stroke:#6366f1,stroke-width:2px;</span><br><span class="line">  classDef osi5 fill:#a5b4fc,stroke:#6366f1,stroke-width:2px;</span><br><span class="line">  classDef osi4 fill:#f9fafb,stroke:#6366f1,stroke-width:2px;</span><br><span class="line">  classDef osi3 fill:#a7f3d0,stroke:#059669,stroke-width:2px;</span><br><span class="line">  classDef osi2 fill:#fde68a,stroke:#b45309,stroke-width:2px;</span><br><span class="line">  classDef osi1 fill:#fca5a5,stroke:#b91c1c,stroke-width:2px;</span><br><span class="line">  classDef tcp4 fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px;</span><br><span class="line">  classDef tcp3 fill:#bae6fd,stroke:#0369a1,stroke-width:2px;</span><br><span class="line">  classDef tcp2 fill:#a7f3d0,stroke:#059669,stroke-width:2px;</span><br><span class="line">  classDef tcp1 fill:#fef9c3,stroke:#ca8a04,stroke-width:2px;</span><br><span class="line">  classDef app fill:#f3e8ff,stroke:#9333ea,stroke-width:2px;</span><br><span class="line">  classDef trans fill:#fef3c7,stroke:#ca8a04,stroke-width:2px;</span><br><span class="line">  classDef net fill:#bbf7d0,stroke:#22d3ee,stroke-width:2px;</span><br><span class="line">  classDef link fill:#fce7f3,stroke:#db2777,stroke-width:2px;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据封装"><a href="#数据封装" class="headerlink" title="数据封装"></a>数据封装</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">  HTTP[&quot;🌐 HTTP数据&lt;br&gt;应用层&quot;]:::app</span><br><span class="line">  HTTP--&quot;封装HTTP头部&quot;--&gt;TCP[&quot;📦 TCP报文段&lt;br&gt;传输层&quot;]:::trans</span><br><span class="line">  TCP--&quot;封装TCP头部&quot;--&gt;IP[&quot;🌍 IP数据包&lt;br&gt;网络层&quot;]:::net</span><br><span class="line">  IP--&quot;封装IP头部&quot;--&gt;ETH[&quot;🪢 以太网帧&lt;br&gt;链路层&quot;]:::link</span><br><span class="line">  ETH--&quot;封装MAC帧头部&quot;--&gt;BITS[&quot;⚡ 比特流&lt;br&gt;物理层&quot;]:::phy</span><br><span class="line"></span><br><span class="line">  BITS--&gt;PHYNET[&quot;🌐 物理网络&quot;]:::phy</span><br><span class="line"></span><br><span class="line">  classDef app fill:#e0e7ff,stroke:#6366f1,stroke-width:2px;</span><br><span class="line">  classDef trans fill:#fef3c7,stroke:#ca8a04,stroke-width:2px;</span><br><span class="line">  classDef net fill:#bbf7d0,stroke:#22d3ee,stroke-width:2px;</span><br><span class="line">  classDef link fill:#fce7f3,stroke:#db2777,stroke-width:2px;</span><br><span class="line">  classDef phy fill:#fca5a5,stroke:#b91c1c,stroke-width:2px;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="生活案例-11"><a href="#生活案例-11" class="headerlink" title="生活案例"></a>生活案例</h3><p>TCP&#x2F;IP的数据传输就像一次<strong>国际快递</strong>。</p>
+<ul>
+<li><strong>应用层 (HTTP):</strong> 你要寄送的“商品”（比如一部手机）。</li>
+<li><strong>传输层 (TCP):</strong> 你把手机装进一个<strong>带有联系方式的</strong>快递盒。盒子上写着你和收件人的电话（<strong>端口号</strong>），并选择了“顺丰保价”（<strong>TCP</strong>，确保可靠送达）。</li>
+<li><strong>网络层 (IP):</strong> 快递公司在你的盒子上贴上国际运单，上面有收件人的详细家庭地址（<strong>IP地址</strong>）。</li>
+<li><strong>链路层 (MAC):</strong> 本地快递员来取件，他只关心下一站是哪个集散中心（下一个路由器的<strong>MAC地址</strong>），把你的包裹装上他的车。</li>
+<li>整个过程，你的“商品”被一层层地包装起来，这就是<strong>封装（Encapsulation）</strong>。</li>
+</ul>
+<h3 id="真实案例-11"><a href="#真实案例-11" class="headerlink" title="真实案例"></a>真实案例</h3><p>思考一个在线直播应用。它同时需要传输两种数据：</p>
+<ol>
+<li><strong>控制信令：</strong> 你发送的弹幕、点赞、送礼物。这些信息<strong>绝对不能丢失</strong>，必须准确送达。因此，承载这些信令的协议（比如一个自定义协议或HTTP）必须运行在<strong>TCP</strong>之上。</li>
+<li><strong>音视频流：</strong> 直播的画面和声音。这些数据量巨大，更强调<strong>实时性</strong>。偶尔丢掉一两帧画面（表现为轻微卡顿或花屏）是可以接受的，但不能因为重传一个旧数据包而导致整个画面延迟。因此，音视频流数据通常运行在<strong>UDP</strong>之上（使用RTP&#x2F;RTCP等协议）。</li>
+</ol>
+<h3 id="经典问题-12"><a href="#经典问题-12" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>简单说说TCP和UDP的区别以及它们各自的应用场景。</p>
+</blockquote>
+<p>TCP和UDP都位于传输层，但它们的设计哲学和应用场景完全不同。</p>
+<p><strong>核心区别有三点：</strong></p>
+<ol>
+<li><strong>连接性与可靠性：</strong> TCP是<strong>面向连接</strong>的，通信前必须“三次握手”建立连接，它提供<strong>可靠的、有序的</strong>数据传输，保证不丢包、不乱序。而UDP是<strong>无连接</strong>的，它只管发，不保证对方是否收到，是一种“尽力而为”的<strong>不可靠</strong>传输。</li>
+<li><strong>开销与速度：</strong> 因为TCP要维护连接状态、进行确认、重传和拥塞控制，所以它的头部开销大（至少20字节），速度相对较慢。UDP没有这些复杂的机制，头部开销极小（固定8字节），速度非常快。</li>
+<li><strong>数据形态：</strong> TCP提供的是<strong>字节流</strong>服务，数据像水流一样没有边界。UDP提供的是<strong>数据报</strong>服务，发送方发送一个个独立的数据包，接收方也必须按包接收。</li>
+</ol>
+<p><strong>应用场景的选择完全基于这些区别：</strong></p>
+<ul>
+<li><strong>选择TCP的场景：</strong> 凡是要求数据<strong>绝对完整、准确</strong>的应用，都必须使用TCP。例如：<strong>HTTP&#x2F;HTTPS</strong>浏览网页、<strong>FTP</strong>文件传输、<strong>SMTP&#x2F;POP3</strong>电子邮件。</li>
+<li><strong>选择UDP的场景：</strong> 凡是追求<strong>实时性</strong>、能容忍一定丢包率的应用，都适合UDP。例如：<strong>DNS解析</strong>（追求快速响应）、<strong>音视频通话&#x2F;直播</strong>、<strong>在线游戏</strong>的数据同步。</li>
+</ul>
+<h3 id="补充知识-2"><a href="#补充知识-2" class="headerlink" title="补充知识"></a>补充知识</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    %% 配色阶段一：DNS 查询</span><br><span class="line">    rect rgb(237,247,255)</span><br><span class="line">        participant Browser as 浏览器&lt;br/&gt;&amp;#128187;</span><br><span class="line">        participant DNS_Server as DNS服务器&lt;br/&gt;&amp;#128424;</span><br><span class="line">        participant Web_Server as Web服务器&lt;br/&gt;&amp;#128187;</span><br><span class="line">        Note over Browser, DNS_Server: &lt;b&gt;第一步：域名解析（DNS）&lt;/b&gt;</span><br><span class="line">        Browser-&gt;&gt;DNS_Server: 1. 查询域名IP&lt;br/&gt;（www.example.com）</span><br><span class="line">        DNS_Server--&gt;&gt;Browser: 2. 返回IP地址&lt;br/&gt;（93.184.216.34）</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% 配色阶段二：TCP连接（三次握手）</span><br><span class="line">    rect rgb(230,255,239)</span><br><span class="line">        Note over Browser, Web_Server: &lt;b&gt;第二步：建立TCP连接（三次握手）&lt;/b&gt;</span><br><span class="line">        Browser-&gt;&gt;Web_Server: 3. SYN（请求建立连接）</span><br><span class="line">        Web_Server--&gt;&gt;Browser: 4. SYN, ACK（确认+回应请求）</span><br><span class="line">        Browser-&gt;&gt;Web_Server: 5. ACK（连接建立完成）</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% 配色阶段三：HTTP/HTTPS请求</span><br><span class="line">    rect rgb(255,248,225)</span><br><span class="line">        Note over Browser, Web_Server: &lt;b&gt;第三步：发送HTTP请求/响应&lt;/b&gt;</span><br><span class="line">        Browser-&gt;&gt;Web_Server: 6. 发送HTTP请求&lt;br/&gt;（如GET /index.html）</span><br><span class="line">        Web_Server--&gt;&gt;Browser: 7. 返回HTTP响应&lt;br/&gt;（如200 OK，网页内容）</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% 可选阶段：关闭连接</span><br><span class="line">    rect rgb(245,245,245)</span><br><span class="line">        Note over Browser, Web_Server: &lt;b&gt;第四步：关闭TCP连接（四次挥手）&lt;/b&gt;</span><br><span class="line">        Browser-&gt;&gt;Web_Server: 8. FIN（请求断开连接）</span><br><span class="line">        Web_Server--&gt;&gt;Browser: 9. ACK（确认收到断开请求）</span><br><span class="line">        Web_Server-&gt;&gt;Browser: 10. FIN（服务器断开）</span><br><span class="line">        Browser--&gt;&gt;Web_Server: 11. ACK（断开完成）</span><br><span class="line">    end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h4><p>DNS是互联网的基石服务。不理解DNS，你甚至不知道请求该发往何处。它是所有网络请求的第一步。</p>
+<ol>
+<li><strong>缓存是关键：</strong> 为了性能，DNS查询结果会被层层缓存，顺序是：<strong>浏览器缓存 -&gt; 操作系统缓存 -&gt; 路由器缓存 -&gt; 本地DNS服务器缓存</strong>。这极大地减少了对根DNS服务器的请求压力。</li>
+<li><strong>记录类型多样化：</strong> 除了将域名指向IPv4地址的A记录，还有指向IPv6的AAAA记录，定义别名的CNAME记录，以及邮件服务器的MX记录等。</li>
+<li><strong>智能DNS与负载均衡：</strong> 现代DNS服务（如CDN服务商提供的GeoDNS）能识别用户的地理位置，返回离他最近的服务器IP地址，这是实现CDN内容就近分发和全局负载均衡的核心技术。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    subgraph DNS查询流程</span><br><span class="line">        direction TB</span><br><span class="line">        A[&quot;fa:fa-chrome 浏览器&quot;]</span><br><span class="line">        B&#123;&#123;&quot;fa:fa-database 本地缓存有吗?&quot;&#125;&#125;</span><br><span class="line">        C[&quot;fa:fa-arrow-rotate-left 直接返回IP&quot;]</span><br><span class="line">        D[&quot;fa:fa-network-wired 本地DNS服务器&quot;]</span><br><span class="line">        E[&quot;fa:fa-globe 根DNS服务器&quot;]</span><br><span class="line">        F[&quot;fa:fa-layer-group .com顶级域DNS&quot;]</span><br><span class="line">        G[&quot;fa:fa-server 权威DNS example.com&quot;]</span><br><span class="line"></span><br><span class="line">        %% 主流程</span><br><span class="line">        A -- &quot;1. 查缓存&quot; --&gt; B</span><br><span class="line">        B -- &quot;有&quot; --&gt; C</span><br><span class="line">        C -- &quot;返回IP&quot; --&gt; A</span><br><span class="line">        B -- &quot;没有&quot; --&gt; D</span><br><span class="line">        D -- &quot;2. 递归/迭代查询&quot; --&gt; E</span><br><span class="line">        E --&gt; F</span><br><span class="line">        F --&gt; G</span><br><span class="line">        G -- &quot;IP地址&quot; --&gt; D</span><br><span class="line">        D -- &quot;缓存结果并返回&quot; --&gt; A</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% 节点配色，兼容性极佳</span><br><span class="line">    style A fill:#e8f4fd,stroke:#1976d2,stroke-width:2px</span><br><span class="line">    style B fill:#fff6db,stroke:#e6a500,stroke-width:2px</span><br><span class="line">    style C fill:#d9f9e5,stroke:#21a366,stroke-width:2px</span><br><span class="line">    style D fill:#f3e8fd,stroke:#9c27b0,stroke-width:2px</span><br><span class="line">    style E fill:#ffe5f1,stroke:#d81b60,stroke-width:2px</span><br><span class="line">    style F fill:#fef6e0,stroke:#ff9800,stroke-width:2px</span><br><span class="line">    style G fill:#ffecec,stroke:#d72638,stroke-width:2px</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>面试题:  除了A记录，你还知道哪些常见的DNS记录类型，它们分别有什么作用？</p>
+</blockquote>
+<p>除了最常见的、将域名映射到IPv4地址的<strong>A记录</strong>外，我还了解以下几种关键的DNS记录：</p>
+<ul>
+<li><strong>AAAA记录：</strong> 功能与A记录类似，但用于将域名映射到<strong>IPv6地址</strong>，是IPv6时代的基础。</li>
+<li><strong>CNAME记录（别名记录）：</strong> 允许将一个域名指向另一个域名。比如，我可以把blog.example.com的CNAME记录指向user.github.io，这样访问我的博客就会被解析到GitHub Pages的服务。它常用于CDN加速，将用户域名指向CDN服务商的域名。</li>
+<li><strong>MX记录（邮件交换记录）：</strong> 指向负责处理该域电子邮件的服务器。比如example.com的MX记录会指向mail.example.com，这样发往<a href="mailto:&#x78;&#120;&#120;&#x40;&#101;&#120;&#x61;&#109;&#x70;&#108;&#101;&#x2e;&#x63;&#111;&#x6d;" rel="external nofollow noreferrer">xxx@example.com</a>的邮件才知道该送往哪里。</li>
+<li><strong>NS记录（域名服务器记录）：</strong> 指定了哪个DNS服务器是该域的权威服务器，负责该域的解析。</li>
+</ul>
+<h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    %% 阶段一：客户端发起 SYN</span><br><span class="line">    rect rgb(220,245,255)</span><br><span class="line">        participant Client as 🧑‍💻 客户端&lt;br/&gt;Client</span><br><span class="line">        participant Server as 🖥️ 服务器&lt;br/&gt;Server</span><br><span class="line">        Client-&gt;&gt;Server: 1. SYN (seq=x, 源端口/目标端口)</span><br><span class="line">        Note over Client,Server: 请求建立连接&lt;br/&gt;SYN=1, ISN=x&lt;br/&gt;“我想建立连接, 我的初始序列号是x”</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% 阶段二：服务器响应 SYN, ACK</span><br><span class="line">    rect rgb(228,255,237)</span><br><span class="line">        Server--&gt;&gt;Client: 2. SYN, ACK (seq=y, ack=x+1)</span><br><span class="line">        Note over Client,Server: 同意连接，确认收到SYN&lt;br/&gt;SYN=1, ACK=1, ISN=y, ACK=x+1&lt;br/&gt;“我的初始序列号是y, 我确认收到了你的x”</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% 阶段三：客户端确认 ACK</span><br><span class="line">    rect rgb(255,249,220)</span><br><span class="line">        Client-&gt;&gt;Server: 3. ACK (seq=x+1, ack=y+1)</span><br><span class="line">        Note over Client,Server: 确认收到SYN和ACK&lt;br/&gt;ACK=1, seq=x+1, ack=y+1&lt;br/&gt;“我确认收到了你的y, 连接建立”</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% 阶段四：连接建立后，传输数据</span><br><span class="line">    rect rgb(237,245,255)</span><br><span class="line">        Client-&gt;&gt;Server: 4. 数据传输（如GET请求）</span><br><span class="line">        Server--&gt;&gt;Client: 5. 数据响应（如HTTP响应）</span><br><span class="line">        Note over Client,Server: 连接已建立，可以开始数据通信</span><br><span class="line">    end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>面试题:  为什么TCP建立连接需要三次握手，而不是两次或者四次？</p>
+</blockquote>
+<p>这个问题核心在于理解TCP作为<strong>全双工、可靠通信</strong>协议的本质。</p>
+<ul>
+<li><strong>不能是两次的原因：</strong> 无法防止历史的、已失效的连接请求报文突然又传送到了服务器，从而引发错误。如果只有两次握手，服务器收到一个旧的SYN包就会立即建立连接并等待客户端数据，这将浪费服务器资源。而三次握手时，客户端不会对旧连接的SYN+ACK进行确认，服务器收不到ACK就不会建立连接。更关键的是，两次握手无法让双方都确认对方的接收和发送能力都正常。</li>
+<li><strong>不需要四次的原因：</strong> 三次握手已经足够验证双方的收发能力并同步初始序列号了。服务器的确认（ACK）和同步请求（SYN）可以在第二步中合并为一个报文（SYN+ACK）发送，没有必要拆成两次。因此，四次握手虽然也能工作，但效率不如三次。</li>
+</ul>
+<p>总结来说，<strong>三次握手是保证双方建立可靠连接所需的最少步骤。</strong></p>
+<h4 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h4><ul>
+<li><strong>IPv4地址耗尽：</strong> 32位的IPv4地址空间（约43亿个）已经完全耗尽，这是向IPv6迁移的根本动力。</li>
+<li><strong>IPv6的优势：</strong> 128位的IPv6提供了近乎无限的地址空间，彻底解决了地址短缺问题。同时，它简化了报文头部，提高了路由效率，并且原生支持IPSec，安全性更好。</li>
+<li><strong>NAT的角色：</strong> 了解IPv4时代广泛使用的NAT（网络地址转换）技术，它虽然缓解了地址不足，但也破坏了IP的端到端通信模型，给一些P2P应用带来了麻烦。</li>
+</ul>
+<h4 id="QUIC"><a href="#QUIC" class="headerlink" title="QUIC"></a>QUIC</h4><p><strong>在应用层重新实现了一个更智能、更适合现代网络的“TCP”</strong>,它之所以能做到这一点，主要依靠三大核心武器：<strong>流（Stream）、0-RTT&#x2F;1-RTT握手、以及连接迁移</strong>。</p>
+<ul>
+<li><p>基于“流”的多路复用，彻底消灭队头阻塞</p>
+<ul>
+<li><p><strong>TCP的问题（传输层队头阻塞）：</strong><br>想象一下TCP连接是一条<strong>单车道的高速公路</strong>。所有的数据包（HTTP请求1、请求2、图片数据等）都必须在这条单车道上排队行驶。如果其中一辆车（一个数据包）在路上抛锚了（网络丢包），后面的所有车都得堵着，等待这辆车被拖走（TCP重传机制）。这就是<strong>传输层的队头阻塞（Head-of-Line Blocking）</strong>。即使HTTP&#x2F;2在应用层实现了多路复用，但它仍然跑在TCP上，这条高速公路还是单车道，堵车问题依旧存在。</p>
+</li>
+<li><p><strong>QUIC的解决方案（在连接内部开辟多条车道）：</strong><br>QUIC依然是建立一个连接，但它在这条连接内部，开辟了<strong>多条逻辑上独立的“流”（Stream）</strong>。每个HTTP请求-响应对（比如一个HTML请求，一个CSS请求）都跑在自己专属的流里。</p>
+<p>现在，如果承载CSS的那个流里的一个数据包丢失了，它<strong>只会阻塞CSS流自己</strong>。承载HTML和图片的流完全不受影响，它们的数据包会绕过这个“事故点”，继续被处理和交付</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    %% --- TCP 部分 ---</span><br><span class="line">    subgraph TCP [TCP 传输层 - 队头阻塞]</span><br><span class="line">        direction LR</span><br><span class="line">        P1[&quot;fa:fa-html5 包1: HTML&quot;]</span><br><span class="line">        P2[&quot;fa:fa-css3-alt 包2: CSS&quot;]</span><br><span class="line">        P3_lost[&quot;fa:fa-css3-alt 包3: CSS 丢失!&quot;]</span><br><span class="line">        P4[&quot;fa:fa-js 包4: JS (必须等待丢失包重传)&quot;]</span><br><span class="line"></span><br><span class="line">        P1 --&gt; P2 --&gt; P3_lost -- X --&gt; P4</span><br><span class="line"></span><br><span class="line">        style P3_lost fill:#ffbcbc,stroke:#c0392b,stroke-width:2px</span><br><span class="line">        style TCP fill:#e7f1fb,stroke:#3498db,stroke-width:3px</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% --- QUIC 部分 ---</span><br><span class="line">    subgraph QUIC [QUIC 多流 无队头阻塞]</span><br><span class="line">        direction LR</span><br><span class="line">        Q1[&quot;fa:fa-html5 流1: HTML 包1 (可立即处理)&quot;]</span><br><span class="line">        Q2[&quot;fa:fa-css3-alt 流2: CSS 包2&quot;]</span><br><span class="line">        Q3_lost[&quot;fa:fa-css3-alt 流2: CSS 包3 丢失!&quot;]</span><br><span class="line">        Q4[&quot;fa:fa-js 流3: JS 包4 (可立即处理)&quot;]</span><br><span class="line"></span><br><span class="line">        Q2 --&gt; Q3_lost</span><br><span class="line"></span><br><span class="line">        style Q3_lost fill:#ffbcbc,stroke:#c0392b,stroke-width:2px</span><br><span class="line">        style QUIC fill:#e8fbe7,stroke:#27ae60,stroke-width:3px</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% --- 节点配色 ---</span><br><span class="line">    classDef html fill:#e3f2fd,stroke:#1976d2;</span><br><span class="line">    classDef css fill:#f9fbe7,stroke:#009688;</span><br><span class="line">    classDef js fill:#fff8e1,stroke:#ffa000;</span><br><span class="line"></span><br><span class="line">    class P1,Q1 html;</span><br><span class="line">    class P2,Q2,Q3_lost css;</span><br><span class="line">    class P4,Q4 js;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>0-RTT&#x2F;1-RTT快速握手，抢占先机</p>
+<ul>
+<li><p><strong>TCP+TLS的问题：握手延迟高</strong></p>
+<ul>
+<li>一个普通的HTTPS连接建立需要：<ol>
+<li>TCP三次握手（耗时1个RTT）</li>
+<li>TLS握手（通常是1-2个RTT）</li>
+</ol>
+</li>
+<li>加起来总共需要<strong>2-3个RTT</strong>才能开始发送第一个HTTP请求数据，这在移动网络环境下延迟非常明显。</li>
+</ul>
+</li>
+<li><p><strong>QUIC的解决方案：集成的加密和传输握手</strong><br>QUIC把“我是谁”（加密认证）和“怎么通信”（传输控制）这两件事合并在一起做了。</p>
+<p><strong>首次连接 (1-RTT)：</strong> 客户端和服务器在第一个RTT内就能完成所有必要的加密和传输参数交换，之后立刻可以开始发送应用数据。</p>
+<p><strong>恢复连接 (0-RTT - 这是真正的黑魔法)：</strong> 如果客户端之前访问过这个服务器，服务器会给它一个“凭证”。下次再访问时，客户端可以在<strong>第一个发送的数据包里就带上这个凭证和加密后的HTTP请求</strong>。服务器验证凭证后，无需任何等待，直接处理请求并返回数据。实现了真正的“零延迟”连接建立。</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    autonumber</span><br><span class="line"></span><br><span class="line">    %% --- TCP + TLS (3 RTT) ---</span><br><span class="line">    participant C1 as 🧑‍💻 Client</span><br><span class="line">    participant S1 as 🖥️ Server</span><br><span class="line"></span><br><span class="line">    C1-&gt;&gt;S1: TCP SYN</span><br><span class="line">    S1--&gt;&gt;C1: TCP SYN ACK</span><br><span class="line">    C1-&gt;&gt;S1: TCP ACK (TCP established)</span><br><span class="line">    Note over C1,S1: RTT 1 (TCP Handshake)</span><br><span class="line">    C1-&gt;&gt;S1: TLS ClientHello</span><br><span class="line">    S1--&gt;&gt;C1: TLS ServerHello, Certificate</span><br><span class="line">    S1--&gt;&gt;C1: TLS Finished</span><br><span class="line">    Note over C1,S1: RTT 2 (TLS Handshake)</span><br><span class="line">    C1-&gt;&gt;S1: TLS Finished</span><br><span class="line">    C1-&gt;&gt;S1: HTTP Data</span><br><span class="line">    Note over C1,S1: RTT 3 (HTTP can be sent)</span><br><span class="line"></span><br><span class="line">    %% --- QUIC (1 RTT) ---</span><br><span class="line">    participant C2 as 🧑‍💻 Client2</span><br><span class="line">    participant S2 as 🖥️ Server2</span><br><span class="line"></span><br><span class="line">    C2-&gt;&gt;S2: QUIC Initial (with TLS info)</span><br><span class="line">    S2--&gt;&gt;C2: QUIC Initial and Handshake (key agreement)</span><br><span class="line">    C2-&gt;&gt;S2: HTTP Data</span><br><span class="line">    Note over C2,S2: RTT 1 (HTTP can be sent)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>连接迁移，无缝切换网络<ul>
+<li><strong>TCP的问题：连接与IP地址强绑定</strong><br>TCP连接由一个四元组定义：(源IP, 源端口, 目标IP, 目标端口)。当你的手机从Wi-Fi切换到4G网络时，你的<strong>源IP地址变了</strong>，这个四元组就失效了，<strong>TCP连接会立刻中断</strong>。所有正在进行中的下载、上传、网页加载都必须重新开始。</li>
+<li><strong>QUIC的解决方案：基于连接ID（Connection ID）</strong><br>QUIC连接不依赖于IP地址，而是由一个64位的<strong>连接ID</strong>来唯一标识。只要这个ID不变，无论你的手机IP地址和端口怎么变，QUIC连接都能继续保持。它会无缝地将数据包从旧地址迁移到新地址上，应用层完全无感。</li>
+<li><strong>生活中的比喻：</strong><ul>
+<li><strong>TCP连接</strong>就像你家的<strong>座机电话</strong>，它绑定在你家的物理地址上，你一出门，电话就断了。</li>
+<li><strong>QUIC连接</strong>就像你的<strong>手机</strong>，它绑定在你的手机号（连接ID）上，无论你是在家、在公司还是在地铁上，电话都能一直保持通话。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Http的安全问题"><a href="#Http的安全问题" class="headerlink" title="Http的安全问题"></a>Http的安全问题</h2><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1752720583236_mermaid-ai-diagram-2025-07-17-024905.png" alt="mermaid-ai-diagram-2025-07-17-024905"></p>
+<p>《图解HTTP》和《权威指南》都明确指出了HTTP协议在设计之初，并未过多考虑安全问题，其核心缺陷主要有三点：</p>
+<ol>
+<li><strong>通信使用明文，内容可能被窃听：</strong> HTTP报文在网络中以纯文本的形式传输，任何在传输路径上的节点（如路由器、网络运营商、黑客）都可以轻易地截获并查看通信内容，包括用户名、密码、信用卡号等敏感信息。</li>
+<li><strong>不验证通信方身份，可能遭遇伪装：</strong> HTTP协议本身无法验证客户端和服务器的真实身份。你以为你在访问银行网站，但实际上可能连接到了一个精心伪装的“钓鱼”网站。反之，服务器也无法确定请求是否真的来自一个合法的用户。</li>
+<li><strong>无法证明报文的完整性，可能遭篡改：</strong> HTTP协议没有提供校验机制来确保报文在传输过程中未被修改。攻击者可以在中途拦截报文，篡改内容（比如在网页中植入恶意广告或脚本），而接收方对此一无所知。这种攻击被称为<strong>中间人攻击（Man-in-the-Middle, MITM）</strong>。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant C as 客户端</span><br><span class="line">    participant M as 中间人攻击者</span><br><span class="line">    participant S as 真实服务器</span><br><span class="line"></span><br><span class="line">    C-&gt;&gt;M: HTTP请求 (发往S)</span><br><span class="line">    Note over C,M: &lt;b&gt;1. 窃听:&lt;/b&gt; 中间人截获了明文请求</span><br><span class="line">    </span><br><span class="line">    M-&gt;&gt;S: 转发/篡改后的请求</span><br><span class="line">    Note over S,M: S以为请求来自C (&lt;b&gt;2. 伪装&lt;/b&gt;)</span><br><span class="line">    </span><br><span class="line">    S--&gt;&gt;M: HTTP响应</span><br><span class="line">    Note over M,C: &lt;b&gt;3. 篡改:&lt;/b&gt; 中间人修改响应内容</span><br><span class="line">    </span><br><span class="line">    M--&gt;&gt;C: 返回篡改后的响应</span><br><span class="line">    Note over C: C以为响应来自S, 未察觉内容被修改</span><br></pre></td></tr></table></figure>
+
+<h3 id="生活案例-12"><a href="#生活案例-12" class="headerlink" title="生活案例"></a>生活案例</h3><p>使用HTTP通信<strong>就像是在公共场合用</strong>明信片**写信和收信。</p>
+<ul>
+<li><strong>明文传输&#x2F;窃听：</strong> 任何人（邮递员、邻居）在传递过程中都可以看到明信片上写了什么。</li>
+<li><strong>不验证身份&#x2F;伪装：</strong> 你收到一张署名“你妈妈”的明信片，但你没法确定这真是你妈妈写的，可能是骗子冒充的。</li>
+<li><strong>不保完整&#x2F;篡改：</strong> 有人在你的明信片上用涂改液改了几个字，你收到后也无法发现。</li>
+</ul>
+<h3 id="真实案例-12"><a href="#真实案例-12" class="headerlink" title="真实案例"></a>真实案例</h3><ul>
+<li>最典型的案例就是<strong>公共Wi-Fi陷阱</strong>。当你在咖啡馆连接一个不安全的免费Wi-Fi时，这个Wi-Fi的提供者（可能是个黑客）就处在了你的通信链路上，成为了一个“中间人”。</li>
+<li>如果你此时访问一个HTTP的网站并输入密码，黑客可以<strong>直接看到</strong>你的密码。</li>
+<li>黑客还可以将你访问的HTTP网站<strong>重定向</strong>到一个他制作的假冒网站，骗取你的信任和信息。</li>
+<li>他甚至可以在你正常浏览的HTTP网页中，<strong>动态注入</strong>恶意JavaScript脚本，来窃取你的其他信息。</li>
+<li>而如果网站使用了HTTPS，上述所有攻击都将因为无法解密通信内容和伪造证书而失效。</li>
+</ul>
+<h3 id="经典问题-13"><a href="#经典问题-13" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>为什么说HTTP是“不安全”的？请从协议层面具体说明其存在的主要风险。</p>
+</blockquote>
+<p>HTTP协议在设计之初主要目标是高效地传输超文本，因此并未内置安全机制，这使其在今天的互联网环境中存在三大核心风险，通常被称为“不安全”：</p>
+<ol>
+<li><strong>明文传输导致窃听风险：</strong> HTTP报文在网络上是以纯文本形式传输的，没有进行任何加密。这意味着在请求从客户端到服务器的整个传输路径上，任何一个中间节点（如路由器、恶意网关、网络嗅探工具）都能轻易地截获并直接读取通信的全部内容，包括像密码、支付信息这样的敏感数据。</li>
+<li><strong>缺少身份验证导致伪装风险：</strong> HTTP协议本身无法验证通信双方的身份。客户端无法确认它正在对话的服务器就是它声称的那个服务器，这为“钓鱼网站”等中间人攻击提供了可能。同样，服务器也无法确认请求方的真实身份，这使得它容易受到恶意请求的攻击。</li>
+<li><strong>缺乏完整性校验导致篡改风险：</strong> HTTP没有机制来保证报文在传输过程中不被修改。攻击者可以在中间环节拦截报文，任意篡改其内容（比如植入广告、病毒或恶意代码），然后再转发给接收方。由于没有校验机制，接收方无法察觉到报文已经被篡改，从而可能造成严重后果。</li>
+</ol>
+<p>这三个根本性的缺陷——<strong>窃听、伪装、篡改</strong>——使得HTTP在处理任何涉及隐私、交易或需要信任的场景时都是完全不可靠的。而HTTPS正是为了解决这三大问题而诞生的。</p>
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p><strong>HTTPS不是一个新协议。</strong> 它的全称是“HTTP over SSL&#x2F;TLS”。它并不是在HTTP基础上修改，而是在HTTP和TCP之间增加了一个<strong>安全层（SSL&#x2F;TLS）</strong>。</p>
+<p>这个安全层提供了三大核心能力，正好对应了HTTP的三大缺陷：</p>
+<ol>
+<li><strong>内容加密：</strong> 通过<strong>混合加密</strong>算法，将HTTP报文加密成密文传输，解决了<strong>窃听</strong>问题。</li>
+<li><strong>身份认证：</strong> 通过<strong>数字证书（CA体系）</strong>，验证服务器的身份，解决了<strong>伪装</strong>问题。</li>
+<li><strong>数据完整性：</strong> 通过<strong>报文摘要（MAC）</strong>，确保数据在传输过程中未被篡改，解决了<strong>篡改</strong>问题。</li>
+</ol>
+<p><strong>SSL已死，TLS当立：</strong> 严格来说，SSL（Secure Sockets Layer）的所有版本都已因安全漏洞被废弃。现在我们使用的协议是其继任者<strong>TLS（Transport Layer Security）</strong>。目前业界主流是 <strong>TLS 1.2</strong>，而 <strong>TLS 1.3</strong> 因为其更高的性能和更强的安全性，正在迅速普及。面试时，能清晰说出TLS 1.2和1.3握手过程的区别，是巨大的加分项。</p>
+<p><strong>握手的核心目标：</strong> 不要陷入繁杂的步骤细节。TLS握手的核心目标只有<strong>两个</strong>：</p>
+<ol>
+<li><strong>安全地协商出会话密钥：</strong> 客户端和服务器需要商定一个<strong>对称加密</strong>的密钥，用于后续的HTTP报文加密。这个协商过程本身必须是安全的，不能被中间人窃听和篡改。</li>
+<li><strong>验证服务器身份：</strong> 客户端必须确认它正在与之通信的服务器是它声称的那个，而不是一个冒牌货。</li>
+</ol>
+<p><strong>混合加密：</strong> 为什么不直接用非对称加密传数据？因为<strong>非对称加密非常慢</strong>，只适合加密少量数据。而<strong>对称加密快得多</strong>，适合加密大量数据。所以TLS采用了<strong>混合加密</strong>的策略：用<strong>非对称加密</strong>来安全地交换<strong>对称加密的密钥</strong>，然后用这个对称密钥来加密真正的HTTP报文。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    autonumber</span><br><span class="line">    participant C as 客户端</span><br><span class="line">    participant S as 服务器</span><br><span class="line"></span><br><span class="line">    C-&gt;&gt;S: SYN</span><br><span class="line">    S--&gt;&gt;C: SYN, ACK</span><br><span class="line">    C-&gt;&gt;S: ACK</span><br><span class="line"></span><br><span class="line">    Note over C,S: TLS 1.2 握手开始 (2个RTT)</span><br><span class="line"></span><br><span class="line">    C-&gt;&gt;S: 1. ClientHello (支持的加密套件, 随机数C)</span><br><span class="line">    S--&gt;&gt;C: 2. ServerHello (选定的加密套件, 随机数S)</span><br><span class="line">    S--&gt;&gt;C: 3. Certificate (服务器的数字证书)</span><br><span class="line">    S--&gt;&gt;C: 4. ServerHelloDone</span><br><span class="line"></span><br><span class="line">    Note right of C: (客户端验证证书)</span><br><span class="line"></span><br><span class="line">    C-&gt;&gt;S: 5. ClientKeyExchange (用证书公钥加密的预主密钥)</span><br><span class="line">    C-&gt;&gt;S: 6. ChangeCipherSpec</span><br><span class="line">    C-&gt;&gt;S: 7. Finished (加密后的握手摘要)</span><br><span class="line"></span><br><span class="line">    S--&gt;&gt;C: 8. ChangeCipherSpec</span><br><span class="line">    S--&gt;&gt;C: 9. Finished (加密后的握手摘要)</span><br><span class="line"></span><br><span class="line">    Note over C,S: 握手结束,双方已安全地生成了会话密钥</span><br><span class="line"></span><br><span class="line">    C-&gt;&gt;S: 加密的HTTP请求</span><br><span class="line">    S--&gt;&gt;C: 加密的HTTP响应</span><br></pre></td></tr></table></figure>
+
+<h3 id="生活案例-13"><a href="#生活案例-13" class="headerlink" title="生活案例"></a>生活案例</h3><p>HTTPS握手就像一次高度机密的<strong>线下交易</strong>。</p>
+<ul>
+<li><strong>ClientHello:</strong> 你（客户端）对卖家（服务器）说：“我们来交易吧！我懂得用A、B、C三种暗号（加密套件）。”</li>
+<li><strong>ServerHello &amp; Certificate:</strong> 卖家说：“好的，我们就用A暗号吧。这是我的<strong>身份证和营业执照</strong>（数字证书），由工商局（CA）颁发，你可以去验证真伪。”</li>
+<li><strong>客户端验证证书 &amp; ClientKeyExchange:</strong> 你打电话给工商局验证了执照是真的。然后你把交易的**接头暗语（预主密钥）<strong>写在一张纸条上，放进一个只有卖家用他私钥才能打开的</strong>保险箱（证书公钥加密）**里，交给了卖家。</li>
+<li><strong>双方生成会话密钥 &amp; Finished:</strong> 卖家用私钥打开保险箱，拿到接头暗语。现在，你们双方都用这个暗语推算出了今天交易用的<strong>最终密码本（会话密钥）</strong>。为了确认无误，你们各自把之前的对话内容用这个密码本加密算了个摘要，发给对方验证。</li>
+<li><strong>加密通信：</strong> 验证通过，交易正式开始。你们所有的对话（HTTP报文）都用这个最终密码本加密。</li>
+</ul>
+<h3 id="经典问题-14"><a href="#经典问题-14" class="headerlink" title="经典问题"></a>经典问题</h3><blockquote>
+<p>请简述一下HTTPS的握手过程。TLS 1.3相比于1.2做了哪些核心优化？</p>
+</blockquote>
+<p>HTTPS的核心是其底层的TLS握手过程。我以目前最主流的TLS 1.2为例，其握手过程可以概括为以下几个核心步骤，主要目的是<strong>安全地协商会话密钥</strong>并<strong>验证服务器身份</strong>。</p>
+<p><strong>TLS 1.2 握手流程 (简化版):</strong></p>
+<ol>
+<li><strong>客户端问候 (ClientHello):</strong> 客户端向服务器发送它支持的TLS版本、一组加密套件（包含密钥交换算法、对称加密算法、MAC算法）和一个随机数。</li>
+<li><strong>服务器响应 (ServerHello &amp; Certificate):</strong> 服务器从客户端的加密套件中选择一个双方都支持的，并返回给客户端。同时，服务器会将其<strong>数字证书</strong>和另一个随机数一并发送给客户端。</li>
+<li><strong>客户端验证与密钥交换:</strong><ul>
+<li>客户端首先验证服务器证书的有效性，包括检查签发机构是否受信任、是否过期、域名是否匹配等。</li>
+<li>验证通过后，客户端生成一个**“预主密钥”(Pre-Master Secret)<strong>，然后用证书中的</strong>公钥**对其进行加密，并通过ClientKeyExchange消息发送给服务器。</li>
+</ul>
+</li>
+<li><strong>生成会话密钥与结束:</strong><ul>
+<li>服务器用自己的<strong>私钥</strong>解密ClientKeyExchange消息，获取到预主密钥。</li>
+<li>现在，客户端和服务器都拥有了三个相同的输入：客户端随机数、服务器随机数、预主密钥。它们各自使用相同的算法，将这三个输入混合生成最终的<strong>会话密钥（对称密钥）</strong>。</li>
+<li>最后，双方互发一个Finished消息，将之前所有握手报文的摘要用这个刚生成的会话密钥加密后发送给对方，以验证握手过程没有被篡改。</li>
+</ul>
+</li>
+</ol>
+<p><strong>TLS 1.3 的核心优化：</strong><br>TLS 1.3 对这个过程进行了大刀阔斧的简化，主要目标就是<strong>提升性能和安全性</strong>：</p>
+<ol>
+<li><strong>减少RTT：</strong> TLS 1.3的握手过程从2个RTT（往返时延）缩减到了<strong>1个RTT</strong>。它在ClientHello时就会猜测服务器可能支持的加密参数并发过去，服务器在ServerHello中一次性返回所有需要的信息，大大缩短了连接建立时间。</li>
+<li><strong>更安全的加密套件：</strong> 废除了所有不安全的、过时的加密算法（如RC4, MD5）和密钥交换方式（如静态RSA），只保留了少数几个安全性极高的算法。</li>
+<li><strong>0-RTT模式：</strong> 对于恢复连接，TLS 1.3引入了0-RTT模式，允许客户端在第一个包中就带上加密的应用数据，实现了零延迟的连接恢复，这对于API调用和移动端应用是巨大的性能提升。</li>
+</ol>
+<h2 id="Web攻击"><a href="#Web攻击" class="headerlink" title="Web攻击"></a>Web攻击</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A[常见Web攻击] --&gt; B[注入型攻击]</span><br><span class="line">    B --&gt; B1[SQL注入]</span><br><span class="line">    B1 --&gt; B1a[攻击点: 后端数据库查询]</span><br><span class="line">    B1 --&gt; B1b[防御: 参数化查询]</span><br><span class="line">    B --&gt; B2[OS命令注入]</span><br><span class="line">    B2 --&gt; B2a[攻击点: 调用系统命令]</span><br><span class="line">    B2 --&gt; B2b[防御: 严格过滤用户输入]</span><br><span class="line"></span><br><span class="line">    A --&gt; C[跨站攻击]</span><br><span class="line">    C --&gt; C1[跨站脚本]</span><br><span class="line">    C1 --&gt; C1a[攻击点: 浏览器渲染HTML]</span><br><span class="line">    C1 --&gt; C1b[防御: 输入过滤]</span><br><span class="line">    C --&gt; C2[跨站请求伪造]</span><br><span class="line">    C2 --&gt; C2a[攻击点: 浏览器携带Cookie]</span><br><span class="line">    C2 --&gt; C2b[防御: SameSite Cookie]</span><br><span class="line"></span><br><span class="line">    A --&gt; D[会话管理攻击]</span><br><span class="line">    D --&gt; D1[会话劫持]</span><br><span class="line">    D1 --&gt; D1a[攻击点: 窃取会话ID]</span><br><span class="line">    D1 --&gt; D1b[防御: HTTPS, HttpOnly Cookie]</span><br><span class="line">    D --&gt; D2[会话固定]</span><br><span class="line">    D2 --&gt; D2a[攻击点: 强行指定会话ID]</span><br><span class="line">    D2 --&gt; D2b[防御: 登录后立即重置Session ID]</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="跨站脚本攻击-XSS"><a href="#跨站脚本攻击-XSS" class="headerlink" title="跨站脚本攻击(XSS)"></a>跨站脚本攻击(XSS)</h3><p><strong>核心思想：</strong> XSS的本质是“<strong>恶意代码注入</strong>”。攻击者设法将恶意的HTML或JavaScript代码，注入到一个受信任的网站中。当其他用户访问这个网站时，这些恶意代码就会在用户的<strong>浏览器</strong>中被执行，从而达到窃取信息、破坏页面的目的。</p>
+<p><strong>攻击对象：</strong> XSS攻击的目标是<strong>用户（的浏览器）</strong>，而不是服务器本身。它利用的是网站对用户的<strong>信任</strong>。</p>
+<p><strong>分类：</strong></p>
+<ol>
+<li><strong>存储型XSS (Stored XSS):</strong> 最危险的一种。恶意代码被<strong>存储在服务器的数据库</strong>中（比如一篇包含<script>标签的博客文章）。每个访问这个页面的用户都会被攻击。</li>
+<li><strong>反射型XSS (Reflected XSS):</strong> 恶意代码存在于<strong>URL</strong>中。攻击者需要诱骗用户点击一个构造好的恶意链接，服务器从URL中获取数据并<strong>不加过滤地</strong>在页面上“反射”出来，导致脚本执行。</li>
+<li><strong>DOM型XSS (DOM-based XSS):</strong> 一种特殊的反射型XSS，其攻击的触发完全在<strong>客户端</strong>发生。恶意代码在URL中，但服务器并未参与，是客户端的JavaScript代码在处理URL时，不慎将恶意代码执行了。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant Attacker as 攻击者</span><br><span class="line">    participant Server as 易受攻击的网站 (如: 博客)</span><br><span class="line">    participant Victim as 普通用户</span><br><span class="line">    </span><br><span class="line">    Attacker-&gt;&gt;Server: 1. 发布一篇包含恶意脚本的文章&lt;br&gt;内容: &quot;文章内容...&lt;script&gt;steal_cookie()&lt;/script&gt;&quot;</span><br><span class="line">    Note over Server: 服务器将恶意内容&lt;br&gt;存储到数据库</span><br><span class="line">    </span><br><span class="line">    Victim-&gt;&gt;Server: 2. 请求浏览这篇文章</span><br><span class="line">    Server--&gt;&gt;Victim: 3. 返回包含恶意脚本的HTML页面</span><br><span class="line">    </span><br><span class="line">    Note over Victim: 浏览器解析HTML...</span><br><span class="line">    Victim-&gt;&gt;Victim: 4. &lt;b&gt;执行了恶意脚本!&lt;/b&gt;&lt;br&gt;steal_cookie()函数被调用</span><br><span class="line">    Victim--&gt;&gt;Attacker: 5. 用户的Cookie被发送到攻击者服务器</span><br></pre></td></tr></table></figure>
+
+<h4 id="生活案例-14"><a href="#生活案例-14" class="headerlink" title="生活案例"></a>生活案例</h4><p>XSS攻击就像是在一个公共的<strong>留言板</strong>上搞破坏。</p>
+<ul>
+<li>你（<strong>攻击者</strong>）没有直接去砸留言板（服务器），而是用一种<strong>隐形墨水</strong>（恶意脚本）在上面写了一句咒语：“凡看到此留言者，钱包自动交给我。”</li>
+<li>当其他路人（<strong>受害者</strong>）过来看留言时，这条用隐形墨水写的咒语在他们眼里突然显形并生效（<strong>浏览器执行脚本</strong>），结果他们的钱包（<strong>Cookie</strong>）就都飞到了你的口袋里。</li>
+</ul>
+<h4 id="经典问题-15"><a href="#经典问题-15" class="headerlink" title="经典问题"></a>经典问题</h4><blockquote>
+<p> 什么是XSS攻击？如何有效防御？</p>
+</blockquote>
+<p>XSS，即跨站脚本攻击，其核心是攻击者将恶意脚本注入到受信任的网页中，当其他用户浏览该网页时，这些脚本在用户的浏览器端被执行，从而窃取用户信息（如Cookie）、或进行其他恶意操作。</p>
+<p>防御XSS的核心原则是：<strong>永远不要信任用户的任何输入，并对所有输出到前端页面的数据进行适当的转义或过滤。</strong></p>
+<p>具体的防御手段主要有以下几种：</p>
+<ol>
+<li><strong>输入过滤：</strong> 在数据存入数据库之前，对用户的输入进行校验，过滤掉潜在的恶意代码。但这通常不被视为主要防御手段，因为可能会误伤正常输入，且难以覆盖所有攻击模式。</li>
+<li><strong>输出转义（最核心的防御手段）：</strong> 当服务器端将数据显示到HTML页面上时，对所有特殊字符进行HTML实体转义。比如，将&lt;转义为&lt;，&gt;转义为&gt;。这样一来，即使用户输入了<script>标签，它在浏览器中也只会被当作普通文本显示出来，而不会被当作代码执行。现代的模板引擎（如Vue, React）默认都会进行这种输出转义。</li>
+<li><strong>设置HttpOnly Cookie：</strong> 如我们之前所学，这是防止XSS攻击者窃取会话Cookie的釜底抽薪之计。即使脚本被执行，它也无法通过document.cookie读到关键的会话信息。</li>
+<li><strong>内容安全策略（CSP - Content Security Policy）：</strong> 这是更高级的纵深防御手段。通过在HTTP响应头中设置Content-Security-Policy，我们可以精确地告诉浏览器，该页面只允许加载和执行来自特定来源的脚本。这样即使攻击者成功注入了脚本，只要其来源不被信任，浏览器就会拒绝执行它。</li>
+</ol>
+<h3 id="跨站请求伪造攻击-CSRF"><a href="#跨站请求伪造攻击-CSRF" class="headerlink" title="跨站请求伪造攻击(CSRF)"></a>跨站请求伪造攻击(CSRF)</h3><p><strong>核心思想：</strong> CSRF的本质是<strong>利用了浏览器在跨域请求时会自动携带目标站点Cookie的特性</strong>，来冒用用户的身份，在用户不知情的情况下，执行非用户本意的操作。</p>
+<p><strong>攻击对象：</strong> CSRF攻击的目标是<strong>服务器</strong>，它利用的是服务器对用户的<strong>信任</strong>（通过Cookie来认证）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant User as 已登录银行网站的用户</span><br><span class="line">    participant Bank as 银行网站 (bank.com)</span><br><span class="line">    participant Attacker as 恶意网站 (hacker.com)</span><br><span class="line"></span><br><span class="line">    User-&gt;&gt;Bank: 1. 正常登录, 浏览器保存了bank.com的Cookie</span><br><span class="line">    </span><br><span class="line">    Note over User, Attacker: 用户被诱导访问恶意网站</span><br><span class="line">    User-&gt;&gt;Attacker: 2. GET /index.html</span><br><span class="line">    Attacker--&gt;&gt;User: 3. 返回页面,其中包含&lt;img src=&quot;https://bank.com/transfer?to=hacker&amp;amount=10000&quot;&gt;</span><br><span class="line"></span><br><span class="line">    Note over User, Bank: 浏览器自动加载图片, 向银行发起请求</span><br><span class="line">    User-&gt;&gt;Bank: 4. GET /transfer?to=hacker...&lt;br&gt;&lt;b&gt;自动携带了bank.com的Cookie!&lt;/b&gt;</span><br><span class="line">    </span><br><span class="line">    Note over Bank: 服务器验证Cookie, 认为是合法用户的操作</span><br><span class="line">    Bank-&gt;&gt;Bank: 5. &lt;b&gt;执行转账操作!&lt;/b&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="生活案例-15"><a href="#生活案例-15" class="headerlink" title="生活案例"></a>生活案例</h4><p>CSRF攻击就像是，你（<strong>用户</strong>）已经跟银行（<strong>服务器</strong>）出示过身份证（<strong>登录并获得Cookie</strong>），银行认识你了。这时，一个骗子（<strong>攻击者</strong>）递给你一张看起来无害的<strong>传单</strong>（恶意网站），传单背面用极小的字写着一张“授权转账1万元给我”的<strong>委托书</strong>，并伪造了你的签名。你没注意，接过了传单。银行的摄像头（<strong>浏览器</strong>）看到了这张委托书，并且因为认识你（<strong>自动携带了Cookie</strong>），就误以为这是你的真实意愿，于是把钱转走了。</p>
+<h4 id="经典问题-16"><a href="#经典问题-16" class="headerlink" title="经典问题"></a>经典问题</h4><blockquote>
+<p>什么是CSRF攻击？它的攻击原理是什么？有哪些防御方法？</p>
+</blockquote>
+<p>CSRF，即跨站请求伪造，是一种利用用户已登录的身份，在用户不知情的情况下，构造请求来执行非本意操作的攻击。</p>
+<p><strong>攻击原理：</strong> CSRF的核心是利用了浏览器的身份验证机制，特别是Cookie的自动发送机制。攻击流程通常是：</p>
+<ol>
+<li>用户登录了受信任的网站A，浏览器保存了A网站的Cookie。</li>
+<li>用户在没有退出A网站的情况下，被诱导访问了恶意的网站B。</li>
+<li>网站B向网站A发起一个请求（比如通过一个隐藏的<img>标签或表单）。</li>
+<li>浏览器在发送这个请求时，会自动带上网站A的Cookie。</li>
+<li>网站A的服务器收到请求后，验证Cookie是合法的，误以为是用户本人的操作，于是执行了该请求（比如转账、修改密码等）。</li>
+</ol>
+<p><strong>防御方法：</strong> 防御CSRF的关键在于，如何验证一个请求确实是用户本人在网站内部主动发起的，而不是来自第三方网站的“伪造”。主要方法有：</p>
+<ol>
+<li><strong>验证Referer头部：</strong> 检查HTTP请求的Referer头部，确保请求来自合法的源域名。这是一种简单的方法，但Referer可以被客户端伪造，所以并非完全可靠。</li>
+<li><strong>使用Anti-CSRF Token：</strong> 这是最常用和最可靠的方法。服务器在渲染表单时，生成一个随机的、不可预测的Token，并将其同时放在用户的Session和表单的一个隐藏字段中。当用户提交表单时，服务器会验证Session中的Token和表单提交的Token是否一致。由于攻击者无法获取到这个随机Token，因此无法成功伪造请求。</li>
+<li><strong>使用SameSite Cookie属性：</strong> 这是从协议层面提供的更现代、更根本的防御手段。通过将关键Cookie设置为SameSite=Strict或SameSite=Lax，可以指示浏览器在跨站请求中不发送该Cookie，从而直接切断CSRF的攻击链。这是目前推荐的最佳实践。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com">一只会飞的旺旺</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com/HTTP%E5%AD%A6%E4%B9%A0/">https://www.wangwangit.com/HTTP学习/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.wangwangit.com" target="_blank">一只会飞的旺旺</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PDF/">PDF</a></div><div class="post-share"><div class="social-share" data-image="/images/background/4.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/3%E6%AC%BE%E8%B6%85%E5%A5%BD%E7%94%A8%E7%9A%84PDF%E7%A5%9E%E5%99%A8/" title="3款超好用的PDF在线处理神器,学会了职场工作效率翻倍! 📈"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/4.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-28</div><div class="info-item-2">3款超好用的PDF在线处理神器,学会了职场工作效率翻倍! 📈</div></div><div class="info-2"><div class="info-item-1">本文推荐3个功能强大、简单易用的PDF在线处理网站,帮你轻松搞定文件合并、格式转换、压缩等需求,让你的工作学习效率嗖嗖提升!还在等什么,快来试试吧~</div></div></div></a><a class="pagination-related" href="/IDEA%202025.1%E6%9B%B4%E6%96%B0-AI%E5%8A%A9%E6%89%8B%E8%AF%95%E7%94%A8%E5%92%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9E%8B%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88/" title="IDEA 2025.1更新-AI助手试用和第三方模型集成方案"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/4.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-17</div><div class="info-item-2">IDEA 2025.1更新-AI助手试用和第三方模型集成方案</div></div><div class="info-2"><div class="info-item-1">今天刚把 IntelliJ IDEA 更新到了 2025.1 版本，主要是想看看这次 AI Assistant 有什么新东西。之前看到消息说功能有更新，而且似乎可以免费试用，就动手试了试，顺便把过程和一些发现记录下来，给可能需要的朋友一个参考。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">204</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p style="margin-bottom: 15px;">我的个人站点已整合到顶部"我的站点"菜单中，欢迎访问体验！若存在无法访问的情况，可以及时反馈！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">HTTP的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">整体架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">1.2.</span> <span class="toc-text">HTTP请求-响应流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B"><span class="toc-number">1.4.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">经典问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86"><span class="toc-number">1.6.</span> <span class="toc-text">补充知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CDN"><span class="toc-number">1.6.1.</span> <span class="toc-text">CDN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-number">1.6.2.</span> <span class="toc-text">负载均衡</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-2%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="toc-number">1.7.</span> <span class="toc-text">HTTP&#x2F;2多路复用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.</span> <span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-1"><span class="toc-number">2.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-1"><span class="toc-number">2.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-1"><span class="toc-number">2.3.</span> <span class="toc-text">经典问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86-1"><span class="toc-number">2.4.</span> <span class="toc-text">补充知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.4.1.</span> <span class="toc-text">请求与线程的关系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">3.</span> <span class="toc-text">Cookie</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-2"><span class="toc-number">3.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-2"><span class="toc-number">3.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-2"><span class="toc-number">3.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5"><span class="toc-number">4.</span> <span class="toc-text">持久连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-3"><span class="toc-number">4.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-3"><span class="toc-number">4.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-3"><span class="toc-number">4.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84"><span class="toc-number">5.</span> <span class="toc-text">HTTP报文结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-4"><span class="toc-number">5.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-4"><span class="toc-number">5.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-4"><span class="toc-number">5.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E7%BC%96%E7%A0%81%E4%B8%8E%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81"><span class="toc-number">6.</span> <span class="toc-text">内容编码与传输编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-5"><span class="toc-number">6.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-5"><span class="toc-number">6.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-5"><span class="toc-number">6.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8C%83%E5%9B%B4%E8%AF%B7%E6%B1%82"><span class="toc-number">7.</span> <span class="toc-text">范围请求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-6"><span class="toc-number">7.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-6"><span class="toc-number">7.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-6"><span class="toc-number">7.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">8.</span> <span class="toc-text">状态码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3xx%E9%87%8D%E5%AE%9A%E5%90%91%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">8.1.</span> <span class="toc-text">3xx重定向状态码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-7"><span class="toc-number">8.1.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-7"><span class="toc-number">8.1.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-7"><span class="toc-number">8.1.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4xx-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%99%E8%AF%AF-5xx-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF"><span class="toc-number">8.2.</span> <span class="toc-text">4xx 客户端错误 &amp; 5xx 服务器错误</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-8"><span class="toc-number">8.2.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-8"><span class="toc-number">8.2.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-8"><span class="toc-number">8.2.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E9%A6%96%E9%83%A8"><span class="toc-number">9.</span> <span class="toc-text">HTTP首部</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E6%8E%A7%E5%88%B6%E9%A6%96%E9%83%A8"><span class="toc-number">9.1.</span> <span class="toc-text">缓存控制首部</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-9"><span class="toc-number">9.1.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-9"><span class="toc-number">9.1.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-9"><span class="toc-number">9.1.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E5%8D%8F%E5%95%86%E7%9B%B8%E5%85%B3%E9%A6%96%E9%83%A8"><span class="toc-number">9.2.</span> <span class="toc-text">内容协商相关首部</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-10"><span class="toc-number">9.2.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-10"><span class="toc-number">9.2.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-10"><span class="toc-number">9.2.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86%E9%A6%96%E9%83%A8"><span class="toc-number">9.3.</span> <span class="toc-text">连接管理首部</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-11"><span class="toc-number">9.3.1.</span> <span class="toc-text">经典问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP%E5%9F%BA%E7%A1%80"><span class="toc-number">10.</span> <span class="toc-text">TCP&#x2F;IP基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI%E4%B8%83%E5%B1%82-TCP-IP%E5%9B%9B%E5%B1%82%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%8D%8F%E8%AE%AE%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB"><span class="toc-number">10.1.</span> <span class="toc-text">OSI七层 &amp; TCP&#x2F;IP四层模型及协议对应关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%B0%81%E8%A3%85"><span class="toc-number">10.2.</span> <span class="toc-text">数据封装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-11"><span class="toc-number">10.3.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-11"><span class="toc-number">10.4.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-12"><span class="toc-number">10.5.</span> <span class="toc-text">经典问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86-2"><span class="toc-number">10.6.</span> <span class="toc-text">补充知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS"><span class="toc-number">10.6.1.</span> <span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP"><span class="toc-number">10.6.2.</span> <span class="toc-text">TCP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IP"><span class="toc-number">10.6.3.</span> <span class="toc-text">IP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#QUIC"><span class="toc-number">10.6.4.</span> <span class="toc-text">QUIC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Http%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">Http的安全问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-12"><span class="toc-number">11.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B-12"><span class="toc-number">11.2.</span> <span class="toc-text">真实案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-13"><span class="toc-number">11.3.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS"><span class="toc-number">12.</span> <span class="toc-text">HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%B4%BB%E6%A1%88%E4%BE%8B-13"><span class="toc-number">12.1.</span> <span class="toc-text">生活案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98-14"><span class="toc-number">12.2.</span> <span class="toc-text">经典问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web%E6%94%BB%E5%87%BB"><span class="toc-number">13.</span> <span class="toc-text">Web攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB-XSS"><span class="toc-number">13.1.</span> <span class="toc-text">跨站脚本攻击(XSS)</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223631117_20251104103344206.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程二：零成本搭建个人图床"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/" title="CloudFlare系列教程二：零成本搭建个人图床">CloudFlare系列教程二：零成本搭建个人图床</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223792489_20251104103625566.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%BA%94%EF%BC%9A%E9%9B%B6%E6%88%90%E6%9C%AC%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E2%80%9C%E4%B8%87%E7%89%A9%E7%9A%86%E5%8F%AF%E6%92%AD%E2%80%9D%E7%9A%84%E7%BD%91%E7%AB%99/" title="CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站">CloudFlare系列教程五：零成本搭建一个“万物皆可播”的网站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223404333_20251104102957089.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="保姆级教程：从零开始，搭建一个属于你自己的AI中转站"/></a><div class="content"><a class="title" href="/%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E4%B8%AD%E8%BD%AC%E7%AB%99/" title="保姆级教程：从零开始，搭建一个属于你自己的AI中转站">保姆级教程：从零开始，搭建一个属于你自己的AI中转站</a><time datetime="2025-11-03T22:25:00.000Z" title="发表于 2025-11-04 06:25:00">2025-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223686134_20251104103443881.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%89%EF%BC%9A%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E7%9A%84%E9%82%AE%E7%AE%B1%E6%96%B9%E6%A1%88%EF%BC%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%8B%A5%E6%9C%89%E6%97%A0%E9%99%90%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80/" title="CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址">CloudFlare系列教程三：一劳永逸的邮箱方案，零成本拥有无限邮箱地址</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1762223735785_20251104103528734.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”"/></a><div class="content"><a class="title" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E5%9B%9B%EF%BC%9A10%E5%88%86%E9%92%9F%EF%BC%8C%E7%BB%99%E5%8F%88%E9%95%BF%E5%8F%88%E4%B8%91%E7%9A%84%E7%BD%91%E5%9D%80%E2%80%9C%E4%B8%80%E9%94%AE%E7%98%A6%E8%BA%AB%E2%80%9D/" title="CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”">CloudFlare系列教程四：10分钟，给又长又丑的网址“一键瘦身”</a><time datetime="2025-11-01T22:25:00.000Z" title="发表于 2025-11-02 06:25:00">2025-11-02</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div></div></div></main><footer id="footer" style="background-image: url(/images/background/4.webp);"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-waline-nine-rho.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('/pluginsSrc/@waline/client/dist/waline.css')
+        .then(() => import('/pluginsSrc/@waline/client/dist/waline.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="https://events.vercount.one/js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
