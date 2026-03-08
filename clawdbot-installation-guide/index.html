@@ -1,0 +1,734 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ClawdBot 保姆级安装指南：从零搭建你的 24/7 私人 AI 助手 | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="手把手教你在服务器上部署 ClawdBot，踩过的坑都帮你填好了。从 Node.js 安装到 Telegram Bot 配置，再到开机自启，一篇搞定。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ClawdBot 保姆级安装指南：从零搭建你的 24&#x2F;7 私人 AI 助手">
+<meta property="og:url" content="https://www.wangwangit.com/clawdbot-installation-guide/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:description" content="手把手教你在服务器上部署 ClawdBot，踩过的坑都帮你填好了。从 Node.js 安装到 Telegram Bot 配置，再到开机自启，一篇搞定。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.996007.icu/file/1769502802437_20260127163313325.png">
+<meta property="article:published_time" content="2026-01-27T07:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-08T06:14:15.972Z">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="自动化">
+<meta property="article:tag" content="ClawdBot">
+<meta property="article:tag" content="AI助手">
+<meta property="article:tag" content="Telegram Bot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.996007.icu/file/1769502802437_20260127163313325.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ClawdBot 保姆级安装指南：从零搭建你的 24/7 私人 AI 助手",
+  "url": "https://www.wangwangit.com/clawdbot-installation-guide/",
+  "image": "https://img.996007.icu/file/1769502802437_20260127163313325.png",
+  "datePublished": "2026-01-27T07:00:00.000Z",
+  "dateModified": "2026-03-08T06:14:15.972Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "一只会飞的旺旺",
+      "url": "https://www.wangwangit.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/clawdbot-installation-guide/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ClawdBot 保姆级安装指南：从零搭建你的 24/7 私人 AI 助手',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">229</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">240</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.996007.icu/file/1769502802437_20260127163313325.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a><a class="nav-page-title" href="/"><span class="site-name">ClawdBot 保姆级安装指南：从零搭建你的 24/7 私人 AI 助手</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">ClawdBot 保姆级安装指南：从零搭建你的 24/7 私人 AI 助手</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-27T07:00:00.000Z" title="发表于 2026-01-27 15:00:00">2026-01-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-08T06:14:15.972Z" title="更新于 2026-03-08 14:14:15">2026-03-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2026-03-08 14:14:15&quot;}" hidden></div><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769502802437_20260127163313325.png" alt="image-20260127163313212"></p>
+<p>今天刷 Twitter 的时候，发现时间线被一个叫 ClawdBot 的东西刷屏了。</p>
+<p>点进去一看，是个开源的 AI 助手框架。能干的事情挺多：通过 Telegram&#x2F;WhatsApp 远程控制电脑、自动处理邮件、定时跑任务、甚至能帮你和 4S 店砍价（有个老外说靠它省了 4200 美元，虽然我觉得有点玄学）。</p>
+<p>手上正好有台吃灰的 VPS，干嘛不试试？</p>
+<p>结果这一试，踩了一晚上的坑。官方文档写得比较散，很多细节要自己摸索。顺手把过程记下来，给想折腾的朋友省点时间。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769500577055_20260127155609268.png" alt="image-20260127155609156"></p>
+<hr>
+<h2 id="ClawdBot-是什么"><a href="#ClawdBot-是什么" class="headerlink" title="ClawdBot 是什么"></a>ClawdBot 是什么</h2><p>简单说，ClawdBot 是一个<strong>本地运行的 AI 助手网关</strong>。</p>
+<p>它的核心是一个 Gateway 进程，负责：</p>
+<ul>
+<li>连接各种聊天平台（Telegram、WhatsApp、Discord、iMessage 等）</li>
+<li>调用 AI 模型（Claude、GPT、本地模型都行）</li>
+<li>执行系统命令、读写文件、控制浏览器</li>
+<li>管理定时任务和自动化流程</li>
+</ul>
+<p>你可以把它理解成一个<strong>7x24 小时在线的 AI 员工</strong>。它有记忆（知道你之前聊过什么），有手脚（能操作你的电脑），还会主动干活（定时任务、邮件监控）。</p>
+<p>根据 Mashable 的报道，这东西火到 Mac mini 都卖断货了——很多人专门买一台小主机放家里，就为了跑这个。</p>
+<p>不过我觉得没必要这么激进。一台便宜的云服务器就够了，一个月几十块钱，玩坏了也不心疼。</p>
+<hr>
+<h2 id="它能干什么"><a href="#它能干什么" class="headerlink" title="它能干什么"></a>它能干什么</h2><p>搭完之后我自己用了一下，体验确实不错：</p>
+<ul>
+<li><strong>随时随地发消息</strong>：手机上给 Bot 发消息，秒回。出门在外也能远程操作服务器</li>
+<li><strong>查服务器状态</strong>：让它跑个 <code>htop</code> 或者看 Docker 容器，截图发过来</li>
+<li><strong>定时任务</strong>：每天早上 7 点发一份服务器健康报告</li>
+<li><strong>写代码调试</strong>：把报错信息发给它，它能直接帮你改文件</li>
+</ul>
+<p>网上还有人玩得更花：</p>
+<p><strong>邮件自动化</strong>：每 15 分钟检查一次收件箱，垃圾邮件自动归档，重要邮件立刻推送摘要到手机，还能用你的口吻起草回复。</p>
+<p><strong>笔记整理</strong>：连接 Obsidian，自动更新每日笔记，从会议记录里提取待办事项，生成每周回顾。</p>
+<p><strong>睡觉时写代码</strong>：睡前把一个 Bug 丢给它，它会持续调试、提交、测试，早上起来 PR 就准备好了。</p>
+<p><strong>智能家居控制</strong>：有人在沙发上看电视，用手机让它帮忙调灯光、查天气、设闹钟。</p>
+<p>当然，这些高级玩法需要配置额外的 Skills 和集成。本文先讲基础安装，能聊天、能执行命令就算成功。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769500643408_20260127155715135.png" alt="image-20260127155715044"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769500650626_20260127155723794.png" alt="image-20260127155723447"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769500673429_20260127155745646.png" alt="image-20260127155745564"></p>
+<hr>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>你需要：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一台服务器</td>
+<td>云服务器（我用的 Ubuntu 24.04）、Mac mini、旧电脑、树莓派都行,最好是国外的,不然网络环境都有的折腾了!</td>
+</tr>
+<tr>
+<td>Telegram 账号</td>
+<td>用来创建 Bot</td>
+</tr>
+<tr>
+<td>Claude&#x2F;GPT API</td>
+<td>官方的或者中转站都行，后面会细说</td>
+</tr>
+</tbody></table>
+<h3 id="关于设备选择"><a href="#关于设备选择" class="headerlink" title="关于设备选择"></a>关于设备选择</h3><p><strong>云服务器（推荐新手）</strong></p>
+<p>优点：便宜（最低几十块&#x2F;月）、玩坏了不心疼、7x24 在线<br>缺点：需要一点 Linux 基础</p>
+<p><strong>Mac mini</strong></p>
+<p>优点：性能好、功耗低、能跑 macOS 专属功能（iMessage 等）<br>缺点：贵（4000+ 起步）、权限太高有安全风险</p>
+<p><strong>我的建议</strong>：</p>
+<p>新手先用 VPS 试水。等熟悉了再考虑要不要买专门的设备。如果真要用 Mac mini，别用日常工作的那台——万一配置出问题，或者 Key 泄露了，后果可能很严重。</p>
+<hr>
+<h2 id="安装方式"><a href="#安装方式" class="headerlink" title="安装方式"></a>安装方式</h2><p>ClawdBot 支持多种安装方式，我按推荐程度排序：</p>
+<h3 id="方式一：一键安装脚本（推荐）"><a href="#方式一：一键安装脚本（推荐）" class="headerlink" title="方式一：一键安装脚本（推荐）"></a>方式一：一键安装脚本（推荐）</h3><p>官方提供的快速安装命令，会自动处理依赖和权限问题：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Linux / macOS</span></span><br><span class="line">curl -fsSL https://get.clawd.bot | bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装完成后运行引导向导</span></span><br><span class="line">clawdbot onboard --install-daemon</span><br></pre></td></tr></table></figure>
+
+<p>这个脚本会自动检测系统、安装 Node.js 22+、处理 npm 权限、全局安装 clawdbot。</p>
+<h3 id="方式二：手动-npm-安装"><a href="#方式二：手动-npm-安装" class="headerlink" title="方式二：手动 npm 安装"></a>方式二：手动 npm 安装</h3><p>如果你已经有 Node.js 22+：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g clawdbot@latest</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="详细安装步骤"><a href="#详细安装步骤" class="headerlink" title="详细安装步骤"></a>详细安装步骤</h2><p>下面用手动方式演示。虽然一键脚本更方便，但手动装能让你更清楚每一步在干嘛，出问题也好排查。</p>
+<h3 id="第一步：安装-Node-js-22"><a href="#第一步：安装-Node-js-22" class="headerlink" title="第一步：安装 Node.js 22+"></a>第一步：安装 Node.js 22+</h3><p>ClawdBot 要求 Node.js 22 以上。Ubuntu 自带的版本太老，得手动装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加 NodeSource 仓库</span></span><br><span class="line">curl -fsSL https://deb.nodesource.com/setup_22.x | bash -</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">apt-get install -y nodejs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">node -v</span><br><span class="line"><span class="comment"># 输出 v22.x.x 就对了</span></span><br></pre></td></tr></table></figure>
+
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769500806955_20260127160000384.png" alt="image-20260127160000295"></p>
+<blockquote>
+<p><strong>踩坑 1</strong>：别直接 <code>apt install nodejs</code>，那样装的是老版本（通常 v12 或 v18），后面会报各种兼容性错误。</p>
+</blockquote>
+<h3 id="第二步：安装-ClawdBot"><a href="#第二步：安装-ClawdBot" class="headerlink" title="第二步：安装 ClawdBot"></a>第二步：安装 ClawdBot</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g clawdbot@latest</span><br></pre></td></tr></table></figure>
+
+<p>装完验证：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">clawdbot --version</span><br></pre></td></tr></table></figure>
+
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769500851845_20260127160042009.png" alt="image-20260127160041920"></p>
+<blockquote>
+<p><strong>踩坑 2</strong>：如果报 <code>EACCES</code> 权限错误，说明 npm 全局目录权限有问题。解决方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.npm-global</span><br><span class="line">npm config <span class="built_in">set</span> prefix <span class="string">&#x27;~/.npm-global&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=~/.npm-global/bin:$PATH&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure></blockquote>
+<h3 id="第三步：创建-Telegram-Bot"><a href="#第三步：创建-Telegram-Bot" class="headerlink" title="第三步：创建 Telegram Bot"></a>第三步：创建 Telegram Bot</h3><p>打开 Telegram，搜索 <code>@BotFather</code>，发送 <code>/newbot</code>。这里好像必须新建!</p>
+<p>按提示设置：</p>
+<ol>
+<li>给 Bot 起个名字（显示名称）</li>
+<li>设置用户名（必须以 <code>bot</code> 结尾，比如 <code>my_clawd_bot</code>）</li>
+</ol>
+<p>最后会给你一串 Token：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1234567890:ABCdefGHIjklMNOpqrSTUvwxYZ1234567890</span><br></pre></td></tr></table></figure>
+
+<p><strong>存好这个 Token</strong>，后面要用。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769500900232_20260127160128884.png" alt="image-20260127160128795"></p>
+<h3 id="第四步：准备-API"><a href="#第四步：准备-API" class="headerlink" title="第四步：准备 API"></a>第四步：准备 API</h3><p>这一步最容易踩坑。</p>
+<p><strong>用官方 API</strong></p>
+<ol>
+<li>去 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://console.anthropic.com/">console.anthropic.com</a> 注册</li>
+<li>创建 API Key（以 <code>sk-ant-</code> 开头）</li>
+<li>充值一点余额</li>
+</ol>
+<p><strong>用中转站 API</strong></p>
+<p>如果用中转站，注意三点：</p>
+<ul>
+<li>必须支持 <strong>OpenAI 兼容格式</strong></li>
+<li>必须支持 <strong>工具调用（function calling）</strong></li>
+<li>确认 <strong>没有分组限制</strong></li>
+</ul>
+<blockquote>
+<p><strong>踩坑 3</strong>：这里我是直接用的CLI Proxy API这个开源项目中转的API,选的gemini-3-flash模型,感觉非常舒畅!</p>
+</blockquote>
+<h3 id="第五步：写配置文件"><a href="#第五步：写配置文件" class="headerlink" title="第五步：写配置文件"></a>第五步：写配置文件</h3><p>创建配置目录：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.clawdbot</span><br><span class="line">nano ~/.clawdbot/clawdbot.json</span><br></pre></td></tr></table></figure>
+
+<p>根据你的 API 类型选配置模板：</p>
+<h4 id="模板-A：Anthropic-官方-API"><a href="#模板-A：Anthropic-官方-API" class="headerlink" title="模板 A：Anthropic 官方 API"></a>模板 A：Anthropic 官方 API</h4><figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;gateway&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;local&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;bind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;loopback&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">18789</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_API_KEY&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sk-ant-你的密钥&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;agents&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;defaults&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;primary&quot;</span><span class="punctuation">:</span> <span class="string">&quot;anthropic/claude-sonnet-4-5-20261022&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;telegram&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;botToken&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的Bot Token&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;dmPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pairing&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="模板-B：OpenAI-兼容的中转站"><a href="#模板-B：OpenAI-兼容的中转站" class="headerlink" title="模板 B：OpenAI 兼容的中转站"></a>模板 B：OpenAI 兼容的中转站</h4><figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;gateway&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;local&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;bind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;loopback&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">18789</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;agents&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;defaults&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;primary&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gemini/gemini-3-flash&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">	  <span class="attr">&quot;elevatedDefault&quot;</span><span class="punctuation">:</span> <span class="string">&quot;full&quot;</span> <span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;workspace&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/wangwang&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;compaction&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;safeguard&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;maxConcurrent&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;subagents&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;maxConcurrent&quot;</span><span class="punctuation">:</span> <span class="number">8</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;models&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;merge&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;providers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;gemini&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;baseUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://你的中转站API/v1&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;apiKey&quot;</span><span class="punctuation">:</span> <span class="string">&quot;test&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;api&quot;</span><span class="punctuation">:</span> <span class="string">&quot;openai-completions&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;models&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gemini-3-flash&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gemini-3-flash&quot;</span></span><br><span class="line">          <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;telegram&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;botToken&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的TG Token&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;entries&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;telegram&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>踩坑 4</strong>：<code>api</code> 字段必须填 <code>openai-completions</code>。我一开始填的 <code>openai-chat</code>，死活启动不了。</p>
+</blockquote>
+<blockquote>
+<p><strong>踩坑 5</strong>：<code>models</code> 数组不能省，不然报错说缺少必填项。注意agents中也有配置模型名,别忘了改!</p>
+</blockquote>
+<h3 id="第六步：启动测试"><a href="#第六步：启动测试" class="headerlink" title="第六步：启动测试"></a>第六步：启动测试</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">clawdbot gateway --verbose</span><br></pre></td></tr></table></figure>
+
+<p>看到这两行就成功了：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[gateway] listening on ws://127.0.0.1:18789</span><br><span class="line">[telegram] [default] starting provider (@你的Bot名字)</span><br></pre></td></tr></table></figure>
+
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769501141515_20260127160536372.png" alt="image-20260127160536261"></p>
+<h3 id="第七步：配对"><a href="#第七步：配对" class="headerlink" title="第七步：配对"></a>第七步：配对</h3><p>第一次给 Bot 发消息，它会回复配对码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Pairing code: X9MKTQ2P</span><br><span class="line">Your Telegram user id: 123456789</span><br></pre></td></tr></table></figure>
+
+<p>在服务器上执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">clawdbot pairing approve telegram X9MKTQ2P</span><br></pre></td></tr></table></figure>
+
+<p>配对完成后，只有你的账号能和 Bot 对话，别人发消息它不会理。</p>
+<p><strong>记下你的 Telegram User ID</strong>，后面设置权限白名单要用。</p>
+<p>后续有啥需求就直接tg对话,让AI自行配置就行了!比如我让它帮我集成了exa的搜索功能!</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769501351139_20260127160903367.png" alt="image-20260127160903264"></p>
+<hr>
+<h2 id="设置开机自启"><a href="#设置开机自启" class="headerlink" title="设置开机自启"></a>设置开机自启</h2><p>用 <code>nohup</code> 跑的话，SSH 一断就挂了。上 systemd：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/systemd/system/clawdbot.service &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">[Unit]</span><br><span class="line">Description=ClawdBot Gateway</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">User=root</span><br><span class="line">ExecStart=/usr/bin/clawdbot gateway --verbose</span><br><span class="line">Restart=always</span><br><span class="line">RestartSec=5</span><br><span class="line">Environment=HOME=/root</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> clawdbot</span><br><span class="line">systemctl start clawdbot</span><br></pre></td></tr></table></figure>
+
+<p>这样就完事了。开机自动启动，挂了 5 秒后自动重启。</p>
+<hr>
+<h2 id="日常维护"><a href="#日常维护" class="headerlink" title="日常维护"></a>日常维护</h2><p>几个常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 看运行状态</span></span><br><span class="line">systemctl status clawdbot</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看实时日志</span></span><br><span class="line">journalctl -u clawdbot -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line">systemctl restart clawdbot</span><br><span class="line"></span><br><span class="line"><span class="comment"># 健康检查</span></span><br><span class="line">clawdbot doctor</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全面状态</span></span><br><span class="line">clawdbot status --all</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="进阶：命令白名单"><a href="#进阶：命令白名单" class="headerlink" title="进阶：命令白名单"></a>进阶：命令白名单</h2><p>如果想让某些命令自动执行，不用每次批准：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 允许 docker 命令</span></span><br><span class="line">clawdbot approvals allowlist add --agent <span class="string">&quot;*&quot;</span> <span class="string">&quot;docker *&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许 systemctl</span></span><br><span class="line">clawdbot approvals allowlist add --agent <span class="string">&quot;*&quot;</span> <span class="string">&quot;systemctl *&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许 /usr/bin 下的程序</span></span><br><span class="line">clawdbot approvals allowlist add --agent <span class="string">&quot;*&quot;</span> <span class="string">&quot;/usr/bin/*&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前白名单</span></span><br><span class="line">clawdbot approvals allowlist list</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="进阶：定时任务"><a href="#进阶：定时任务" class="headerlink" title="进阶：定时任务"></a>进阶：定时任务</h2><p>ClawdBot 内置 Cron 功能。比如每天早上 7 点发送服务器状态：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">clawdbot cron add --schedule <span class="string">&quot;0 7 * * *&quot;</span> \</span><br><span class="line">  --timezone <span class="string">&quot;Asia/Shanghai&quot;</span> \</span><br><span class="line">  --message <span class="string">&quot;检查服务器状态，给我发个简报&quot;</span> \</span><br><span class="line">  --deliver telegram \</span><br><span class="line">  --to <span class="string">&quot;你的TG用户ID&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>或者写进配置文件：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;cron&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;jobs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;daily-report&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;schedule&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;cron&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0 7 * * *&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;timezone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Asia/Shanghai&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;sessionTarget&quot;</span><span class="punctuation">:</span> <span class="string">&quot;isolated&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;payload&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;agentTurn&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;检查服务器状态，生成简报&quot;</span></span><br><span class="line">          <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;deliver&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;channel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;telegram&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;to&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的TG用户ID&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="clawdbot-command-not-found"><a href="#clawdbot-command-not-found" class="headerlink" title="clawdbot: command not found"></a><code>clawdbot: command not found</code></h3><p>npm PATH 问题。确认全局目录在 PATH 里：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm config get prefix</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$(npm config get prefix)/bin:$PATH&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="端口被占用"><a href="#端口被占用" class="headerlink" title="端口被占用"></a>端口被占用</h3><p>默认端口 18789 冲突了：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof -i :18789  <span class="comment"># 看谁在用</span></span><br><span class="line"></span><br><span class="line">clawdbot gateway --port 18790 --verbose  <span class="comment"># 换个端口</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Bot-收到消息但不回复"><a href="#Bot-收到消息但不回复" class="headerlink" title="Bot 收到消息但不回复"></a>Bot 收到消息但不回复</h3><p>按顺序检查：</p>
+<ol>
+<li>Gateway 在不在跑：<code>clawdbot status</code></li>
+<li>配对了没：<code>clawdbot pairing list telegram</code></li>
+<li>API 还有没有额度</li>
+<li>看日志：<code>journalctl -u clawdbot -f</code></li>
+</ol>
+<h3 id="all-models-failed"><a href="#all-models-failed" class="headerlink" title="all models failed"></a><code>all models failed</code></h3><p>API 配置问题：</p>
+<ol>
+<li>Key 对不对</li>
+<li>baseUrl 格式对不对（结尾有没有 <code>/v1</code>）</li>
+<li>model id 写对没</li>
+<li>跑一下 <code>clawdbot doctor</code></li>
+</ol>
+<h3 id="工具调用失败"><a href="#工具调用失败" class="headerlink" title="工具调用失败"></a>工具调用失败</h3><p>你的 API 不支持 function calling。这种情况 Bot 能聊天，但执行命令用不了。换一个支持工具调用的 API。</p>
+<hr>
+<h2 id="完整配置示例"><a href="#完整配置示例" class="headerlink" title="完整配置示例"></a>完整配置示例</h2><p>一个功能完整的配置，开箱即用：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;gateway&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;local&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;bind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;loopback&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">18789</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;agents&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;defaults&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;primary&quot;</span><span class="punctuation">:</span> <span class="string">&quot;openai-compat/claude-sonnet-4-5-20261022&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;fallback&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;openai-compat/claude-haiku-3-5-20241022&quot;</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;elevatedDefault&quot;</span><span class="punctuation">:</span> <span class="string">&quot;full&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;thinking&quot;</span><span class="punctuation">:</span> <span class="string">&quot;medium&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;models&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;merge&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;providers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;openai-compat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;baseUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://你的API地址/v1&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;apiKey&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的密钥&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;api&quot;</span><span class="punctuation">:</span> <span class="string">&quot;openai-completions&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;models&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;claude-sonnet-4-5-20261022&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Claude Sonnet 4.5&quot;</span></span><br><span class="line">          <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;claude-haiku-3-5-20241022&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Claude Haiku 3.5&quot;</span></span><br><span class="line">          <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tools&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;exec&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;backgroundMs&quot;</span><span class="punctuation">:</span> <span class="number">10000</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;timeoutSec&quot;</span><span class="punctuation">:</span> <span class="number">1800</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cleanupMs&quot;</span><span class="punctuation">:</span> <span class="number">1800000</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;notifyOnExit&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;elevated&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;allowFrom&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;telegram&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;你的TG用户ID&quot;</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;exec&quot;</span><span class="punctuation">,</span> <span class="string">&quot;process&quot;</span><span class="punctuation">,</span> <span class="string">&quot;read&quot;</span><span class="punctuation">,</span> <span class="string">&quot;write&quot;</span><span class="punctuation">,</span> <span class="string">&quot;edit&quot;</span><span class="punctuation">,</span> <span class="string">&quot;web_search&quot;</span><span class="punctuation">,</span> <span class="string">&quot;web_fetch&quot;</span><span class="punctuation">,</span> <span class="string">&quot;cron&quot;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;telegram&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;botToken&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的Bot Token&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;dmPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pairing&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;allowFrom&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;你的TG用户ID&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;groupPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;disabled&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;cron&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;jobs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置亮点</strong>：</p>
+<ul>
+<li><code>fallback</code>：主模型挂了自动切备用</li>
+<li><code>thinking: medium</code>：启用中等深度思考</li>
+<li><code>groupPolicy: disabled</code>：只响应私聊，不进群</li>
+<li>双重白名单：elevated 和 channels 都设了 allowFrom</li>
+</ul>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>整个过程折腾了大半天，大部分时间花在排查配置格式上。</p>
+<p>几个关键点：</p>
+<ol>
+<li><strong>Node.js 版本</strong>：必须 22 以上</li>
+<li><strong>API 要通用</strong>：别用有分组限制的 Key</li>
+<li><strong>配置格式严格</strong>：<code>api</code> 字段、<code>models</code> 数组这些容易出错</li>
+<li><strong>用 systemd 管理</strong>：别用 nohup</li>
+<li><strong>安全第一</strong>：白名单必须设，日志定期看</li>
+</ol>
+<p>搭完之后确实方便。出门在外随时能跟服务器交互，定时任务也不用自己写脚本了。</p>
+<p>但说实话，这东西更适合有一定技术基础的人。如果只是想聊天，直接用 Claude 官网就够了。折腾 ClawdBot，图的是「可控」和「自动化」。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com">一只会飞的旺旺</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com/clawdbot-installation-guide/">https://www.wangwangit.com/clawdbot-installation-guide/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.wangwangit.com" target="_blank">一只会飞的旺旺</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/">教程</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><a class="post-meta__tags" href="/tags/ClawdBot/">ClawdBot</a><a class="post-meta__tags" href="/tags/AI%E5%8A%A9%E6%89%8B/">AI助手</a><a class="post-meta__tags" href="/tags/Telegram-Bot/">Telegram Bot</a></div><div class="post-share"><div class="social-share" data-image="https://img.996007.icu/file/1769502802437_20260127163313325.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025-03-23-%E7%9F%AD%E4%BF%A1%E8%BD%AC%E5%8F%91%E7%A5%9E%E5%99%A8SmsForwarder/" title="短信转发神器SmsForwarder"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/3.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-23</div><div class="info-item-2">短信转发神器SmsForwarder</div></div><div class="info-2"><div class="info-item-1">还在为多张SIM卡、多个手机来回切换查看消息而烦恼？SmsForwarder这款开源神器，让你一部手机掌握所有信息！详细教程，手把手教你玩转短信、来电、应用通知转发！</div></div></div></a><a class="pagination-related" href="/5%E5%88%86%E9%92%9F%E6%8A%8AGoogle%E8%B4%A6%E5%8F%B7%E6%94%B9%E6%88%90%E7%BE%8E%E5%8C%BA/" title="5分钟把 Google 账号改成美区"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1768351633140_20260114084701986.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-13</div><div class="info-item-2">5分钟把 Google 账号改成美区</div></div><div class="info-2"><div class="info-item-1">一张信用卡，5分钟搞定 Google 账号改区。申请 Google One 学生会员、用反重力，都需要美区账号，这是我找到的最简单方法。</div></div></div></a><a class="pagination-related" href="/OpenClaw%E5%A4%9A%E4%BC%9A%E8%AF%9D%E6%A8%A1%E5%BC%8F-%E5%B0%8F%E7%99%BD%E4%B9%9F%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/" title="OpenClaw 多会话模式：小白也能看懂的完整教程"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1770018981980_20260202155606257.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-02</div><div class="info-item-2">OpenClaw 多会话模式：小白也能看懂的完整教程</div></div><div class="info-2"><div class="info-item-1">每次对话都是全新开始。昨天的语境？没了。上周要求的研究？再也找不到了。我想让 OpenClaw 同时处理多个任务，但默认情况下它只能一个一个来。OpenClaw 多会话模式配置教程，让多个任务同时跑，互不干扰</div></div></div></a><a class="pagination-related" href="/%E4%BB%8E%E9%9B%B6%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E4%B8%93%E5%B1%9E%20AI%20%E5%8A%A9%E6%89%8B%E2%80%94%E2%80%94Claude%20Code%20Skills%20%E5%AE%9E%E6%88%98%E6%95%99%E7%A8%8B/" title="从零打造你的专属 AI 助手——Claude Code Skills 实战教程"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1767955569597_20260109184558026.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-09</div><div class="info-item-2">从零打造你的专属 AI 助手——Claude Code Skills 实战教程</div></div><div class="info-2"><div class="info-item-1">10 分钟学会创建 Claude Code Skills，让 AI 按你的方式干活。手把手教你从零打造一个「安全审计」Skill。</div></div></div></a><a class="pagination-related" href="/CloudFlare%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E4%B8%80%EF%BC%9A%E5%B7%A7%E7%94%A8%20Workers%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%AF%8F%E6%97%A5%E4%BB%BB%E5%8A%A1%E8%87%AA%E5%8A%A8%E5%8C%96/" title="CloudFlare系列教程一：巧用 Workers，实现每日任务自动化"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1760580722483_20251016101151327.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-01</div><div class="info-item-2">CloudFlare系列教程一：巧用 Workers，实现每日任务自动化</div></div><div class="info-2"><div class="info-item-1">我手上有些服务，比如 GLaDOS之类的网站，都需要每天手动签到一下来维持活跃或获取积分。这个操作本身不复杂，但每天重复，就显得很繁琐，也容易忘记。</div></div></div></a><a class="pagination-related" href="/TinyTask%E8%A7%A3%E6%94%BE%E5%8F%8C%E6%89%8B%E8%AE%A9%E7%94%B5%E8%84%91%E8%87%AA%E5%8A%A8%E5%B7%A5%E4%BD%9C%E7%9A%84%E7%A5%9E%E5%99%A8/" title="TinyTask解放双手，让电脑自动工作的神器 🤖"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/background/27.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-19</div><div class="info-item-2">TinyTask解放双手，让电脑自动工作的神器 🤖</div></div><div class="info-2"><div class="info-item-1">本文详细介绍了一款极简主义的PC自动化工具TinyTask,教你如何利用它录制和回放重复性操作,大幅提升工作效率。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">229</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">240</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p style="margin-bottom: 15px;">我的个人站点已整合到顶部"我的站点"菜单中，欢迎访问体验！若存在无法访问的情况，可以及时反馈！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ClawdBot-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">ClawdBot 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E8%83%BD%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">它能干什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E8%AE%BE%E5%A4%87%E9%80%89%E6%8B%A9"><span class="toc-number">3.1.</span> <span class="toc-text">关于设备选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">安装方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">方式一：一键安装脚本（推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E6%89%8B%E5%8A%A8-npm-%E5%AE%89%E8%A3%85"><span class="toc-number">4.2.</span> <span class="toc-text">方式二：手动 npm 安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-number">5.</span> <span class="toc-text">详细安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%AE%89%E8%A3%85-Node-js-22"><span class="toc-number">5.1.</span> <span class="toc-text">第一步：安装 Node.js 22+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%89%E8%A3%85-ClawdBot"><span class="toc-number">5.2.</span> <span class="toc-text">第二步：安装 ClawdBot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA-Telegram-Bot"><span class="toc-number">5.3.</span> <span class="toc-text">第三步：创建 Telegram Bot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%87%86%E5%A4%87-API"><span class="toc-number">5.4.</span> <span class="toc-text">第四步：准备 API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E5%86%99%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.5.</span> <span class="toc-text">第五步：写配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF-A%EF%BC%9AAnthropic-%E5%AE%98%E6%96%B9-API"><span class="toc-number">5.5.1.</span> <span class="toc-text">模板 A：Anthropic 官方 API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF-B%EF%BC%9AOpenAI-%E5%85%BC%E5%AE%B9%E7%9A%84%E4%B8%AD%E8%BD%AC%E7%AB%99"><span class="toc-number">5.5.2.</span> <span class="toc-text">模板 B：OpenAI 兼容的中转站</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%9A%E5%90%AF%E5%8A%A8%E6%B5%8B%E8%AF%95"><span class="toc-number">5.6.</span> <span class="toc-text">第六步：启动测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E6%AD%A5%EF%BC%9A%E9%85%8D%E5%AF%B9"><span class="toc-number">5.7.</span> <span class="toc-text">第七步：配对</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="toc-number">6.</span> <span class="toc-text">设置开机自启</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%B8%B8%E7%BB%B4%E6%8A%A4"><span class="toc-number">7.</span> <span class="toc-text">日常维护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%91%BD%E4%BB%A4%E7%99%BD%E5%90%8D%E5%8D%95"><span class="toc-number">8.</span> <span class="toc-text">进阶：命令白名单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">9.</span> <span class="toc-text">进阶：定时任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#clawdbot-command-not-found"><span class="toc-number">10.1.</span> <span class="toc-text">clawdbot: command not found</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8"><span class="toc-number">10.2.</span> <span class="toc-text">端口被占用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bot-%E6%94%B6%E5%88%B0%E6%B6%88%E6%81%AF%E4%BD%86%E4%B8%8D%E5%9B%9E%E5%A4%8D"><span class="toc-number">10.3.</span> <span class="toc-text">Bot 收到消息但不回复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#all-models-failed"><span class="toc-number">10.4.</span> <span class="toc-text">all models failed</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E5%A4%B1%E8%B4%A5"><span class="toc-number">10.5.</span> <span class="toc-text">工具调用失败</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B"><span class="toc-number">11.</span> <span class="toc-text">完整配置示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">12.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%20OpenClaw%20%E4%B8%80%E5%88%B0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E5%B0%B1%E5%83%8F%E5%A4%B1%E5%BF%86%E4%BA%86%EF%BC%9F%E7%9C%9F%E6%AD%A3%E7%9A%84%E5%9D%91%E4%B8%8D%E6%98%AF%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BF%99%E4%B8%AA%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE/" title="为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1772948850945_20260308134722131.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置"/></a><div class="content"><a class="title" href="/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%20OpenClaw%20%E4%B8%80%E5%88%B0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E5%B0%B1%E5%83%8F%E5%A4%B1%E5%BF%86%E4%BA%86%EF%BC%9F%E7%9C%9F%E6%AD%A3%E7%9A%84%E5%9D%91%E4%B8%8D%E6%98%AF%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BF%99%E4%B8%AA%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE/" title="为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置">为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置</a><time datetime="2026-03-08T05:35:00.000Z" title="发表于 2026-03-08 13:35:00">2026-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/openclaw-remote-browser-guide/" title="OpenClaw 远程浏览器使用指南：从入门到踩坑"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1772948528437_20260308134201918.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenClaw 远程浏览器使用指南：从入门到踩坑"/></a><div class="content"><a class="title" href="/openclaw-remote-browser-guide/" title="OpenClaw 远程浏览器使用指南：从入门到踩坑">OpenClaw 远程浏览器使用指南：从入门到踩坑</a><time datetime="2026-02-26T04:16:00.000Z" title="发表于 2026-02-26 12:16:00">2026-02-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/OpenClaw%E5%A4%9A%E4%BC%9A%E8%AF%9D%E6%A8%A1%E5%BC%8F-%E5%B0%8F%E7%99%BD%E4%B9%9F%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/" title="OpenClaw 多会话模式：小白也能看懂的完整教程"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1770018981980_20260202155606257.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenClaw 多会话模式：小白也能看懂的完整教程"/></a><div class="content"><a class="title" href="/OpenClaw%E5%A4%9A%E4%BC%9A%E8%AF%9D%E6%A8%A1%E5%BC%8F-%E5%B0%8F%E7%99%BD%E4%B9%9F%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/" title="OpenClaw 多会话模式：小白也能看懂的完整教程">OpenClaw 多会话模式：小白也能看懂的完整教程</a><time datetime="2026-02-01T22:56:00.000Z" title="发表于 2026-02-02 06:56:00">2026-02-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Typora%202026%20%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E4%BE%9D%E7%84%B6%E6%98%AF%20Markdown%20%E7%95%8C%E7%9A%84%E5%A4%A9%E8%8A%B1%E6%9D%BF/" title="Typora 2026 终极指南：为什么它依然是 Markdown 界的天花板？"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769657992439_20260129113944311.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Typora 2026 终极指南：为什么它依然是 Markdown 界的天花板？"/></a><div class="content"><a class="title" href="/Typora%202026%20%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E4%BE%9D%E7%84%B6%E6%98%AF%20Markdown%20%E7%95%8C%E7%9A%84%E5%A4%A9%E8%8A%B1%E6%9D%BF/" title="Typora 2026 终极指南：为什么它依然是 Markdown 界的天花板？">Typora 2026 终极指南：为什么它依然是 Markdown 界的天花板？</a><time datetime="2026-01-29T03:15:20.000Z" title="发表于 2026-01-29 11:15:20">2026-01-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/clawdbot-installation-guide/" title="ClawdBot 保姆级安装指南：从零搭建你的 24/7 私人 AI 助手"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1769502802437_20260127163313325.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ClawdBot 保姆级安装指南：从零搭建你的 24/7 私人 AI 助手"/></a><div class="content"><a class="title" href="/clawdbot-installation-guide/" title="ClawdBot 保姆级安装指南：从零搭建你的 24/7 私人 AI 助手">ClawdBot 保姆级安装指南：从零搭建你的 24/7 私人 AI 助手</a><time datetime="2026-01-27T07:00:00.000Z" title="发表于 2026-01-27 15:00:00">2026-01-27</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div></div></div></main><footer id="footer" style="background-image: url(https://img.996007.icu/file/1769502802437_20260127163313325.png);"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-waline-nine-rho.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('/pluginsSrc/@waline/client/dist/waline.css')
+        .then(() => import('/pluginsSrc/@waline/client/dist/waline.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="https://events.vercount.one/js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
