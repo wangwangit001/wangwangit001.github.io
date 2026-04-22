@@ -1,0 +1,693 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置 | 一只会飞的旺旺</title><meta name="author" content="一只会飞的旺旺"><meta name="copyright" content="一只会飞的旺旺"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="很多人以为 OpenClaw 第二天记不起昨天的事，是记忆系统坏了。真相往往不是 MEMORY&#x2F;QMD 出问题，而是 session.reset 默认按天切会话。本文讲清这个坑，并给出更适合个人助手场景的最佳配置方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置">
+<meta property="og:url" content="https://www.wangwangit.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%20OpenClaw%20%E4%B8%80%E5%88%B0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E5%B0%B1%E5%83%8F%E5%A4%B1%E5%BF%86%E4%BA%86%EF%BC%9F%E7%9C%9F%E6%AD%A3%E7%9A%84%E5%9D%91%E4%B8%8D%E6%98%AF%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BF%99%E4%B8%AA%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="一只会飞的旺旺">
+<meta property="og:description" content="很多人以为 OpenClaw 第二天记不起昨天的事，是记忆系统坏了。真相往往不是 MEMORY&#x2F;QMD 出问题，而是 session.reset 默认按天切会话。本文讲清这个坑，并给出更适合个人助手场景的最佳配置方案。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.996007.icu/file/1772948850945_20260308134722131.png">
+<meta property="article:published_time" content="2026-03-08T05:35:00.000Z">
+<meta property="article:modified_time" content="2026-04-22T09:26:03.265Z">
+<meta property="article:author" content="一只会飞的旺旺">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="session">
+<meta property="article:tag" content="memory">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.996007.icu/file/1772948850945_20260308134722131.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置",
+  "url": "https://www.wangwangit.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%20OpenClaw%20%E4%B8%80%E5%88%B0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E5%B0%B1%E5%83%8F%E5%A4%B1%E5%BF%86%E4%BA%86%EF%BC%9F%E7%9C%9F%E6%AD%A3%E7%9A%84%E5%9D%91%E4%B8%8D%E6%98%AF%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BF%99%E4%B8%AA%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE/",
+  "image": "https://img.996007.icu/file/1772948850945_20260308134722131.png",
+  "datePublished": "2026-03-08T05:35:00.000Z",
+  "dateModified": "2026-04-22T09:26:03.265Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "一只会飞的旺旺",
+      "url": "https://www.wangwangit.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.webp"><link rel="canonical" href="https://www.wangwangit.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%20OpenClaw%20%E4%B8%80%E5%88%B0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E5%B0%B1%E5%83%8F%E5%A4%B1%E5%BF%86%E4%BA%86%EF%BC%9F%E7%9C%9F%E6%AD%A3%E7%9A%84%E5%9D%91%E4%B8%8D%E6%98%AF%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BF%99%E4%B8%AA%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE/index.html"><link rel="preconnect"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="FHLjkCq3_Lc-cEgxXN8BfR4rfC9omgFmaAB1vhSrJyw"/><meta name="baidu-site-verification" content="code-pSK313Q8yf"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 检查是否已有缓存结果及其是否在24小时内
+    const stored = localStorage.getItem('isChineseIP');
+    const timestamp = localStorage.getItem('ipCheckTime');
+    const now = Date.now();
+
+    // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+    if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+      if (stored !== 'true') {
+        // 非中国大陆IP，加载AdSense
+        loadAdSense();
+      } else {
+        console.log('检测到中国大陆IP，已禁用Google AdSense');
+      }
+    } else {
+      // 没有缓存或缓存过期，异步检测IP
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const isChineseIP = data.country_code === 'CN';
+
+          // 存储结果和时间戳
+          localStorage.setItem('isChineseIP', isChineseIP);
+          localStorage.setItem('ipCheckTime', now.toString());
+
+          // 如果不是中国大陆IP，加载AdSense
+          if (!isChineseIP) {
+            loadAdSense();
+          } else {
+            console.log('检测到中国大陆IP，已禁用Google AdSense');
+          }
+        })
+        .catch(error => {
+          console.error('IP检测失败:', error);
+          // 出错时默认加载AdSense
+          loadAdSense();
+        });
+    }
+
+    // 加载AdSense函数
+    function loadAdSense() {
+      // 异步加载AdSense主脚本
+      const adScript = document.createElement('script');
+      adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      adScript.async = true;
+      document.head.appendChild(adScript);
+
+      // 设置自动广告
+      if (true) {
+        adScript.onload = function() {
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: 'ca-pub-2114287505938813',
+            enable_page_level_ads: 'true'
+          });
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Google AdSense加载出错:', error);
+  }
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7a6812c7a8ad219e56fcc2f0397ea516";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-ENFHSEQW2K"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-ENFHSEQW2K')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-ENFHSEQW2K', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: 一只会飞的旺旺","link":"链接: ","source":"来源: 一只会飞的旺旺","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="一只会飞的旺旺" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">234</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">254</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.996007.icu/file/1772948850945_20260308134722131.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" alt="Logo"><span class="site-name">一只会飞的旺旺</span></a><a class="nav-page-title" href="/"><span class="site-name">为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><span> 我的站点</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://nav.wangwangit.com"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://ali.wangwangit.com"><i class="fa-fw fas fa-folder"></i><span> 资源站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://url.wangwangit.com"><i class="fa-fw fas fa-link"></i><span> 短链站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://mail.wangwangit.com"><i class="fa-fw fas fa-envelope"></i><span> 邮箱站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener external nofollow noreferrer" href="https://tts.wangwangit.com"><i class="fa-fw fas fa-volume-up"></i><span> 语音站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-08T05:35:00.000Z" title="发表于 2026-03-08 13:35:00">2026-03-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-22T09:26:03.265Z" title="更新于 2026-04-22 17:26:03">2026-04-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2026-04-22 17:26:03&quot;}" hidden></div><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1772948850945_20260308134722131.png" alt="image-20260308134721886"></p>
+<p>昨晚还聊得好好的。</p>
+<p>你跟 OpenClaw 一起梳理方案、记待办、定步骤，甚至已经把今天要继续的事都铺好了。结果第二天早晨你一开口，它来一句：像什么都没发生过。</p>
+<p>很多人碰到这里，第一反应都是一样的：<strong>完了，记忆坏了。</strong></p>
+<p>但啧，真相往往没那么复杂。</p>
+<p><strong>大多数时候，锅不在 MEMORY，也不在 QMD，更不在 embedding。真正更常见的元凶，是 <code>session.reset</code>。</strong></p>
+<p>更狠的是，这个坑还很像“记忆系统故障”，所以特别容易误诊。你会去查向量检索、查长期记忆、查模型上下文，折腾半天，最后才发现：原来只是 OpenClaw 在凌晨按默认策略把会话切走了。</p>
+<p>如果你把 OpenClaw 当个人助手用，这个默认配置非常容易把体验直接打废。</p>
+<p>先说我的结论：</p>
+<blockquote>
+<p><strong>个人助手场景下，不要默认用 <code>session.reset.mode = &quot;daily&quot;</code>。更稳的方案，是改成 <code>idle</code>，再按 <code>dm / thread / group</code> 分类型设置。</strong></p>
+</blockquote>
+<p>这不是玄学优化。</p>
+<p>这是最影响“它到底像不像一个连续工作的助手”的配置之一。</p>
+<h2 id="这坑到底是怎么来的"><a href="#这坑到底是怎么来的" class="headerlink" title="这坑到底是怎么来的"></a>这坑到底是怎么来的</h2><p>OpenClaw 官方文档其实写得很直白。</p>
+<p>它的会话会按重置策略复用，直到过期。而 <strong>daily reset 默认按 Gateway 主机本地时间凌晨 4 点判断</strong>。一旦过期，下一条消息到来时，就会创建新的 <code>sessionId</code>。</p>
+<p>翻成人话就是：</p>
+<p><strong>你昨天晚上聊的那一段，到了今天早晨，可能已经不在同一个会话桶里了。</strong></p>
+<p>所以你第二天看到的典型症状会是这样：</p>
+<ul>
+<li>它接不上你昨晚的话</li>
+<li>你说“按昨天那个方案继续”，它一脸茫然</li>
+<li>你开始怀疑长期记忆是不是挂了</li>
+</ul>
+<p>但这里要先分清两个概念。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1772948869633_20260308134740824.png" alt="image-20260308134740506"></p>
+<h3 id="1）Session-不是长期记忆"><a href="#1）Session-不是长期记忆" class="headerlink" title="1）Session 不是长期记忆"></a>1）Session 不是长期记忆</h3><p><code>session</code> 更像是“这一段连续对话”。</p>
+<p>它负责保存最近这段聊天的上下文，决定模型这一轮能不能自然接着上一轮往下说。</p>
+<h3 id="2）Memory-才是长期记忆"><a href="#2）Memory-才是长期记忆" class="headerlink" title="2）Memory 才是长期记忆"></a>2）Memory 才是长期记忆</h3><p><code>MEMORY.md</code>、<code>memory/*.md</code>、QMD 这套，更接近“长期笔记”和“可检索事实”。</p>
+<p>它们能帮助手段性地找回过去的信息，但那种“像昨天还在同一个聊天里”的连续感，主要还是靠 session。</p>
+<p>所以很多人说“OpenClaw 第二天失忆”，严格讲，很多时候并不是<strong>长期记忆没了</strong>，而是<strong>短期会话连续性断了</strong>。</p>
+<p>这俩不是一回事。</p>
+<h2 id="为什么-daily-对个人助手特别伤"><a href="#为什么-daily-对个人助手特别伤" class="headerlink" title="为什么 daily 对个人助手特别伤"></a>为什么 <code>daily</code> 对个人助手特别伤</h2><p>如果你做的是客服机器人、值班机器人、工单机器人，那 <code>daily</code> 其实不难理解。</p>
+<p>它的优点很明确：</p>
+<ul>
+<li>每天自动切新会话，边界干净</li>
+<li>更容易审计</li>
+<li>不容易把前一天的上下文脏东西带进今天</li>
+<li>对成本和上下文膨胀更保守</li>
+</ul>
+<p>问题在于，<strong>个人助手不是这么用的。</strong></p>
+<p>你对私人 AI 助手的期待，通常不是“它每天凌晨帮我切干净”，而是：</p>
+<ul>
+<li>昨天说到一半的事，今天还能接着说</li>
+<li>我不用每天重新讲背景</li>
+<li>我一句“按昨天那个继续”，它就该听得懂</li>
+</ul>
+<p>而 <code>daily</code> 这套默认逻辑，跟这种预期几乎是反着来的。</p>
+<p>它不是错。</p>
+<p><strong>只是特别不适合“个人助理”这个场景。</strong></p>
+<h2 id="最佳配置方案：别按天切，按空闲时长切"><a href="#最佳配置方案：别按天切，按空闲时长切" class="headerlink" title="最佳配置方案：别按天切，按空闲时长切"></a>最佳配置方案：别按天切，按空闲时长切</h2><p>如果你问我，OpenClaw 在个人助手场景下，<code>session.reset</code> 最值得推荐的默认方案是什么，我的答案很直接：</p>
+<blockquote>
+<p><strong>全局别再用 <code>daily</code>，改成 <code>idle</code>。然后按不同会话类型分别设置。</strong></p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1772949061483_20260308135058466.png" alt="image-20260308135058392"></p>
+<p>推荐配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">session: &#123;</span><br><span class="line">  scope: &quot;per-sender&quot;,</span><br><span class="line">  resetTriggers: [&quot;/new&quot;, &quot;/reset&quot;],</span><br><span class="line"></span><br><span class="line">  // 默认兜底：7 天没说话，再重置</span><br><span class="line">  reset: &#123;</span><br><span class="line">    mode: &quot;idle&quot;,</span><br><span class="line">    idleMinutes: 10080, // 7 days</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  // 按会话类型覆盖</span><br><span class="line">  resetByType: &#123;</span><br><span class="line">    // 私聊：最需要跨天连续性</span><br><span class="line">    dm: &#123;</span><br><span class="line">      mode: &quot;idle&quot;,</span><br><span class="line">      idleMinutes: 10080, // 7 days</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    // 线程 / Telegram topic / Discord thread：</span><br><span class="line">    // 更像围绕一个任务的上下文，1 天空闲后重置更合理</span><br><span class="line">    thread: &#123;</span><br><span class="line">      mode: &quot;idle&quot;,</span><br><span class="line">      idleMinutes: 1440, // 1 day</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    // 群聊：噪音大，保守一点</span><br><span class="line">    group: &#123;</span><br><span class="line">      mode: &quot;idle&quot;,</span><br><span class="line">      idleMinutes: 120, // 2 hours</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你主要只在私聊里用 OpenClaw，甚至可以再更简单一点：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">session: &#123;</span><br><span class="line">  resetTriggers: [&quot;/new&quot;, &quot;/reset&quot;],</span><br><span class="line">  reset: &#123;</span><br><span class="line">    mode: &quot;idle&quot;,</span><br><span class="line">    idleMinutes: 10080,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但更推荐的，还是前面那版按类型拆开。</p>
+<p>因为它更接近真实使用场景。</p>
+<h2 id="我为什么认为这是“最佳默认方案”"><a href="#我为什么认为这是“最佳默认方案”" class="headerlink" title="我为什么认为这是“最佳默认方案”"></a>我为什么认为这是“最佳默认方案”</h2><p>不是因为它最激进，也不是因为它参数最大。</p>
+<p>而是因为它在<strong>连续性、干净程度、成本控制</strong>之间，平衡得最好。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1772948909724_20260308134822193.png" alt="image-20260308134821840"></p>
+<h3 id="私聊：该长就长"><a href="#私聊：该长就长" class="headerlink" title="私聊：该长就长"></a>私聊：该长就长</h3><p>个人助手最核心的体验，几乎都发生在私聊里。</p>
+<p>而私聊一旦隔夜就断，会特别难受。</p>
+<p>你前一天才刚定好的任务、方案、取舍，第二天要重新铺一遍背景，这体验基本就废了。</p>
+<p>所以 DM 最应该保连续性。</p>
+<p>我建议默认先给 <strong>7 天 idle</strong>，原因很简单：</p>
+<ul>
+<li>足够跨天</li>
+<li>足够覆盖多数人一周内的连续工作流</li>
+<li>又没有长到完全放飞</li>
+</ul>
+<p>如果你是重度个人助理用户，也可以把私聊拉到 30 天：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dm: &#123;</span><br><span class="line">  mode: &quot;idle&quot;,</span><br><span class="line">  idleMinutes: 43200, // 30 days</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但对大多数人来说，<strong>7 天已经够舒服了</strong>。</p>
+<h3 id="线程：保一天，通常最顺手"><a href="#线程：保一天，通常最顺手" class="headerlink" title="线程：保一天，通常最顺手"></a>线程：保一天，通常最顺手</h3><p>thread、topic 这种东西，本质更像“围绕某个任务临时开出来的上下文容器”。</p>
+<p>它不是永久办公室，更像项目讨论间。</p>
+<p>所以这里我不建议拉太长。</p>
+<p><strong>1 天 idle</strong> 是个很顺手的值：</p>
+<ul>
+<li>今天没聊完，明天还能接上</li>
+<li>如果已经冷掉，就让它自然结束</li>
+<li>不会积一堆陈年上下文</li>
+</ul>
+<p>比起“每天凌晨固定 4 点切一刀”，这个策略更贴近人的实际工作节奏。</p>
+<h3 id="群聊：短一点才稳"><a href="#群聊：短一点才稳" class="headerlink" title="群聊：短一点才稳"></a>群聊：短一点才稳</h3><p>群聊最容易脏。</p>
+<p>消息多、话题乱、噪音高，还容易串上下文。</p>
+<p>所以群聊没必要像私聊一样保很久。</p>
+<p><strong>2 小时 idle</strong> 是个比较稳的起点：</p>
+<ul>
+<li>能覆盖一轮连续讨论</li>
+<li>不会把半天前的群聊垃圾也拖进来</li>
+<li>真出问题也更容易排查</li>
+</ul>
+<p>如果你群特别安静，也可以放宽到 4 小时、6 小时。</p>
+<p>但别上来就按私聊标准去配群聊，不然迟早串味。</p>
+<h2 id="哪些人不该直接照抄这套"><a href="#哪些人不该直接照抄这套" class="headerlink" title="哪些人不该直接照抄这套"></a>哪些人不该直接照抄这套</h2><p>这套配置，不是全场景通杀。</p>
+<p>它是给“<strong>把 OpenClaw 当个人助手</strong>”的人准备的。</p>
+<p>如果你是下面这些场景，就别无脑照抄：</p>
+<h3 id="1）客服-工单-值班机器人"><a href="#1）客服-工单-值班机器人" class="headerlink" title="1）客服 &#x2F; 工单 &#x2F; 值班机器人"></a>1）客服 &#x2F; 工单 &#x2F; 值班机器人</h3><p>这种场景更看重边界清晰、审计方便、上下文隔离。</p>
+<p>那 <code>daily</code> 反而可能是合理的。</p>
+<h3 id="2）高合规环境"><a href="#2）高合规环境" class="headerlink" title="2）高合规环境"></a>2）高合规环境</h3><p>如果你的要求就是“每天必须开新会话”，那就不要用私人助手思路套进来。</p>
+<h3 id="3）极端成本敏感场景"><a href="#3）极端成本敏感场景" class="headerlink" title="3）极端成本敏感场景"></a>3）极端成本敏感场景</h3><p>虽然 OpenClaw 有压缩、摘要、记忆刷新这些机制，但会话活得越久，上下文管理通常越复杂。</p>
+<p>如果你特别在意 token 和会话膨胀，就要把 <code>idleMinutes</code> 设得更保守一点。</p>
+<h2 id="改完之后，怎么确认自己真的修好了"><a href="#改完之后，怎么确认自己真的修好了" class="headerlink" title="改完之后，怎么确认自己真的修好了"></a>改完之后，怎么确认自己真的修好了</h2><p>最笨也最有效的方法，不是盯着配置发呆，而是直接做一次隔夜验证。</p>
+<h3 id="最小验证路径"><a href="#最小验证路径" class="headerlink" title="最小验证路径"></a>最小验证路径</h3><ol>
+<li><p>今晚先跟 OpenClaw 聊一段有明显上下文的内容</p>
+<ul>
+<li>比如一个部署方案</li>
+<li>一个待办列表</li>
+<li>一个你自定义的代号</li>
+</ul>
+</li>
+<li><p>确认你已经把 <code>daily</code> 改成 <code>idle</code></p>
+</li>
+<li><p>第二天早晨直接问：</p>
+</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">按我们昨天那个方案继续。</span><br></pre></td></tr></table></figure>
+
+<h3 id="成功表现"><a href="#成功表现" class="headerlink" title="成功表现"></a>成功表现</h3><p>如果配置生效，正常应该看到这些现象：</p>
+<ul>
+<li>它能自然续上昨天的讨论</li>
+<li>不需要你再从头铺背景</li>
+<li>不会像第一次见面一样重新起头</li>
+</ul>
+<h3 id="如果没生效，先查这几个地方"><a href="#如果没生效，先查这几个地方" class="headerlink" title="如果没生效，先查这几个地方"></a>如果没生效，先查这几个地方</h3><ol>
+<li><strong>只改了 <code>reset</code>，没改 <code>resetByType</code></strong></li>
+<li><strong>thread 里还留着 <code>daily</code></strong></li>
+<li><strong>某个 channel override 又把它覆盖回去了</strong></li>
+<li><strong>你测试的其实不是同一类会话</strong>（比如昨天在 topic，今天跑到私聊）</li>
+</ol>
+<p>很多人以为自己已经改好了，结果不是没改成功，而是<strong>有覆盖项没清干净</strong>。</p>
+<h2 id="这个坑最容易误诊的-3-个方向"><a href="#这个坑最容易误诊的-3-个方向" class="headerlink" title="这个坑最容易误诊的 3 个方向"></a>这个坑最容易误诊的 3 个方向</h2><h3 id="误诊-1：上来就怀疑-MEMORY-QMD"><a href="#误诊-1：上来就怀疑-MEMORY-QMD" class="headerlink" title="误诊 1：上来就怀疑 MEMORY &#x2F; QMD"></a>误诊 1：上来就怀疑 MEMORY &#x2F; QMD</h3><p>这最常见。</p>
+<p>一看到隔夜接不上话，大家就会去查：</p>
+<ul>
+<li>MEMORY.md 有没有写入</li>
+<li>QMD 有没有 embed</li>
+<li>rerank 是不是挂了</li>
+<li>向量索引是不是坏了</li>
+</ul>
+<p>但啧，先别急着拆这么深。</p>
+<p><strong>先查 <code>session.reset</code>。</strong></p>
+<p>因为它才是最像“隔夜失忆”的第一嫌疑人。</p>
+<h3 id="误诊-2：觉得“只要关掉-daily-就万事大吉”"><a href="#误诊-2：觉得“只要关掉-daily-就万事大吉”" class="headerlink" title="误诊 2：觉得“只要关掉 daily 就万事大吉”"></a>误诊 2：觉得“只要关掉 daily 就万事大吉”</h3><p>也不一定。</p>
+<p>你如果只改全局 <code>reset</code>，但 <code>resetByType.thread</code> 还保留着：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">thread: &#123; mode: &quot;daily&quot;, atHour: 4 &#125;</span><br></pre></td></tr></table></figure>
+
+<p>那你第二天在 Telegram topic 或 Discord thread 里，照样可能断。</p>
+<h3 id="误诊-3：一刀切追求“永不重置”"><a href="#误诊-3：一刀切追求“永不重置”" class="headerlink" title="误诊 3：一刀切追求“永不重置”"></a>误诊 3：一刀切追求“永不重置”</h3><p>这也不是好路子。</p>
+<p>表面上看，永不重置最连续。</p>
+<p>但后面你很可能会遇到这些问题：</p>
+<ul>
+<li>会话越来越脏</li>
+<li>任务之间互相串味</li>
+<li>排查问题更麻烦</li>
+<li>某些场景下成本更难控</li>
+</ul>
+<p>所以更稳的思路不是“彻底不重置”，而是：</p>
+<blockquote>
+<p><strong>该长的地方长，该短的地方短。</strong></p>
+</blockquote>
+<p>也就是：私聊长一点，线程中等，群聊短一点。</p>
+<p>这才是更适合个人助手的现实配置。</p>
+<h2 id="最后一句话"><a href="#最后一句话" class="headerlink" title="最后一句话"></a>最后一句话</h2><p>如果你把 OpenClaw 当个人助手，</p>
+<p><strong>别让它每天凌晨 4 点把昨天的你“格式化”掉。</strong></p>
+<p>真正更顺手的配置，不是粗暴关掉会话管理，而是把 <code>daily</code> 改成 <code>idle</code>，再按 <code>dm / thread / group</code> 分开设置。</p>
+<p>这样你既能保住“隔天还能接着聊”的体验，也不会把所有会话无限拖下去。</p>
+<p>对个人助手来说，这不是边角料配置。</p>
+<p>这是最影响体感的那一项。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com">一只会飞的旺旺</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.wangwangit.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%20OpenClaw%20%E4%B8%80%E5%88%B0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E5%B0%B1%E5%83%8F%E5%A4%B1%E5%BF%86%E4%BA%86%EF%BC%9F%E7%9C%9F%E6%AD%A3%E7%9A%84%E5%9D%91%E4%B8%8D%E6%98%AF%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BF%99%E4%B8%AA%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE/">https://www.wangwangit.com/为什么你的 OpenClaw 一到第二天就像失忆了？真正的坑不是记忆系统，而是这个默认配置/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.wangwangit.com" target="_blank">一只会飞的旺旺</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OpenClaw/">OpenClaw</a><a class="post-meta__tags" href="/tags/session/">session</a><a class="post-meta__tags" href="/tags/memory/">memory</a></div><div class="post-share"><div class="social-share" data-image="https://img.996007.icu/file/1772948850945_20260308134722131.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/OpenClaw%E5%A4%9A%E4%BC%9A%E8%AF%9D%E6%A8%A1%E5%BC%8F-%E5%B0%8F%E7%99%BD%E4%B9%9F%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/" title="OpenClaw 多会话模式：小白也能看懂的完整教程"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1770018981980_20260202155606257.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-02</div><div class="info-item-2">OpenClaw 多会话模式：小白也能看懂的完整教程</div></div><div class="info-2"><div class="info-item-1">每次对话都是全新开始。昨天的语境？没了。上周要求的研究？再也找不到了。我想让 OpenClaw 同时处理多个任务，但默认情况下它只能一个一个来。OpenClaw 多会话模式配置教程，让多个任务同时跑，互不干扰</div></div></div></a><a class="pagination-related" href="/%E5%B0%8F%E9%BE%99%E8%99%BE%E7%AA%81%E7%84%B6%E5%A8%87%E6%B0%94%E4%BA%86-%E5%AE%A1%E6%89%B9%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" title="小龙虾突然&quot;娇气&quot;了？3.31 版本审批避坑指南"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1775101963395_20260402115231619.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-02</div><div class="info-item-2">小龙虾突然&quot;娇气&quot;了？3.31 版本审批避坑指南</div></div><div class="info-2"><div class="info-item-1">OpenClaw 3.31 版本更新后，exec 命令审批机制大改，配置完全失效。这篇文章把踩坑过程和解决方案说清楚。</div></div></div></a><a class="pagination-related" href="/%E7%8C%9C%E4%BA%86%E4%B8%80%E5%91%A8%E7%9A%84%E5%8C%BF%E5%90%8D%E6%A8%A1%E5%9E%8B%E7%AB%9F%E7%84%B6%E6%98%AF%E5%B0%8F%E7%B1%B3%E7%9A%84%EF%BC%9A%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E6%8E%A5%E5%85%A5%20MiMo%20%E5%88%B0%20OpenClaw/" title="猜了一周的匿名模型竟然是小米的：手把手教你接入 MiMo 到 OpenClaw"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1773897756312_20260319132232565.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-19</div><div class="info-item-2">猜了一周的匿名模型竟然是小米的：手把手教你接入 MiMo 到 OpenClaw</div></div><div class="info-2"><div class="info-item-1">小米 MiMo-V2-Pro（Hunter Alpha）和 MiMo-V2-Omni（Healer Alpha）正式揭晓，本文手把手教你如何在 OpenClaw 中接入这两款模型，小白也能跟着做。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">一只会飞的旺旺</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">234</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">254</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/wangwangit"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/wangwangit" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1249217495@vip.qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a><a class="social-icon" href="https://ali.wangwangit.com" rel="external nofollow noreferrer" target="_blank" title="Alist"><i class="fa-solid fa-cloud" style="color: #000000;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">'<div style="font-family: sans-serif; line-height: 1.6; margin: 20px auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; color: #555; max-width: 600px;"> <h2 style="color: #333; margin-bottom: 10px; text-align: center;">🎉 博客更新啦！</h2> <div style="margin-bottom: 15px;"> <p>是不是觉得页面焕然一新？没错！为了更好的体验，我们更换了全新的主题。</p> <p>旧主题年久失修 😥，而且过于花哨，所以选择了更简洁、更易用的新主题。希望大家喜欢！</p> <p style="margin-bottom: 15px;">我的个人站点已整合到顶部"我的站点"菜单中，欢迎访问体验！若存在无法访问的情况，可以及时反馈！✨</p> </div> <div style="display: flex; justify-content: center; margin-top: 20px;"> <div style="text-align: center;"> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/img1/a48c4eac2f2a99909da5611c3885726.jpg" alt="微信公众号二维码" style="width: 150px; height: 150px;"> <p style="font-size: 12px; margin-top: 5px;">公众号</p> </div> </div> </div> '</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E5%9D%91%E5%88%B0%E5%BA%95%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84"><span class="toc-number">1.</span> <span class="toc-text">这坑到底是怎么来的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89Session-%E4%B8%8D%E6%98%AF%E9%95%BF%E6%9C%9F%E8%AE%B0%E5%BF%86"><span class="toc-number">1.1.</span> <span class="toc-text">1）Session 不是长期记忆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%89Memory-%E6%89%8D%E6%98%AF%E9%95%BF%E6%9C%9F%E8%AE%B0%E5%BF%86"><span class="toc-number">1.2.</span> <span class="toc-text">2）Memory 才是长期记忆</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-daily-%E5%AF%B9%E4%B8%AA%E4%BA%BA%E5%8A%A9%E6%89%8B%E7%89%B9%E5%88%AB%E4%BC%A4"><span class="toc-number">2.</span> <span class="toc-text">为什么 daily 对个人助手特别伤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E9%85%8D%E7%BD%AE%E6%96%B9%E6%A1%88%EF%BC%9A%E5%88%AB%E6%8C%89%E5%A4%A9%E5%88%87%EF%BC%8C%E6%8C%89%E7%A9%BA%E9%97%B2%E6%97%B6%E9%95%BF%E5%88%87"><span class="toc-number">3.</span> <span class="toc-text">最佳配置方案：别按天切，按空闲时长切</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A4%E4%B8%BA%E8%BF%99%E6%98%AF%E2%80%9C%E6%9C%80%E4%BD%B3%E9%BB%98%E8%AE%A4%E6%96%B9%E6%A1%88%E2%80%9D"><span class="toc-number">4.</span> <span class="toc-text">我为什么认为这是“最佳默认方案”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%81%E8%81%8A%EF%BC%9A%E8%AF%A5%E9%95%BF%E5%B0%B1%E9%95%BF"><span class="toc-number">4.1.</span> <span class="toc-text">私聊：该长就长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%EF%BC%9A%E4%BF%9D%E4%B8%80%E5%A4%A9%EF%BC%8C%E9%80%9A%E5%B8%B8%E6%9C%80%E9%A1%BA%E6%89%8B"><span class="toc-number">4.2.</span> <span class="toc-text">线程：保一天，通常最顺手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BE%A4%E8%81%8A%EF%BC%9A%E7%9F%AD%E4%B8%80%E7%82%B9%E6%89%8D%E7%A8%B3"><span class="toc-number">4.3.</span> <span class="toc-text">群聊：短一点才稳</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%AA%E4%BA%9B%E4%BA%BA%E4%B8%8D%E8%AF%A5%E7%9B%B4%E6%8E%A5%E7%85%A7%E6%8A%84%E8%BF%99%E5%A5%97"><span class="toc-number">5.</span> <span class="toc-text">哪些人不该直接照抄这套</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E5%AE%A2%E6%9C%8D-%E5%B7%A5%E5%8D%95-%E5%80%BC%E7%8F%AD%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="toc-number">5.1.</span> <span class="toc-text">1）客服 &#x2F; 工单 &#x2F; 值班机器人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%89%E9%AB%98%E5%90%88%E8%A7%84%E7%8E%AF%E5%A2%83"><span class="toc-number">5.2.</span> <span class="toc-text">2）高合规环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89%E6%9E%81%E7%AB%AF%E6%88%90%E6%9C%AC%E6%95%8F%E6%84%9F%E5%9C%BA%E6%99%AF"><span class="toc-number">5.3.</span> <span class="toc-text">3）极端成本敏感场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B9%E5%AE%8C%E4%B9%8B%E5%90%8E%EF%BC%8C%E6%80%8E%E4%B9%88%E7%A1%AE%E8%AE%A4%E8%87%AA%E5%B7%B1%E7%9C%9F%E7%9A%84%E4%BF%AE%E5%A5%BD%E4%BA%86"><span class="toc-number">6.</span> <span class="toc-text">改完之后，怎么确认自己真的修好了</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E9%AA%8C%E8%AF%81%E8%B7%AF%E5%BE%84"><span class="toc-number">6.1.</span> <span class="toc-text">最小验证路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%8A%9F%E8%A1%A8%E7%8E%B0"><span class="toc-number">6.2.</span> <span class="toc-text">成功表现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E6%B2%A1%E7%94%9F%E6%95%88%EF%BC%8C%E5%85%88%E6%9F%A5%E8%BF%99%E5%87%A0%E4%B8%AA%E5%9C%B0%E6%96%B9"><span class="toc-number">6.3.</span> <span class="toc-text">如果没生效，先查这几个地方</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E5%9D%91%E6%9C%80%E5%AE%B9%E6%98%93%E8%AF%AF%E8%AF%8A%E7%9A%84-3-%E4%B8%AA%E6%96%B9%E5%90%91"><span class="toc-number">7.</span> <span class="toc-text">这个坑最容易误诊的 3 个方向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E8%AF%8A-1%EF%BC%9A%E4%B8%8A%E6%9D%A5%E5%B0%B1%E6%80%80%E7%96%91-MEMORY-QMD"><span class="toc-number">7.1.</span> <span class="toc-text">误诊 1：上来就怀疑 MEMORY &#x2F; QMD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E8%AF%8A-2%EF%BC%9A%E8%A7%89%E5%BE%97%E2%80%9C%E5%8F%AA%E8%A6%81%E5%85%B3%E6%8E%89-daily-%E5%B0%B1%E4%B8%87%E4%BA%8B%E5%A4%A7%E5%90%89%E2%80%9D"><span class="toc-number">7.2.</span> <span class="toc-text">误诊 2：觉得“只要关掉 daily 就万事大吉”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E8%AF%8A-3%EF%BC%9A%E4%B8%80%E5%88%80%E5%88%87%E8%BF%BD%E6%B1%82%E2%80%9C%E6%B0%B8%E4%B8%8D%E9%87%8D%E7%BD%AE%E2%80%9D"><span class="toc-number">7.3.</span> <span class="toc-text">误诊 3：一刀切追求“永不重置”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E4%B8%80%E5%8F%A5%E8%AF%9D"><span class="toc-number">8.</span> <span class="toc-text">最后一句话</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/%E5%BF%AB%E6%89%8B%20AI%20IDE%20CodeFlicker%20%E6%B7%B1%E5%BA%A6%E4%BD%93%E9%AA%8C/" title="快手 AI IDE CodeFlicker 深度体验"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://h2.static.yximgs.com/kcdn/cdn-kcdn112115/ide-login/assets/duet-zh-waNFgN9I.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="快手 AI IDE CodeFlicker 深度体验"/></a><div class="content"><a class="title" href="/%E5%BF%AB%E6%89%8B%20AI%20IDE%20CodeFlicker%20%E6%B7%B1%E5%BA%A6%E4%BD%93%E9%AA%8C/" title="快手 AI IDE CodeFlicker 深度体验">快手 AI IDE CodeFlicker 深度体验</a><time datetime="2026-04-21T06:51:00.000Z" title="发表于 2026-04-21 14:51:00">2026-04-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E8%8E%B7%E5%8F%96%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0%EF%BC%8C%E6%88%91%E8%AF%95%E4%BA%86%206%20%E7%A7%8D%E6%96%B9%E6%A1%88%EF%BC%8C%E6%9C%80%E5%90%8E%E5%8F%91%E7%8E%B0%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E9%82%A3%E4%B8%AA%E6%9C%80%E8%83%BD%E6%89%93/" title="获取微信公众号文章，我试了 6 种方案，最后发现最简单的那个最能打"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1775113797056_20260402150952238.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="获取微信公众号文章，我试了 6 种方案，最后发现最简单的那个最能打"/></a><div class="content"><a class="title" href="/%E8%8E%B7%E5%8F%96%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0%EF%BC%8C%E6%88%91%E8%AF%95%E4%BA%86%206%20%E7%A7%8D%E6%96%B9%E6%A1%88%EF%BC%8C%E6%9C%80%E5%90%8E%E5%8F%91%E7%8E%B0%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E9%82%A3%E4%B8%AA%E6%9C%80%E8%83%BD%E6%89%93/" title="获取微信公众号文章，我试了 6 种方案，最后发现最简单的那个最能打">获取微信公众号文章，我试了 6 种方案，最后发现最简单的那个最能打</a><time datetime="2026-04-02T06:51:00.000Z" title="发表于 2026-04-02 14:51:00">2026-04-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E5%B0%8F%E9%BE%99%E8%99%BE%E7%AA%81%E7%84%B6%E5%A8%87%E6%B0%94%E4%BA%86-%E5%AE%A1%E6%89%B9%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" title="小龙虾突然&quot;娇气&quot;了？3.31 版本审批避坑指南"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1775101963395_20260402115231619.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小龙虾突然&quot;娇气&quot;了？3.31 版本审批避坑指南"/></a><div class="content"><a class="title" href="/%E5%B0%8F%E9%BE%99%E8%99%BE%E7%AA%81%E7%84%B6%E5%A8%87%E6%B0%94%E4%BA%86-%E5%AE%A1%E6%89%B9%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" title="小龙虾突然&quot;娇气&quot;了？3.31 版本审批避坑指南">小龙虾突然&quot;娇气&quot;了？3.31 版本审批避坑指南</a><time datetime="2026-04-02T03:30:00.000Z" title="发表于 2026-04-02 11:30:00">2026-04-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E7%8C%9C%E4%BA%86%E4%B8%80%E5%91%A8%E7%9A%84%E5%8C%BF%E5%90%8D%E6%A8%A1%E5%9E%8B%E7%AB%9F%E7%84%B6%E6%98%AF%E5%B0%8F%E7%B1%B3%E7%9A%84%EF%BC%9A%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E6%8E%A5%E5%85%A5%20MiMo%20%E5%88%B0%20OpenClaw/" title="猜了一周的匿名模型竟然是小米的：手把手教你接入 MiMo 到 OpenClaw"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.996007.icu/file/1773897756312_20260319132232565.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="猜了一周的匿名模型竟然是小米的：手把手教你接入 MiMo 到 OpenClaw"/></a><div class="content"><a class="title" href="/%E7%8C%9C%E4%BA%86%E4%B8%80%E5%91%A8%E7%9A%84%E5%8C%BF%E5%90%8D%E6%A8%A1%E5%9E%8B%E7%AB%9F%E7%84%B6%E6%98%AF%E5%B0%8F%E7%B1%B3%E7%9A%84%EF%BC%9A%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E6%8E%A5%E5%85%A5%20MiMo%20%E5%88%B0%20OpenClaw/" title="猜了一周的匿名模型竟然是小米的：手把手教你接入 MiMo 到 OpenClaw">猜了一周的匿名模型竟然是小米的：手把手教你接入 MiMo 到 OpenClaw</a><time datetime="2026-03-18T18:08:00.000Z" title="发表于 2026-03-19 02:08:00">2026-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/AI%20%E4%B9%9F%E4%BC%9A%E8%A2%AB%E4%B8%8B%E6%AF%92%EF%BC%9F315%20%E6%9B%9D%E5%85%89%E7%9A%84%20GEO%20%E6%8A%95%E6%AF%92%EF%BC%8C%E6%99%AE%E9%80%9A%E4%BA%BA%E8%AF%A5%E7%9F%A5%E9%81%93%E7%9A%84%E4%BA%8B/" title="AI 也会被&quot;下毒&quot;？315 曝光的 GEO 投毒，普通人该知道的事"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.wangwangit.com/file/blog/geo-poisoning-315/1773668150952_pollinations_20260316_213529.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI 也会被&quot;下毒&quot;？315 曝光的 GEO 投毒，普通人该知道的事"/></a><div class="content"><a class="title" href="/AI%20%E4%B9%9F%E4%BC%9A%E8%A2%AB%E4%B8%8B%E6%AF%92%EF%BC%9F315%20%E6%9B%9D%E5%85%89%E7%9A%84%20GEO%20%E6%8A%95%E6%AF%92%EF%BC%8C%E6%99%AE%E9%80%9A%E4%BA%BA%E8%AF%A5%E7%9F%A5%E9%81%93%E7%9A%84%E4%BA%8B/" title="AI 也会被&quot;下毒&quot;？315 曝光的 GEO 投毒，普通人该知道的事">AI 也会被&quot;下毒&quot;？315 曝光的 GEO 投毒，普通人该知道的事</a><time datetime="2026-03-16T13:30:00.000Z" title="发表于 2026-03-16 21:30:00">2026-03-16</time></div></div></div></div><div class="card-widget ads-wrap" id="adsContainer"><script>(function() {
+  // 立即获取当前脚本元素并保存引用
+  const currentScript = document.currentScript;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // 使用ID选择器获取广告容器元素，而不是依赖currentScript
+      const adContainer = document.getElementById('adsContainer');
+
+      if (!adContainer) {
+        console.error('找不到广告容器');
+        return;
+      }
+
+      // 检查是否已有缓存结果及其是否在24小时内
+      const stored = localStorage.getItem('isChineseIP');
+      const timestamp = localStorage.getItem('ipCheckTime');
+      const now = Date.now();
+
+      // 如果有缓存且未过期(24小时内)，直接使用缓存结果
+      if (stored !== null && timestamp && now - parseInt(timestamp) < 24 * 60 * 60 * 1000) {
+        if (stored === 'true') {
+          // 中国大陆IP显示替代内容
+          showChineseContent(adContainer);
+          console.log('检测到中国大陆IP，已替换侧边栏广告');
+        } else {
+          // 非中国大陆IP显示原始广告
+          showNodeseekAd(adContainer);
+        }
+      } else {
+        // 没有缓存或缓存过期，先显示替代内容，然后异步检测IP
+        const placeholderContent = createPlaceholder('资源加载中...');
+        adContainer.appendChild(placeholderContent);
+
+        // 异步检测IP
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(data => {
+            const isChineseIP = data.country_code === 'CN';
+
+            // 存储结果和时间戳
+            localStorage.setItem('isChineseIP', isChineseIP);
+            localStorage.setItem('ipCheckTime', now.toString());
+
+            // 根据IP地区替换内容
+            if (isChineseIP) {
+              // 更新为中国大陆用户的替代内容
+              placeholderContent.textContent = '';
+              const title = document.createElement('h3');
+              title.textContent = '广告招租';
+              const desc = document.createElement('p');
+              desc.textContent = '欢迎来投放国内广告哦！';
+              placeholderContent.appendChild(title);
+              placeholderContent.appendChild(desc);
+              console.log('检测到中国大陆IP，显示替代内容');
+            } else {
+              // 更新为NodeSeek推广iframe
+              adContainer.removeChild(placeholderContent);
+              showNodeseekAd(adContainer);
+            }
+          })
+          .catch(error => {
+            console.error('IP检测失败:', error);
+            // 出错时显示简单的推荐内容
+            showChineseContent(adContainer, placeholderContent);
+          });
+      }
+    } catch (error) {
+      // 出错时显示简单的推荐内容
+      const adContainer = document.getElementById('adsContainer');
+      if (adContainer) {
+        showChineseContent(adContainer);
+      }
+      console.error('广告IP检测出错:', error);
+    }
+  });
+
+  // 辅助函数：显示中文内容
+  function showChineseContent(container, existingElement = null) {
+    if (existingElement) {
+      existingElement.textContent = '';
+      existingElement.style.borderRadius = '8px';
+      existingElement.style.height = '246px';
+      existingElement.style.backgroundColor = '#f8f9fa';
+      existingElement.style.padding = '15px';
+      existingElement.style.display = 'flex';
+      existingElement.style.flexDirection = 'column';
+      existingElement.style.justifyContent = 'center';
+      existingElement.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+      existingElement.appendChild(title);
+      existingElement.appendChild(desc);
+    } else {
+      const fallbackContent = document.createElement('div');
+      fallbackContent.style.borderRadius = '8px';
+      fallbackContent.style.height = '246px';
+      fallbackContent.style.backgroundColor = '#f8f9fa';
+      fallbackContent.style.padding = '15px';
+      fallbackContent.style.display = 'flex';
+      fallbackContent.style.flexDirection = 'column';
+      fallbackContent.style.justifyContent = 'center';
+      fallbackContent.style.textAlign = 'center';
+
+      const title = document.createElement('h3');
+      title.textContent = '广告招租';
+      const desc = document.createElement('p');
+      desc.textContent = '欢迎来投放国内广告哦！';
+
+      fallbackContent.appendChild(title);
+      fallbackContent.appendChild(desc);
+      container.appendChild(fallbackContent);
+    }
+  }
+
+  // 辅助函数：显示Nodeseek广告
+  function showNodeseekAd(container) {
+    const nodeseekContainer = document.createElement('div');
+    nodeseekContainer.id = 'nodeseek-container';
+    container.appendChild(nodeseekContainer);
+
+    setTimeout(function() {
+      const element = document.getElementById('nodeseek-container');
+      if (element) {
+        element.innerHTML = '<iframe src="https://support.nodeseek.com/page/promotion?id=46" style="border-radius:8px; height: 246px;" loading="lazy"></iframe>';
+      }
+    }, 1000);
+  }
+
+  // 辅助函数：创建占位内容
+  function createPlaceholder(text) {
+    const placeholder = document.createElement('div');
+    placeholder.style.borderRadius = '8px';
+    placeholder.style.height = '246px';
+    placeholder.style.backgroundColor = '#f8f9fa';
+    placeholder.style.padding = '15px';
+    placeholder.style.display = 'flex';
+    placeholder.style.flexDirection = 'column';
+    placeholder.style.justifyContent = 'center';
+    placeholder.style.textAlign = 'center';
+    placeholder.textContent = text;
+    return placeholder;
+  }
+})();</script></div></div></div></main><footer id="footer" style="background-image: url(https://img.996007.icu/file/1772948850945_20260308134722131.png);"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By 一只会飞的旺旺</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">本站点由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yxvm.com">YXVM</a>提供技术支持</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/pluginsSrc/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-waline-nine-rho.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('/pluginsSrc/@waline/client/dist/waline.css')
+        .then(() => import('/pluginsSrc/@waline/client/dist/waline.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="/pluginsSrc/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="/pluginsSrc/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="https://events.vercount.one/js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
